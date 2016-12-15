@@ -10,6 +10,7 @@
     "type": "git"
   },
   "dependencies": {
-    "babel-preset-react": "^6.16.0"
+    "babel-preset-react": "^6.16.0",
+    "usfm-parser": "^0.1.6"
   }
 }
