@@ -29,7 +29,7 @@ function fetchData(params, progress, callback) {
       dir: null
     }
   ];
-  api.putDataInCheckStore("scripturePane", 'currentPaneSettings', currentPaneSettings);
+  api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
   /**
   * @description The code  below sets the static settings/set up for the
   *  originalLanguage, gatewayLanguage, targetLanguage and more resources
@@ -52,7 +52,7 @@ function fetchData(params, progress, callback) {
       dir: null
     }
   ];
-  api.putDataInCheckStore("scripturePane", 'staticSettings', staticSettings);
+  api.putDataInCheckStore("ScripturePane", 'staticSettings', staticSettings);
   /**
   * @description
   * Get original language
@@ -63,7 +63,7 @@ function fetchData(params, progress, callback) {
 
   if (!targetLanguage) {
     if (!params.targetLanguagePath) {
-      console.error('scripturePane requires a filepath');
+      console.error('ScripturePane requires a filepath');
     } else {
       dispatcher.schedule(function (subCallback) {
         sendToReader(params.targetLanguagePath, subCallback);
@@ -300,7 +300,7 @@ function parseGreek() {
       }
     }
   }
-  api.putDataInCheckStore("scripturePane", 'parsedGreek', parsedText);
+  api.putDataInCheckStore("ScripturePane", 'parsedGreek', parsedText);
 }
 
 function parseHebrew() {
@@ -339,7 +339,7 @@ function parseHebrew() {
       }
     }
   }
-  api.putDataInCheckStore("scripturePane", 'parsedGreek', parsedText);
+  api.putDataInCheckStore("ScripturePane", 'parsedGreek', parsedText);
   //Put the parsed Hebrew into the checkstore in the Object format specified here
 }
 

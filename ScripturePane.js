@@ -9,7 +9,7 @@ const React = api.React;
 const RB = api.ReactBootstrap;
 const {Row, Well, Glyphicon, Col} = RB;
 const Pane = require('./Pane');
-const NAMESPACE = "scripturePane";
+const NAMESPACE = "ScripturePane";
 const AddPaneModal = require('./AddPaneModal');
 const style = require('./Style');
 
@@ -34,7 +34,7 @@ class ScripturePane extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // Stops scripturePane from re-rendering when the check module changes state
+    // Stops ScripturePane from re-rendering when the check module changes state
     return nextState !== this.state;
   }
   /**
@@ -60,7 +60,7 @@ class ScripturePane extends React.Component {
   /**
   * @description This gets the pane heading names
   * @return{state} saves the heading names for (originalLang, targetLang,
-  * gatewayLang) within the state of the scripturePane component
+  * gatewayLang) within the state of the ScripturePane component
   *******************************************************************************/
   getPaneHeadingName(){
     let targetLanguageName = "";
@@ -85,7 +85,7 @@ class ScripturePane extends React.Component {
   /**
   * @description This displays, generates and maintains the array that holds all the
   * resource panes currently rendered on the screen.
-  * @return {array} scripturePane - an array of resource panes
+  * @return {array} ScripturePane - an array of resource panes
   *******************************************************************************/
   displayPanes(){
     let pane = this.state.currentPaneSettings;
