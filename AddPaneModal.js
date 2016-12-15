@@ -21,7 +21,7 @@ class AddPaneModal extends React.Component {
 
   componentWillMount(){
     //get all the static settings saved for all panes in the checkstore
-    let staticPaneSettings = api.getDataFromCheckStore('scripturePane', 'staticSettings');
+    let staticPaneSettings = api.getDataFromCheckStore('ScripturePane', 'staticSettings');
     //save static settings of all panes in state
     this.setState({staticPaneSettings: staticPaneSettings});
   }
@@ -33,12 +33,14 @@ class AddPaneModal extends React.Component {
    * uses the onHide prop to close the modal.
   *******************************************************************************/
   handleLoad(){
-    let currentPaneSettings = api.getDataFromCheckStore('scripturePane', 'currentPaneSettings');
-    let newPane = this.state.selectedPane;
-    currentPaneSettings.push(newPane)
-    api.putDataInCheckStore("scripturePane", 'currentPaneSettings', currentPaneSettings);
-    api.saveProject();
-    this.props.onHide();
+    let currentPaneSettings = api.getDataFromCheckStore('ScripturePane', 'currentPaneSettings');
+    if(newPane){
+      let newPane = this.state.selectedPane;
+      currentPaneSettings.push(newPane)
+      api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
+      api.saveProject();
+      this.props.onHide();
+    }
   }
   /**
    * @description This generates a list of resource names and saves it in option
@@ -87,14 +89,18 @@ class AddPaneModal extends React.Component {
   *******************************************************************************/
   selectOption(event){
     let sourceLanguageName = event.target.value;
-    let paneSettings = this.state.staticPaneSettings;
-    let selectedPane = {};
-    for(let key in paneSettings){
-      if(paneSettings[key].sourceName === sourceLanguageName){
-        selectedPane = paneSettings[key];
+    if(sourceLanguageName !== ''){
+      let paneSettings = this.state.staticPaneSettings;
+      let selectedPane = {};
+      for(let key in paneSettings){
+        if(paneSettings[key].sourceName === sourceLanguageName){
+          selectedPane = paneSettings[key];
+        }
       }
+      this.setState({selectedPane: selectedPane});
+    }else {
+      this.setState({selectedPane: null});
     }
-    this.setState({selectedPane: selectedPane});
   }
 
   render() {
@@ -111,9 +117,12 @@ class AddPaneModal extends React.Component {
                 Select the settings for the scripture source you want
                 to load in to the scripture pane
             </h4>
+            {/*
              <input type="file" name="file" ref="file"
                     onChange={this.handleFile.bind(this)}
              /><br />
+             Under construction for content manager
+             */}
              <label>Select source language name</label>
              <FormControl componentClass="select" style={{width: "20%"}}
                           onChange={this.selectOption.bind(this)}>
