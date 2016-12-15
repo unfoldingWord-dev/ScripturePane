@@ -1,6 +1,6 @@
 {
   "name": "scripturePane",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A sub-module for scripture display",
   "main": "View.js",
   "scripts": {
