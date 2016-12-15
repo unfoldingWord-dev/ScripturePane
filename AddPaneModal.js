@@ -34,8 +34,8 @@ class AddPaneModal extends React.Component {
   *******************************************************************************/
   handleLoad(){
     let currentPaneSettings = api.getDataFromCheckStore('ScripturePane', 'currentPaneSettings');
+    let newPane = this.state.selectedPane;
     if(newPane){
-      let newPane = this.state.selectedPane;
       currentPaneSettings.push(newPane)
       api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
       api.saveProject();
