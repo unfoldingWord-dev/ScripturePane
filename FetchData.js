@@ -21,12 +21,12 @@ function fetchData(params, progress, callback) {
       "dir": "ltr"
     },
     {
-      sourceName: "gatewayLanguage",
-      dir: "ltr"
+      "sourceName": "gatewayLanguage",
+      "dir": "ltr"
     },
     {
-      sourceName: "targetLanguage",
-      dir: null
+      "sourceName": "targetLanguage",
+      "dir": null
     }
   ];
   api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
@@ -44,12 +44,12 @@ function fetchData(params, progress, callback) {
       "dir": "ltr"
     },
     {
-      sourceName: "gatewayLanguage",
-      dir: "ltr"
+      "sourceName": "gatewayLanguage",
+      "dir": "ltr"
     },
     {
-      sourceName: "targetLanguage",
-      dir: null
+      "sourceName": "targetLanguage",
+      "dir": null
     }
   ];
   api.putDataInCheckStore("ScripturePane", 'staticSettings', staticSettings);
