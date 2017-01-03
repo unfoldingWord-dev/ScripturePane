@@ -172,4 +172,7 @@ class ScripturePane extends React.Component {
   }
 }
 
-module.exports = ScripturePane;
+module.exports = {
+  name: NAMESPACE,
+  container: ScripturePane
+}
