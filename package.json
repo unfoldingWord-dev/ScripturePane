@@ -2,7 +2,7 @@
   "name": "scripturePane",
   "version": "1.0.0",
   "description": "A sub-module for scripture display",
-  "main": "View.js",
+  "main": "Container.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
