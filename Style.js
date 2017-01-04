@@ -1,10 +1,16 @@
 var style = {
   pane: {
-    content: {
+    contentLTR: {
       overflowY: 'scroll',
       width: '100%',
       height: '180px',
       direction: 'ltr'
+    },
+    contentRTL: {
+      overflowY: 'scroll',
+      width: '100%',
+      height: '180px',
+      direction: 'rtl'
     },
     header: {
       margin: '5px 0',
