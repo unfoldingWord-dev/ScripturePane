@@ -6,31 +6,39 @@
   ******************************************************************************/
 const api = window.ModuleApi;
 const React = api.React;
-const RB = api.ReactBootstrap;
-const {Row, Well, Glyphicon, Col} = RB;
-const Pane = require('./Pane');
+const View = require('./View');
+
 const NAMESPACE = "ScripturePane";
-const AddPaneModal = require('./AddPaneModal');
-const style = require('./Style');
 
 class ScripturePane extends React.Component {
   constructor() {
     super();
     this.state = {
+      currentCheck: null,
       originalLanguage: null,
       targetLanguage: null,
       gatewayLanguage: null,
       tlDirection: null,
       currentPaneSettings: null,
-      modalShow: false,
+      modalVisibility: false,
+      staticPaneSettings: null,
     };
   }
 
   componentWillMount() {
+    this.setState({currentCheck: this.props.currentCheck});
     //get default resources (originalLang, targetLang, gatewayLang) content
     this.getContentFromCheckStore();
     //get pane heading names
     this.getPaneHeadingName();
+    //get all the static settings saved for all panes in the checkstore
+    let staticPaneSettings = api.getDataFromCheckStore('ScripturePane', 'staticSettings');
+    //save static settings of all panes in state
+    this.setState({staticPaneSettings: staticPaneSettings});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({currentCheck: nextProps.currentCheck});
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -83,72 +91,6 @@ class ScripturePane extends React.Component {
     this.setState({targetLanguageHeading: targetLanguageHeading});
   }
   /**
-  * @description This displays, generates and maintains the array that holds all the
-  * resource panes currently rendered on the screen.
-  * @return {array} ScripturePane - an array of resource panes
-  *******************************************************************************/
-  displayPanes(){
-    let pane = this.state.currentPaneSettings;
-    let scripturePane = [];
-    let greek;
-    for(let key in pane){
-      let content = this.state[pane[key].sourceName];
-      let dir;
-      //ex. heading = this.state.gatewayLanguageHeading = "gatewayLanguage" + "Heading"
-      let heading = this.state[pane[key].sourceName + "Heading"];
-      if(pane[key].sourceName === "targetLanguage"){
-        dir =  this.targetLanguageDirection;
-      }else if (pane[key].sourceName === "originalLanguage") {
-        greek = true;
-        dir = pane[key].dir;
-      }else{
-        dir = pane[key].dir;
-      }
-      if(scripturePane.length <= 4){
-        scripturePane.push(
-          <Pane
-            greek={greek}
-            key={key}
-            content={content}
-            heading={heading}
-            dir={dir}
-            remove={this.removePane.bind(this, key)}
-          />
-        );
-        greek = false;
-      }else{
-        //will prompt user that only 4 scripture sources can be loaded at once
-        console.warn("Only 4 scripture sources can be loaded at once");
-      }
-    }
-    if(scripturePane.length <= 3){
-      scripturePane = this.renderAddResourcesButton(scripturePane);
-    }
-    return scripturePane;
-  }
-  /**
-  * @description This will add/push an array element to the scripturePane array
-  * only when the length of the array is less than or equal to 3. this element
-  * being added is a button to add more resources to the scripturePane component.
-  * @param {Array} scripturePane - the array of panes currently being rendered.
-  * @return {Array} scripturePane - array updated with add resources button.
-  *******************************************************************************/
-  renderAddResourcesButton(scripturePane){
-    scripturePane.push(
-      <Col key={3} md={3} sm={3} xs={3} lg={3}
-           style={{width: "200px", height: "200px"}}>
-        <div style={{margin: "45px 60px 0px 60px", cursor: "pointer", width: "50px", height: "50px", border: "#4BC7ED dashed", padding: "12px"}}
-             onClick={()=>this.setState({ modalShow: true })}>
-          <Glyphicon glyph={"plus"} style={{color: "#4BC7ED", fontSize: "20px"}}/>
-        </div>
-          <h6 style={{textAlign: "center", color: "#4BC7ED"}}>Add Resources</h6>
-          <AddPaneModal show={this.state.modalShow}
-                        onHide={() => this.setState({ modalShow: false })} />
-      </Col>
-    );
-    return scripturePane;
-  }
-  /**
    * @description - This removes a scripture source from the scripture pane.
    * @param {number} key - position index of the scripture source language
    *        in the currentPaneSettings array.
@@ -160,14 +102,63 @@ class ScripturePane extends React.Component {
     api.putDataInCheckStore('scripturePane', 'currentPaneSettings', paneSettings);
     api.saveProject();
   }
+  /**
+   * @description this methos is called when an user selects a resource name to
+   * be added to the scripture pane and it sets the state with this name in the
+   * selectedPane property. it matches that name that was sleected with the
+   * staticPaneSettings.
+   * @param {object} event - An event object that we use to get the value
+   * selected by the user from the select element
+   * @return {state} This will set the state to the selectedPane object
+  *******************************************************************************/
+  selectSourceLanguage(event){
+    let sourceLanguageName = event.target.value;
+    if(sourceLanguageName !== ''){
+      let paneSettings = this.state.staticPaneSettings;
+      let selectedPane = {};
+      for(let key in paneSettings){
+        if(paneSettings[key].sourceName === sourceLanguageName){
+          selectedPane = paneSettings[key];
+        }
+      }
+      this.setState({selectedPane: selectedPane});
+    }else {
+      this.setState({selectedPane: null});
+    }
+  }
+  /**
+   * @description This handles loading a new resource to the scripture pane
+   * it gets the currentPaneSettings array (the info of all the panes currently
+   * rendered in the scripture pane component) from the checkstore. and then it
+   * adds the new pane information and saves it in the checkstore. Finally, it
+   * sets the modalVisibility to false to close the modal.
+  *******************************************************************************/
+  addPane(){
+    let currentPaneSettings = api.getDataFromCheckStore('ScripturePane', 'currentPaneSettings');
+    if(this.state.selectedPane){
+      currentPaneSettings.push(this.state.selectedPane);
+      api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
+      api.saveProject();
+      this.setState({ modalVisibility: false });
+    }
+  }
+
   render() {
     return (
-      <div style={{marginTop: '15px'}}>
-        <h3 style={style.pane.header}>Scriptural Context</h3>
-        <Row>
-          {this.displayPanes()}
-        </Row>
-      </div>
+      <View
+        currentPaneSettings={this.state.currentPaneSettings}
+        currentCheck={this.state.currentCheck}
+        originalLanguage={this.state.originalLanguage}
+        targetLanguage={this.state.targetLanguage}
+        gatewayLanguage={this.state.gatewayLanguage}
+        removePane={this.removePane.bind(this)}
+        modalVisibility={this.state.modalVisibility}
+        showModal={() => this.setState({ modalVisibility: true })}
+        hideModal={() => this.setState({ modalVisibility: false })}
+        staticPaneSettings={this.state.staticPaneSettings}
+        selectSourceLanguage={this.selectSourceLanguage.bind(this)}
+        addPane={this.addPane.bind(this)}
+      />
     );
   }
 }
