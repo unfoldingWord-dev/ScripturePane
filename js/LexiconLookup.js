@@ -1,4 +1,4 @@
-var Lexicon = require('./Lexicon.json');
+var Lexicon = require('../static/Lexicon.json');
 
 function LexiconLookup(strong, concise){
   if (Lexicon[strong] && concise) {
