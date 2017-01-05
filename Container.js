@@ -6,7 +6,7 @@
   ******************************************************************************/
 const api = window.ModuleApi;
 const React = api.React;
-const View = require('./View');
+const View = require('./components/View');
 
 const NAMESPACE = "ScripturePane";
 
@@ -32,7 +32,7 @@ class ScripturePane extends React.Component {
     //get pane heading names
     this.getPaneHeadingName();
     //get all the static settings saved for all panes in the checkstore
-    let staticPaneSettings = api.getDataFromCheckStore('ScripturePane', 'staticSettings');
+    let staticPaneSettings = api.getDataFromCheckStore(NAMESPACE, 'staticSettings');
     //save static settings of all panes in state
     this.setState({staticPaneSettings: staticPaneSettings});
   }
@@ -99,7 +99,7 @@ class ScripturePane extends React.Component {
     let paneSettings = this.state.currentPaneSettings;
     paneSettings.splice(key, 1);
     this.setState({currentPaneSettings: paneSettings});
-    api.putDataInCheckStore('scripturePane', 'currentPaneSettings', paneSettings);
+    api.putDataInCheckStore(NAMESPACE, 'currentPaneSettings', paneSettings);
     api.saveProject();
   }
   /**
@@ -134,10 +134,10 @@ class ScripturePane extends React.Component {
    * sets the modalVisibility to false to close the modal.
   *******************************************************************************/
   addPane(){
-    let currentPaneSettings = api.getDataFromCheckStore('ScripturePane', 'currentPaneSettings');
+    let currentPaneSettings = api.getDataFromCheckStore(NAMESPACE, 'currentPaneSettings');
     if(this.state.selectedPane){
       currentPaneSettings.push(this.state.selectedPane);
-      api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
+      api.putDataInCheckStore(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
       api.saveProject();
       this.setState({ modalVisibility: false });
     }
