@@ -8,7 +8,6 @@ const api = window.ModuleApi;
 const React = api.React;
 
 class VerseDisplay extends React.Component {
-
   /**
    * @description - This handles the verse that will be display in the pane in
    * the greek language. it generates Popover with Lexicon info about eahc word.

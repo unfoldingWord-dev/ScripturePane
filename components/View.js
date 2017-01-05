@@ -5,7 +5,7 @@ const RB = api.ReactBootstrap;
 const {Row, Glyphicon, Col} = RB;
 const Pane = require('./Pane');
 const AddPaneModal = require('./AddPaneModal');
-const style = require('./Style');
+const style = require('../css/Style');
 
 class View extends React.Component {
   render(){

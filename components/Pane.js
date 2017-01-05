@@ -3,7 +3,7 @@ const api = window.ModuleApi;
 const React = api.React;
 const RB = api.ReactBootstrap;
 const {Col, Well, Glyphicon} = RB;
-const style = require('./Style');
+const style = require('../css/Style');
 const VerseDisplay = require('./VerseDisplay');
 
 class Pane extends React.Component {
