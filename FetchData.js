@@ -263,7 +263,7 @@ function len(obj) {
   * @description parses the incoming greek and modifies it to be ready
 */
 function parseGreek() {
-  var lex = require("./Lexicon.json");
+  var lex = require("./static/Lexicon.json");
   let origText = api.getDataFromCommon("originalLanguage");
   let parsedText = {};
   for (let ch in origText) {
@@ -304,7 +304,7 @@ function parseGreek() {
 }
 
 function parseHebrew() {
-  var lex = require("./HebrewLexicon.json");
+  var lex = require("./static/HebrewLexicon.json");
   let origText = api.getDataFromCommon("originalLanguage");
   let parsedText = {};
   for (let ch in origText) {
