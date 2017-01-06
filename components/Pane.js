@@ -19,10 +19,16 @@ class Pane extends React.Component {
       }
       return (
           <Col md={3} sm={3} xs={3} lg={3}>
-              <div style={{float: "right", cursor: "pointer"}} onClick={() => removePane(id)}>
-                <Glyphicon glyph={"remove"} style={{color: "grey"}}/>
-              </div>
-              <span style={headerStyle}>{heading || ''}</span>
+          <div style={{float: "right", cursor: "pointer", marginTop: "3px"}} onClick={() => removePane(id)}>
+            <Glyphicon glyph={"remove"} style={{color: "red"}}/>
+          </div>
+              <span style={headerStyle}>
+                {heading.heading || ''}
+              </span>
+              <span style={{color: "#747474", fontFamily: "noto sans italic"}}>
+                {heading.headingDescription || ''}
+              </span>
+
               <div style={contentStyle}>
                   <VerseDisplay chapter={chapter} verse={verse}
                                 input={content} greek={greek}
