@@ -1,12 +1,14 @@
 var style = {
   pane: {
     contentLTR: {
+      marginTop: "5px",
       overflowY: 'scroll',
       width: '100%',
       height: '180px',
       direction: 'ltr'
     },
     contentRTL: {
+      marginTop: "5px",
       overflowY: 'scroll',
       width: '100%',
       height: '180px',
@@ -21,7 +23,10 @@ var style = {
     },
     title: {
       fontWeight: '700',
-      fontSize: '14px'
+      fontSize: '14px',
+      marginBottom: "-5px",
+      marginTop: "5px",
+      display: "flex",
     }
   },
   dropzone: {
@@ -73,6 +78,15 @@ var style = {
         display: 'none'
       }
     }
+  },
+  removePane:{
+    float: "right",
+    cursor: "pointer",
+    marginTop: "3px"
+  },
+  headingDescription:{
+    color: "#747474",
+    fontFamily: "noto sans italic"
   },
 };
 
