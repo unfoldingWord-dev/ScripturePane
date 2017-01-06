@@ -22,6 +22,9 @@ class ScripturePane extends React.Component {
       currentPaneSettings: null,
       modalVisibility: false,
       staticPaneSettings: null,
+      originalLanguageHeading: null,
+      gatewayLanguageHeading: null,
+      targetLanguageHeading: null,
     };
   }
 
@@ -82,10 +85,19 @@ class ScripturePane extends React.Component {
       gatewayLanguageName = manifest.source_translations[0].language_id.toUpperCase();
       gatewayLanguageVersion = " (" + manifest.source_translations[0].resource_id.toUpperCase() + ")";
     }
-    let gatewayLanguageHeading = "Gateway Language: " + gatewayLanguageName + " " + gatewayLanguageVersion;
-    let targetLanguageHeading = "Target Language: " + targetLanguageName + " (Draft)";
+    let gatewayLanguageHeading = {
+      heading: gatewayLanguageName + " " + gatewayLanguageVersion,
+      headingDescription: "Gateway Language"
+    }
+    let targetLanguageHeading = {
+      heading: targetLanguageName + " (Draft)",
+      headingDescription: "Target Language"
+    }
     //TODO: eventually we need to add the originalLanguage heading dynamically
-    let originalLanguageHeading = "Original Language: " + "Greek " + "(UGNT)";
+    let originalLanguageHeading = {
+      heading: "Greek (UGNT)",
+      headingDescription: "Original Language"
+    }
     this.setState({originalLanguageHeading: originalLanguageHeading});
     this.setState({gatewayLanguageHeading: gatewayLanguageHeading});
     this.setState({targetLanguageHeading: targetLanguageHeading});
@@ -158,6 +170,10 @@ class ScripturePane extends React.Component {
         staticPaneSettings={this.state.staticPaneSettings}
         selectSourceLanguage={this.selectSourceLanguage.bind(this)}
         addPane={this.addPane.bind(this)}
+        originalLanguageHeading={this.state.originalLanguageHeading}
+        gatewayLanguageHeading={this.state.gatewayLanguageHeading}
+        targetLanguageHeading={this.state.targetLanguageHeading}
+        tlDirection={this.state.tlDirection}
       />
     );
   }
