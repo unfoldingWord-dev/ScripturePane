@@ -10,7 +10,6 @@ class Pane extends React.Component {
     render() {
       let { content, greek, removePane, heading, dir, currentCheck, id } = this.props;
       let { chapter, verse } = currentCheck;
-      let headerStyle = style.pane.title;
       let contentStyle;
       if(dir == 'ltr'){
         contentStyle = style.pane.contentLTR;
@@ -19,10 +18,17 @@ class Pane extends React.Component {
       }
       return (
           <Col md={3} sm={3} xs={3} lg={3}>
-              <div style={{float: "right", cursor: "pointer"}} onClick={() => removePane(id)}>
-                <Glyphicon glyph={"remove"} style={{color: "grey"}}/>
-              </div>
-              <span style={headerStyle}>{heading || ''}</span>
+          <div style={style.removePane}
+               onClick={() => removePane(id)}>
+            <Glyphicon glyph={"remove"} style={{color: "red"}}/>
+          </div>
+              <span style={style.pane.title}>
+                {heading.heading || ''}
+              </span>
+              <span style={style.headingDescription}>
+                {heading.headingDescription || ''}
+              </span>
+
               <div style={contentStyle}>
                   <VerseDisplay chapter={chapter} verse={verse}
                                 input={content} greek={greek}
