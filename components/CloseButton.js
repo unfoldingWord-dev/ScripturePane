@@ -18,7 +18,7 @@ class CloseButton extends React.Component{
 
     render(){
       return(
-        <Glyphicon glyph={"remove"} style={{color: this.state.hover ? "red":"black"}}
+        <Glyphicon glyph={"remove"} style={{color: this.state.hover ? "red":"#747474"}}
           onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}/>
       )
     }
