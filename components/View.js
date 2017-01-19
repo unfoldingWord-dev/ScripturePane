@@ -54,11 +54,11 @@ class View extends React.Component {
       scripturePane.push(
         <Col key={3} md={3} sm={3} xs={3} lg={3}
              style={{width: "200px", height: "200px"}}>
-          <div style={{margin: "45px 60px 0px 60px", cursor: "pointer", width: "50px", height: "50px", border: "#4BC7ED dashed", padding: "12px"}}
+          <div style={{margin: "45px 60px 0px 60px", cursor: "pointer", width: "50px", height: "50px", border: "#0277BD dashed", padding: "12px"}}
                onClick={this.props.showModal}>
-            <Glyphicon glyph={"plus"} style={{color: "#4BC7ED", fontSize: "20px"}}/>
+            <Glyphicon glyph={"plus"} style={{color: "#0277BD", fontSize: "20px"}}/>
           </div>
-            <h6 style={{textAlign: "center", color: "#4BC7ED"}}>Add Resources</h6>
+            <h6 style={{textAlign: "center", color: "#0277BD"}}>Add Resources</h6>
             <AddPaneModal show={this.props.modalVisibility}
                           onHide={this.props.hideModal}
                           staticPaneSettings={this.props.staticPaneSettings}
