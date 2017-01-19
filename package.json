@@ -1,5 +1,5 @@
 {
-  "name": "scripturePane",
+  "name": "ScripturePane",
   "version": "1.0.2",
   "description": "A sub-module for scripture display",
   "main": "Container.js",
