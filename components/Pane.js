@@ -5,6 +5,7 @@ const RB = api.ReactBootstrap;
 const {Col, Well, Glyphicon} = RB;
 const style = require('../css/Style');
 const VerseDisplay = require('./VerseDisplay');
+const CloseButton = require('./CloseButton');
 
 class Pane extends React.Component {
     render() {
@@ -20,7 +21,7 @@ class Pane extends React.Component {
           <Col md={3} sm={3} xs={3} lg={3}>
           <div style={style.removePane}
                onClick={() => removePane(id)}>
-            <Glyphicon glyph={"remove"} style={{color: "red"}}/>
+            <CloseButton />
           </div>
               <span style={style.pane.title}>
                 {heading.heading || ''}
