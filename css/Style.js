@@ -86,7 +86,8 @@ var style = {
   },
   headingDescription:{
     color: "#747474",
-    fontFamily: "noto sans italic"
+    fontStyle: 'italic',
+    fontFamily: "noto sans"
   },
 };
 
