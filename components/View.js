@@ -11,7 +11,7 @@ class View extends React.Component {
   render(){
     let pane = this.props.currentPaneSettings;
     let scripturePane = [];
-    let greek;
+    let greek, isGatewayLanguage;
     for(let key in pane){
       let content = this.props[pane[key].sourceName];
       let dir;
@@ -22,6 +22,9 @@ class View extends React.Component {
       }else if (pane[key].sourceName === "originalLanguage") {
         greek = true;
         dir = pane[key].dir;
+      }else if(pane[key].sourceName === "gatewayLanguage"){
+        gatewayLanguage = true;
+        dir = pane[key].dir;
       }else{
         dir = pane[key].dir;
       }
@@ -29,6 +32,7 @@ class View extends React.Component {
         scripturePane.push(
           <Pane
             currentCheck={this.props.currentCheck}
+            isGatewayLanguage={isGatewayLanguage}
             greek={greek}
             key={key}
             id={key}
