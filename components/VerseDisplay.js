@@ -55,6 +55,19 @@ class VerseDisplay extends React.Component {
     }else {
       console.warn("The prop input is undefined");
     }
+    if(this.props.isGatewayLanguage && !this.props.phrase.includes("...")){
+        let contentArray = content.split(this.props.phrase);
+      return (
+        <div>
+        <b>{this.props.verse + " "}</b>
+        {contentArray[0]}
+        <span style={{backgroundColor: "#FDD910"}}>
+        {this.props.phrase}
+        </span>
+        {contentArray[1]}
+        </div>
+      )
+    }
     return (
       <div>
         <b>{this.props.verse + " "}</b>
