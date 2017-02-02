@@ -33,6 +33,7 @@ class Pane extends React.Component {
               <div style={contentStyle}>
                   <VerseDisplay chapter={chapter} verse={verse}
                                 input={content} greek={greek}
+                                phrase={this.props.currentCheck.phrase}
                   />
               </div>
           </Col>
