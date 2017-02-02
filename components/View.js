@@ -42,6 +42,7 @@ class View extends React.Component {
           />
         );
         greek = false;
+        isGatewayLanguage = false;
       }else{
         //will prompt user that only 4 scripture sources can be loaded at once
         console.warn("Only 4 scripture sources can be loaded at once");
