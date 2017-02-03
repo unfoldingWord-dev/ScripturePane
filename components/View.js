@@ -12,6 +12,7 @@ class View extends React.Component {
     let pane = this.props.currentPaneSettings;
     let scripturePane = [];
     let greek;
+    let isGatewayLanguage = false;
     for(let key in pane){
       let content = this.props[pane[key].sourceName];
       let dir;
@@ -23,12 +24,14 @@ class View extends React.Component {
         greek = true;
         dir = pane[key].dir;
       }else{
+        isGatewayLanguage = true;
         dir = pane[key].dir;
       }
       if(scripturePane.length <= 4){
         scripturePane.push(
           <Pane
             currentCheck={this.props.currentCheck}
+            isGatewayLanguage={isGatewayLanguage}
             greek={greek}
             key={key}
             id={key}
@@ -39,6 +42,7 @@ class View extends React.Component {
           />
         );
         greek = false;
+        isGatewayLanguage = false;
       }else{
         //will prompt user that only 4 scripture sources can be loaded at once
         console.warn("Only 4 scripture sources can be loaded at once");

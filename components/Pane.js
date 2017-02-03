@@ -9,7 +9,7 @@ const CloseButton = require('./CloseButton');
 
 class Pane extends React.Component {
     render() {
-      let { content, greek, removePane, heading, dir, currentCheck, id } = this.props;
+      let { content, greek, removePane, heading, dir, currentCheck, id, isGatewayLanguage } = this.props;
       let { chapter, verse } = currentCheck;
       let contentStyle;
       if(dir == 'ltr'){
@@ -33,6 +33,8 @@ class Pane extends React.Component {
               <div style={contentStyle}>
                   <VerseDisplay chapter={chapter} verse={verse}
                                 input={content} greek={greek}
+                                isGatewayLanguage = {isGatewayLanguage}
+                                currentCheck={this.props.currentCheck}
                   />
               </div>
           </Col>

@@ -44,6 +44,12 @@ class VerseDisplay extends React.Component {
 
   render() {
     let content = "";
+    let toHighlight = "";
+    if(this.props.currentCheck.phrase == undefined){
+        toHighlight = this.props.currentCheck.groupName;
+    }else{
+        toHighlight = this.props.currentCheck.phrase;
+    }
     if(this.props.input){
       if(this.props.greek){
         var greekVerse =  this.props.input[this.props.chapter][this.props.verse];
@@ -58,6 +64,19 @@ class VerseDisplay extends React.Component {
       }
     }else {
       console.warn("The prop input is undefined");
+    }
+    if(this.props.isGatewayLanguage && !toHighlight.includes("...")){
+        let contentArray = content.split(toHighlight);
+      return (
+        <div>
+        <b>{this.props.verse + " "}</b>
+        {contentArray[0]}
+        <span style={{backgroundColor: "#FDD910"}}>
+        {toHighlight}
+        </span>
+        {contentArray[1]}
+        </div>
+      )
     }
     return (
       <div>
