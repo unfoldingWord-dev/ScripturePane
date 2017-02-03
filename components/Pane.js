@@ -34,7 +34,7 @@ class Pane extends React.Component {
                   <VerseDisplay chapter={chapter} verse={verse}
                                 input={content} greek={greek}
                                 isGatewayLanguage = {isGatewayLanguage}
-                                phrase={this.props.currentCheck.phrase}
+                                currentCheck={this.props.currentCheck}
                   />
               </div>
           </Col>
