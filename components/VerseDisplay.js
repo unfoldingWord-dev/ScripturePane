@@ -50,7 +50,11 @@ class VerseDisplay extends React.Component {
         content = this.displayGreek(greekVerse);
       }else{
         var list = this.props.input;
-        content = list[this.props.chapter][this.props.verse];
+        try {
+          content = list[this.props.chapter][this.props.verse];
+        } catch (err) {
+          // Happens when the file is not complete
+        }
       }
     }else {
       console.warn("The prop input is undefined");
