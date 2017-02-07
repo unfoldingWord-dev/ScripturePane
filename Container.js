@@ -7,6 +7,7 @@
 const api = window.ModuleApi;
 const React = api.React;
 const View = require('./components/View');
+const BooksOfBible = require('./js/BooksOfBible.js');
 
 const NAMESPACE = "ScripturePane";
 
@@ -165,6 +166,17 @@ class ScripturePane extends React.Component {
       api.saveProject();
       this.setState({ modalVisibility: false });
     }
+  }
+
+  isOldTestament(projectBook) {
+    var passedBook = false;
+    for (var book in BooksOfBible) {
+      if (book == projectBook) passedBook = true;
+      if (BooksOfBible[book] == "Malachi" && passedBook) {
+        return true;
+      }
+    }
+    return false;
   }
 
   render() {
