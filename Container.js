@@ -78,6 +78,7 @@ class ScripturePane extends React.Component {
     let targetLanguageName = "";
     let gatewayLanguageName = "";
     let gatewayLanguageVersion = "";
+    let originalLanguageName = "";
     let bookAbbr = "";
     var tcManifest = api.getDataFromCommon('tcManifest');
     let manifest = ModuleApi.getDataFromCommon("tcManifest");
@@ -107,8 +108,14 @@ class ScripturePane extends React.Component {
       bookAbbr = tcManifest.project_id;
     }
 
+    if(isOldTestament(bookAbbr)){
+      originalLanguageName = "Hebrew";
+    } else {
+      originalLanguageName = "Greek (UGNT)";
+    }
+
     let originalLanguageHeading = {
-      heading: "Greek (UGNT)",
+      heading: originalLanguageName,
       headingDescription: "Original Language"
     }
     this.setState({originalLanguageHeading: originalLanguageHeading});
