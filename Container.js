@@ -108,7 +108,7 @@ class ScripturePane extends React.Component {
       bookAbbr = tcManifest.project_id;
     }
 
-    if(isOldTestament(bookAbbr)){
+    if(this.isOldTestament(bookAbbr)){
       originalLanguageName = "Hebrew";
     } else {
       originalLanguageName = "Greek (UGNT)";
