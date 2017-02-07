@@ -77,6 +77,8 @@ class ScripturePane extends React.Component {
     let targetLanguageName = "";
     let gatewayLanguageName = "";
     let gatewayLanguageVersion = "";
+    let bookAbbr = "";
+    var tcManifest = api.getDataFromCommon('tcManifest');
     let manifest = ModuleApi.getDataFromCommon("tcManifest");
     if (manifest && manifest.target_language){
       targetLanguageName = manifest.target_language.name;
@@ -93,7 +95,17 @@ class ScripturePane extends React.Component {
       heading: targetLanguageName + " (Draft)",
       headingDescription: "Target Language"
     }
-    //TODO: eventually we need to add the originalLanguage heading dynamically
+
+    if (tcManifest.ts_project) {
+      bookAbbr = tcManifest.ts_project.id;
+    }
+    else if (tcManifest.project) {
+      bookAbbr = tcManifest.project.id;
+    }
+    else {
+      bookAbbr = tcManifest.project_id;
+    }
+
     let originalLanguageHeading = {
       heading: "Greek (UGNT)",
       headingDescription: "Original Language"
