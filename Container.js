@@ -7,6 +7,7 @@
 const api = window.ModuleApi;
 const React = api.React;
 const View = require('./components/View');
+const BooksOfBible = require('./js/BooksOfBible.js');
 
 const NAMESPACE = "ScripturePane";
 
@@ -77,6 +78,9 @@ class ScripturePane extends React.Component {
     let targetLanguageName = "";
     let gatewayLanguageName = "";
     let gatewayLanguageVersion = "";
+    let originalLanguageName = "";
+    let bookAbbr = "";
+    var tcManifest = api.getDataFromCommon('tcManifest');
     let manifest = ModuleApi.getDataFromCommon("tcManifest");
     if (manifest && manifest.target_language){
       targetLanguageName = manifest.target_language.name;
@@ -93,9 +97,25 @@ class ScripturePane extends React.Component {
       heading: targetLanguageName + " (Draft)",
       headingDescription: "Target Language"
     }
-    //TODO: eventually we need to add the originalLanguage heading dynamically
+
+    if (tcManifest.ts_project) {
+      bookAbbr = tcManifest.ts_project.id;
+    }
+    else if (tcManifest.project) {
+      bookAbbr = tcManifest.project.id;
+    }
+    else {
+      bookAbbr = tcManifest.project_id;
+    }
+
+    if(this.isOldTestament(bookAbbr)){
+      originalLanguageName = "Hebrew";
+    } else {
+      originalLanguageName = "Greek (UGNT)";
+    }
+
     let originalLanguageHeading = {
-      heading: "Greek (UGNT)",
+      heading: originalLanguageName,
       headingDescription: "Original Language"
     }
     this.setState({originalLanguageHeading: originalLanguageHeading});
@@ -153,6 +173,17 @@ class ScripturePane extends React.Component {
       api.saveProject();
       this.setState({ modalVisibility: false });
     }
+  }
+
+  isOldTestament(projectBook) {
+    var passedBook = false;
+    for (var book in BooksOfBible) {
+      if (book == projectBook) passedBook = true;
+      if (BooksOfBible[book] == "Malachi" && passedBook) {
+        return true;
+      }
+    }
+    return false;
   }
 
   render() {
