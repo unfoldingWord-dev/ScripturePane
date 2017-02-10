@@ -96,13 +96,14 @@ class VerseDisplay extends React.Component {
         }
       return (
         <div>
-        {newContent}
+          <b>{chapterNumber + ":" + verseNumber + " "}</b>
+          {newContent}
         </div>
       )
     }
     return (
       <div>
-        <b>{verseNumber + " "}</b>
+        <b>{chapterNumber + ":" + verseNumber + " "}</b>
         {content}
       </div>
     );
