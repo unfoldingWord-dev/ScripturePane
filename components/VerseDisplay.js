@@ -44,17 +44,19 @@ class VerseDisplay extends React.Component {
 
   render() {
     let content = "";
+    let verseNumber = this.props.verse;
+    let chapterNumber = this.props.chapter;
     let toHighlight = this.props.currentCheck.phrase ? this.props.currentCheck.phrase : this.props.currentCheck.groupName;
     let phrase = this.props.currentCheck.phrase;
     let word = this.props.currentCheck.groupName;
     if(this.props.input){
       if(this.props.greek){
-        var greekVerse =  this.props.input[this.props.chapter][this.props.verse];
+        var greekVerse =  this.props.input[chapterNumber][verseNumber];
         content = this.displayGreek(greekVerse);
       }else{
         var list = this.props.input;
         try {
-          content = list[this.props.chapter][this.props.verse];
+          content = list[chapterNumber][verseNumber];
         } catch (err) {
           // Happens when the file is not complete
         }
@@ -71,20 +73,37 @@ class VerseDisplay extends React.Component {
 
     if(this.props.isGatewayLanguage && !toHighlight.includes("...")){
         let contentArray = content.split(toHighlight);
+        let newContent = [];
+        for(let i in contentArray){
+          if(i < (contentArray.length - 1)){
+            newContent.push(
+              <span key={i}>
+              <span>
+                {contentArray[i]}
+              </span>
+              <span style={{backgroundColor: "#FDD910"}}>
+                {toHighlight}
+              </span>
+            </span>
+            );
+          }else {
+            newContent.push(
+              <span key={i}>
+              {contentArray[i]}
+              </span>
+            );
+          }
+        }
       return (
         <div>
-        <b>{this.props.verse + " "}</b>
-        {contentArray[0]}
-        <span style={{backgroundColor: "#FDD910"}}>
-        {toHighlight}
-        </span>
-        {contentArray[1]}
+          <b>{chapterNumber + ":" + verseNumber + " "}</b>
+          {newContent}
         </div>
       )
     }
     return (
       <div>
-        <b>{this.props.verse + " "}</b>
+        <b>{chapterNumber + ":" + verseNumber + " "}</b>
         {content}
       </div>
     );
