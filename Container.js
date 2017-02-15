@@ -15,11 +15,6 @@ class ScripturePane extends React.Component {
   constructor() {
     super();
     this.state = {
-      currentCheck: null,
-      originalLanguage: null,
-      targetLanguage: null,
-      gatewayLanguage: null,
-      tlDirection: null,
       currentPaneSettings: null,
       modalVisibility: false,
       staticPaneSettings: null,
@@ -30,7 +25,6 @@ class ScripturePane extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({currentCheck: this.props.currentCheck});
     //get default resources (originalLang, targetLang, gatewayLang) content
     this.getContentFromCheckStore();
     //get pane heading names
@@ -42,7 +36,7 @@ class ScripturePane extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({currentCheck: nextProps.currentCheck});
+    this.getContentFromCheckStore();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -56,16 +50,8 @@ class ScripturePane extends React.Component {
   * @return {state} panes' content, target lang direction and currentPaneSettings.
   *******************************************************************************/
   getContentFromCheckStore(){
-    var originalLanguage = api.getDataFromCheckStore(NAMESPACE, 'parsedGreek');
-    var targetLanguage = api.getDataFromCommon('targetLanguage');
-    var gatewayLanguage = api.getDataFromCommon('gatewayLanguage');
-    this.targetLanguageDirection = api.getDataFromCommon('params').direction;
     let currentPaneSettings = api.getDataFromCheckStore(NAMESPACE, 'currentPaneSettings');
     this.setState({
-      originalLanguage: !originalLanguage ? "" : originalLanguage,
-      targetLanguage: !targetLanguage ? "" : targetLanguage,
-      gatewayLanguage: !gatewayLanguage ? "" : gatewayLanguage,
-      tlDirection: this.targetLanguageDirection,
       currentPaneSettings: currentPaneSettings,
     });
   }
@@ -187,13 +173,17 @@ class ScripturePane extends React.Component {
   }
 
   render() {
+    var originalLanguage = api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') ? api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') : '';
+    var targetLanguage = api.getDataFromCommon('targetLanguage') ? api.getDataFromCommon('targetLanguage') : '';
+    var gatewayLanguage = api.getDataFromCommon('gatewayLanguage') ? api.getDataFromCommon('gatewayLanguage') : '';
+    var tlDirection = api.getDataFromCommon('params').direction;
     return (
       <View
         currentPaneSettings={this.state.currentPaneSettings}
-        currentCheck={this.state.currentCheck}
-        originalLanguage={this.state.originalLanguage}
-        targetLanguage={this.state.targetLanguage}
-        gatewayLanguage={this.state.gatewayLanguage}
+        currentCheck={this.props.currentCheck}
+        originalLanguage={originalLanguage}
+        targetLanguage={targetLanguage}
+        gatewayLanguage={gatewayLanguage}
         removePane={this.removePane.bind(this)}
         modalVisibility={this.state.modalVisibility}
         showModal={() => this.setState({ modalVisibility: true })}
@@ -204,7 +194,7 @@ class ScripturePane extends React.Component {
         originalLanguageHeading={this.state.originalLanguageHeading}
         gatewayLanguageHeading={this.state.gatewayLanguageHeading}
         targetLanguageHeading={this.state.targetLanguageHeading}
-        tlDirection={this.state.tlDirection}
+        tlDirection={tlDirection}
       />
     );
   }
