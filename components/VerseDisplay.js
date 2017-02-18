@@ -63,28 +63,22 @@ class VerseDisplay extends React.Component {
       console.warn("The prop input is undefined");
     }
     if(this.props.isGatewayLanguage && !toHighlight.includes("...")){
-        let contentArray = content.split(toHighlight);
+        let firstPart = content.substr(0, this.props.currentCheck.wordIndex);
+        let secondPart = content.substr(this.props.currentCheck.wordIndex + toHighlight.length);
         let newContent = [];
-        for(let i in contentArray){
-          if(i < (contentArray.length - 1)){
-            newContent.push(
-              <span key={i}>
-              <span>
-                {contentArray[i]}
-              </span>
-              <span style={{backgroundColor: "#FDD910"}}>
-                {toHighlight}
-              </span>
+        newContent.push(
+          <span key={1}>
+            <span>
+              {firstPart}
             </span>
-            );
-          }else {
-            newContent.push(
-              <span key={i}>
-              {contentArray[i]}
-              </span>
-            );
-          }
-        }
+            <span style={{backgroundColor: "#FDD910"}}>
+              {toHighlight}
+            </span>
+            <span>
+              {secondPart}
+            </span>
+          </span>
+        );
       return (
         <div>
           <b>{chapterNumber + ":" + verseNumber + " "}</b>
