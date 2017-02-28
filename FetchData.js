@@ -94,7 +94,8 @@ function fetchData(params, progress, callback) {
   var gatewayLanguageUDB = api.getDataFromCommon('gatewayLanguageUDB');
   if (!gatewayLanguageUDB) {
     if (!params.gatewayLanguageUDBPath) {
-      console.error("Can't find original language");
+      params.gatewayLanguageUDBPath = path.join(window.__base, 'static', 'taggedUDB');
+      console.warn("This project is using old params data")
     } else {
       dispatcher.schedule(function (subCallback) {
         parseUSFM(params.gatewayLanguageUDBPath, api.getDataFromCommon('params').bookAbbr, subCallback)

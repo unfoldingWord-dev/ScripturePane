@@ -23,7 +23,7 @@ class View extends React.Component {
       }else if (pane[key].sourceName === "originalLanguage") {
         greek = true;
         dir = pane[key].dir;
-      }else{
+      }else if (pane[key].sourceName === "gatewayLanguageULB"){
         isGatewayLanguage = true;
         dir = pane[key].dir;
       }
