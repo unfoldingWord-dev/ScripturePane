@@ -2,15 +2,16 @@
 
 const api = window.ModuleApi;
 const fs = require(window.__base + 'node_modules/fs-extra');
+const pathex = require('path-extra');
 const path = require('path');
 var missingChunks = 0;
-
+const defaultSave = path.join(pathex.homedir(), 'translationCore');
 var parser = require('usfm-parser');
 
 function fetchData(params, progress, callback) {
   /**
   * @description The code  below sets the default settings for the three
-  *  initial panes (originalLanguage, gatewayLanguage and targetLanguage)
+  *  initial panes (originalLanguage, gatewayLanguageULB and targetLanguage)
   *  As the user adds or removes panes from the scripture pane the current Pane
   *  Settings will change based on the specicic settings of each pane in the current
   *  PaneSettings array in the checkstore.
@@ -21,18 +22,23 @@ function fetchData(params, progress, callback) {
       "dir": "ltr"
     },
     {
-      "sourceName": "gatewayLanguage",
+      "sourceName": "gatewayLanguageULB",
       "dir": "ltr"
     },
     {
       "sourceName": "targetLanguage",
       "dir": null
-    }
+    },
+    {
+      "sourceName": "gatewayLanguageUDB",
+      "dir": 'ltr'
+    },
   ];
+
   api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
   /**
   * @description The code  below sets the static settings/set up for the
-  *  originalLanguage, gatewayLanguage, targetLanguage and more resources
+  *  originalLanguage, gatewayLanguageULB, targetLanguage and more resources
   *  settings can be added as the user downloads/loads content for the scripture
   *  pane. In other words, each resource settings will be saved here so that the
   *  user is able to recover pane setiings if the pane info was removed from the
@@ -44,13 +50,17 @@ function fetchData(params, progress, callback) {
       "dir": "ltr"
     },
     {
-      "sourceName": "gatewayLanguage",
+      "sourceName": "gatewayLanguageULB",
       "dir": "ltr"
     },
     {
       "sourceName": "targetLanguage",
       "dir": null
-    }
+    },
+    {
+      "sourceName": "gatewayLanguageUDB",
+      "dir": 'ltr'
+    },
   ];
   api.putDataInCheckStore("ScripturePane", 'staticSettings', staticSettings);
   /**
@@ -60,7 +70,6 @@ function fetchData(params, progress, callback) {
   * get it if it isn't using parsers and params
   ******************************************************************************/
   var targetLanguage = api.getDataFromCommon('targetLanguage');
-
   if (!targetLanguage) {
     if (!params.targetLanguagePath) {
       console.error('ScripturePane requires a filepath');
@@ -81,8 +90,65 @@ function fetchData(params, progress, callback) {
       });
     }
   }
+
+  var gatewayLanguageUDB = api.getDataFromCommon('gatewayLanguageUDB');
+  if (!gatewayLanguageUDB) {
+    if (!params.gatewayLanguageUDBPath) {
+      console.error("Can't find original language");
+    } else {
+      dispatcher.schedule(function (subCallback) {
+        parseUSFM(params.gatewayLanguageUDBPath, api.getDataFromCommon('params').bookAbbr, subCallback)
+      });
+    }
+  }
   dispatcher.run(callback, progress);
   // I'm not supposed to get the gateway language!
+}
+
+function parseUSFM(savePath, bookAbbr, callback) {
+  var projectFolder = fs.readdirSync(savePath);
+  var targetLanguage;
+  for (var file in projectFolder) {
+    var parsedPath = path.parse(projectFolder[file]);
+    if ((parsedPath.ext.toUpperCase() == ".SFM" || parsedPath.ext.toUpperCase() == '.USFM') && parsedPath.name.includes(bookAbbr.toUpperCase())) {
+      var actualFile = path.join(savePath, parsedPath.base);
+      try {
+        var data = fs.readFileSync(actualFile);
+      } catch (err) {
+        console.warn("There was an error getting the UDB")
+      }
+      var usfmData = data.toString();
+      var parsedUSFM = parser.toJSON(usfmData);
+      if (parsedUSFM.headers['id']) parsedUSFM.book = parsedUSFM.headers['id'].split(" ")[0].toLowerCase();
+      targetLanguage = saveUDBinAPI(parsedUSFM);
+    }
+  }
+  callback(targetLanguage);
+}
+
+function saveUDBinAPI(parsedUSFM) {
+  var targetLanguage = {};
+  targetLanguage.title = parsedUSFM.book;
+  // targetLanguage.header = parsedUSFM.headers;
+  var chapters = parsedUSFM.chapters;
+  for (var ch in chapters) {
+    targetLanguage[chapters[ch].number] = {};
+    var verses = chapters[ch].verses;
+    for (var v in verses) {
+      var verseText = verses[v].text.trim();
+      targetLanguage[chapters[ch].number][verses[v].number] = verseText;
+    }
+  }
+  if (parsedUSFM.headers) {
+    var parsedHeaders = parsedUSFM.headers;
+    if (parsedHeaders['mt1']) {
+      targetLanguage.title = parsedHeaders['mt1'];
+    } else if (parsedHeaders['id']) {
+      targetLanguage.title = books[parsedHeaders['id'].toLowerCase()];
+    }
+  }
+  api.putDataInCommon('gatewayLanguageUDB', targetLanguage);
+  return targetLanguage;
 }
 
 function bookAbbreviationToBookPath(bookAbbr) {
@@ -176,7 +242,7 @@ function readInOriginal(path, bookAbbr, callback) {
   var originalLanguage = api.getDataFromCommon("params").originalLanguage;
   try {
     var data = fs.readFileSync(path).toString();
-    if (!data) {} else {
+    if (!data) { } else {
       var betterData = typeof data == 'object' ? JSON.stringify(data) : data;
       openOriginal(betterData, api.convertToFullBookName(bookAbbr));
       if (originalLanguage == "hebrew") {
@@ -202,7 +268,7 @@ function openUsfmFromChunks(chunk, currentJoined, totalChunk, source, callback) 
     var fileName = chunk[1] + '.txt';
     var chunkLocation = path.join(source, chunk[0], fileName);
     var data = fs.readFileSync(chunkLocation);
-    if (!data) {}
+    if (!data) { }
     joinChunks(data.toString(), currentChapter, currentJoined);
     callback();
   } catch (error) {
@@ -290,7 +356,7 @@ function parseGreek() {
             strong = nextElement;
             brief = lex[strong].brief;
             long = lex[strong].long;
-            verse.push({ word, strong, brief, long});
+            verse.push({ word, strong, brief, long });
           }
         } catch (e) {
           if (word) {

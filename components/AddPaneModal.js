@@ -7,6 +7,7 @@ const api = window.ModuleApi;
 const React = api.React;
 const RB = api.ReactBootstrap;
 const {Modal, Button, FormControl} = RB;
+const {dialog} = remote;
 
 class AddPaneModal extends React.Component {
   render() {
@@ -16,34 +17,35 @@ class AddPaneModal extends React.Component {
      * it in option elements for the user to select from a dropdown list.
     *******************************************************************************/
     let paneNames = [];
-    for(let key in staticPaneSettings){
+    for (let key in staticPaneSettings) {
       paneNames.push(
         <option key={key} value={staticPaneSettings[key].sourceName.toString()}>
           {staticPaneSettings[key].sourceName}
         </option>
       );
     }
+
     return (
       <Modal {...this.props} bsSize="lg" aria-labelledby="contained-modal-title-sm">
-        <Modal.Header style={{backgroundColor: "#333333"}} closeButton>
+        <Modal.Header style={{ backgroundColor: "#333333" }} closeButton>
           <Modal.Title id="contained-modal-title-sm"
-                      style={{textAlign: "center", color: "#FFFFFF"}}>
-              Add Resources
+            style={{ textAlign: "center", color: "#FFFFFF" }}>
+            Add Resources
           </Modal.Title>
         </Modal.Header>
-          <Modal.Body style={{backgroundColor: "#333333", color: "#FFFFFF", padding: "45px 80px"}}>
-            <h4 style={{textAlign:"center", marginBottom: "45px"}}>
-                Select the settings for the scripture source you want
+        <Modal.Body style={{ backgroundColor: "#333333", color: "#FFFFFF", padding: "45px 80px" }}>
+          <h4 style={{ textAlign: "center", marginBottom: "45px" }}>
+            Select the settings for the scripture source you want
                 to load in to the scripture pane
             </h4>
-             <label>Select source language name</label>
-             <FormControl componentClass="select" style={{width: "20%"}}
-                          onChange={e => {selectSourceLanguage(e)}}>
-               <option value=""></option>
-               {paneNames}
-             </FormControl>
-          </Modal.Body>
-        <Modal.Footer style={{backgroundColor: "#333333"}}>
+          <label>Select source language name</label>
+          <FormControl componentClass="select" style={{ width: "20%" }}
+            onChange={e => { selectSourceLanguage(e) }}>
+            <option value=""></option>
+            {paneNames}
+          </FormControl>
+        </Modal.Body>
+        <Modal.Footer style={{ backgroundColor: "#333333" }}>
           <Button bsStyle="success" onClick={() => addPane()}>Load</Button>
         </Modal.Footer>
       </Modal>

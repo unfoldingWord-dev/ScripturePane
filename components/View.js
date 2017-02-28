@@ -16,7 +16,7 @@ class View extends React.Component {
     for(let key in pane){
       let content = this.props[pane[key].sourceName];
       let dir;
-      //ex. heading = this.props.gatewayLanguageHeading = "gatewayLanguage" + "Heading"
+      //ex. heading = this.props.gatewayLanguageULBHeading = "gatewayLanguageULB" + "Heading"
       let heading = this.props[pane[key].sourceName +  "Heading"];
       if(pane[key].sourceName === "targetLanguage"){
         dir =  this.props.tlDirection;

@@ -19,7 +19,8 @@ class ScripturePane extends React.Component {
       modalVisibility: false,
       staticPaneSettings: null,
       originalLanguageHeading: null,
-      gatewayLanguageHeading: null,
+      gatewayLanguageULBHeading: null,
+      gatewayLanguageUDBHeading:null,
       targetLanguageHeading: null,
     };
   }
@@ -75,7 +76,7 @@ class ScripturePane extends React.Component {
       gatewayLanguageName = manifest.source_translations[0].language_id.toUpperCase();
       gatewayLanguageVersion = " (" + manifest.source_translations[0].resource_id.toUpperCase() + ")";
     }
-    let gatewayLanguageHeading = {
+    let gatewayLanguageULBHeading = {
       heading: gatewayLanguageName + " " + gatewayLanguageVersion,
       headingDescription: "Gateway Language"
     }
@@ -83,7 +84,10 @@ class ScripturePane extends React.Component {
       heading: targetLanguageName + " (Draft)",
       headingDescription: "Target Language"
     }
-
+    let gatewayLanguageUDBHeading = {
+      heading: gatewayLanguageName + " (UDB)" ,
+      headingDescription: "Gateway Language"
+    }
     if (tcManifest.ts_project) {
       bookAbbr = tcManifest.ts_project.id;
     }
@@ -105,8 +109,9 @@ class ScripturePane extends React.Component {
       headingDescription: "Original Language"
     }
     this.setState({originalLanguageHeading: originalLanguageHeading});
-    this.setState({gatewayLanguageHeading: gatewayLanguageHeading});
+    this.setState({gatewayLanguageULBHeading: gatewayLanguageULBHeading});
     this.setState({targetLanguageHeading: targetLanguageHeading});
+    this.setState({gatewayLanguageUDBHeading: gatewayLanguageUDBHeading});
   }
   /**
    * @description - This removes a scripture source from the scripture pane.
@@ -175,7 +180,8 @@ class ScripturePane extends React.Component {
   render() {
     var originalLanguage = api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') ? api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') : '';
     var targetLanguage = api.getDataFromCommon('targetLanguage') ? api.getDataFromCommon('targetLanguage') : '';
-    var gatewayLanguage = api.getDataFromCommon('gatewayLanguage') ? api.getDataFromCommon('gatewayLanguage') : '';
+    var gatewayLanguageULB = api.getDataFromCommon('gatewayLanguageULB') ? api.getDataFromCommon('gatewayLanguageULB') : '';
+    var gatewayLanguageUDB = api.getDataFromCommon('gatewayLanguageUDB') ? api.getDataFromCommon('gatewayLanguageUDB') : '';
     var tlDirection = api.getDataFromCommon('params').direction;
     return (
       <View
@@ -183,7 +189,8 @@ class ScripturePane extends React.Component {
         currentCheck={this.props.currentCheck}
         originalLanguage={originalLanguage}
         targetLanguage={targetLanguage}
-        gatewayLanguage={gatewayLanguage}
+        gatewayLanguageULB={gatewayLanguageULB}
+        gatewayLanguageUDB={gatewayLanguageUDB}
         removePane={this.removePane.bind(this)}
         modalVisibility={this.state.modalVisibility}
         showModal={() => this.setState({ modalVisibility: true })}
@@ -192,8 +199,9 @@ class ScripturePane extends React.Component {
         selectSourceLanguage={this.selectSourceLanguage.bind(this)}
         addPane={this.addPane.bind(this)}
         originalLanguageHeading={this.state.originalLanguageHeading}
-        gatewayLanguageHeading={this.state.gatewayLanguageHeading}
+        gatewayLanguageULBHeading={this.state.gatewayLanguageULBHeading}
         targetLanguageHeading={this.state.targetLanguageHeading}
+        gatewayLanguageUDBHeading={this.state.gatewayLanguageUDBHeading}
         tlDirection={tlDirection}
       />
     );
