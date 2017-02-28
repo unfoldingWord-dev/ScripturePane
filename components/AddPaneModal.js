@@ -7,7 +7,6 @@ const api = window.ModuleApi;
 const React = api.React;
 const RB = api.ReactBootstrap;
 const {Modal, Button, FormControl} = RB;
-const {dialog} = remote;
 
 class AddPaneModal extends React.Component {
   render() {
