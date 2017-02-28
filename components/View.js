@@ -27,6 +27,9 @@ class View extends React.Component {
         isGatewayLanguage = true;
         dir = pane[key].dir;
       }
+      else {
+        dir = pane[key].dir;
+      }
       if(scripturePane.length <= 4){
         scripturePane.push(
           <Pane
