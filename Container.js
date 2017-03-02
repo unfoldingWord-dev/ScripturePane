@@ -8,7 +8,6 @@ const api = window.ModuleApi;
 const React = api.React;
 const View = require('./components/View');
 const BooksOfBible = require('./js/BooksOfBible.js');
-
 const NAMESPACE = "ScripturePane";
 
 class ScripturePane extends React.Component {
@@ -17,23 +16,13 @@ class ScripturePane extends React.Component {
     this.state = {
       currentPaneSettings: null,
       modalVisibility: false,
-      staticPaneSettings: null,
-      originalLanguageHeading: null,
-      gatewayLanguageULBHeading: null,
-      gatewayLanguageUDBHeading:null,
-      targetLanguageHeading: null,
+      staticPaneSettings:null
     };
   }
 
   componentWillMount() {
     //get default resources (originalLang, targetLang, gatewayLang) content
     this.getContentFromCheckStore();
-    //get pane heading names
-    this.getPaneHeadingName();
-    //get all the static settings saved for all panes in the checkstore
-    let staticPaneSettings = api.getDataFromCheckStore(NAMESPACE, 'staticSettings');
-    //save static settings of all panes in state
-    this.setState({staticPaneSettings: staticPaneSettings});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,66 +41,11 @@ class ScripturePane extends React.Component {
   *******************************************************************************/
   getContentFromCheckStore(){
     let currentPaneSettings = api.getDataFromCheckStore(NAMESPACE, 'currentPaneSettings');
+    let staticPaneSettings = api.getDataFromCheckStore(NAMESPACE, 'staticPaneSettings');
     this.setState({
       currentPaneSettings: currentPaneSettings,
+      staticPaneSettings:staticPaneSettings
     });
-  }
-  /**
-  * @description This gets the pane heading names
-  * @return{state} saves the heading names for (originalLang, targetLang,
-  * gatewayLang) within the state of the ScripturePane component
-  *******************************************************************************/
-  getPaneHeadingName(){
-    let targetLanguageName = "";
-    let gatewayLanguageName = "";
-    let gatewayLanguageVersion = "";
-    let originalLanguageName = "";
-    let bookAbbr = "";
-    var tcManifest = api.getDataFromCommon('tcManifest');
-    let manifest = ModuleApi.getDataFromCommon("tcManifest");
-    if (manifest && manifest.target_language){
-      targetLanguageName = manifest.target_language.name;
-    }
-    if(manifest && (manifest.source_translations.length !== 0)){
-      gatewayLanguageName = manifest.source_translations[0].language_id.toUpperCase();
-      gatewayLanguageVersion = " (" + manifest.source_translations[0].resource_id.toUpperCase() + ")";
-    }
-    let gatewayLanguageULBHeading = {
-      heading: gatewayLanguageName + " " + gatewayLanguageVersion,
-      headingDescription: "Gateway Language"
-    }
-    let targetLanguageHeading = {
-      heading: targetLanguageName + " (Draft)",
-      headingDescription: "Target Language"
-    }
-    let gatewayLanguageUDBHeading = {
-      heading: gatewayLanguageName + " (UDB)" ,
-      headingDescription: "Gateway Language"
-    }
-    if (tcManifest.ts_project) {
-      bookAbbr = tcManifest.ts_project.id;
-    }
-    else if (tcManifest.project) {
-      bookAbbr = tcManifest.project.id;
-    }
-    else {
-      bookAbbr = tcManifest.project_id;
-    }
-
-    if(this.isOldTestament(bookAbbr)){
-      originalLanguageName = "Hebrew";
-    } else {
-      originalLanguageName = "Greek (UGNT)";
-    }
-
-    let originalLanguageHeading = {
-      heading: originalLanguageName,
-      headingDescription: "Original Language"
-    }
-    this.setState({originalLanguageHeading: originalLanguageHeading});
-    this.setState({gatewayLanguageULBHeading: gatewayLanguageULBHeading});
-    this.setState({targetLanguageHeading: targetLanguageHeading});
-    this.setState({gatewayLanguageUDBHeading: gatewayLanguageUDBHeading});
   }
   /**
    * @description - This removes a scripture source from the scripture pane.
@@ -137,11 +71,10 @@ class ScripturePane extends React.Component {
   selectSourceLanguage(event){
     let sourceLanguageName = event.target.value;
     if(sourceLanguageName !== ''){
-      let paneSettings = this.state.staticPaneSettings;
       let selectedPane = {};
-      for(let key in paneSettings){
-        if(paneSettings[key].sourceName === sourceLanguageName){
-          selectedPane = paneSettings[key];
+      for(let key in this.state.staticPaneSettings){
+        if(this.state.staticPaneSettings[key].sourceName === sourceLanguageName){
+          selectedPane = this.state.staticPaneSettings[key];
         }
       }
       this.setState({selectedPane: selectedPane});
@@ -162,46 +95,23 @@ class ScripturePane extends React.Component {
       currentPaneSettings.push(this.state.selectedPane);
       api.putDataInCheckStore(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
       api.saveProject();
-      this.setState({ modalVisibility: false });
+      this.setState({ modalVisibility: false, currentPaneSettings:currentPaneSettings });
     }
-  }
-
-  isOldTestament(projectBook) {
-    var passedBook = false;
-    for (var book in BooksOfBible) {
-      if (book == projectBook) passedBook = true;
-      if (BooksOfBible[book] == "Malachi" && passedBook) {
-        return true;
-      }
-    }
-    return false;
   }
 
   render() {
-    var originalLanguage = api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') ? api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') : '';
-    var targetLanguage = api.getDataFromCommon('targetLanguage') ? api.getDataFromCommon('targetLanguage') : '';
-    var gatewayLanguageULB = api.getDataFromCommon('gatewayLanguageULB') ? api.getDataFromCommon('gatewayLanguageULB') : '';
-    var gatewayLanguageUDB = api.getDataFromCommon('gatewayLanguageUDB') ? api.getDataFromCommon('gatewayLanguageUDB') : '';
     var tlDirection = api.getDataFromCommon('params').direction;
     return (
       <View
         currentPaneSettings={this.state.currentPaneSettings}
+        staticPaneSettings={this.state.staticPaneSettings}
         currentCheck={this.props.currentCheck}
-        originalLanguage={originalLanguage}
-        targetLanguage={targetLanguage}
-        gatewayLanguageULB={gatewayLanguageULB}
-        gatewayLanguageUDB={gatewayLanguageUDB}
         removePane={this.removePane.bind(this)}
         modalVisibility={this.state.modalVisibility}
         showModal={() => this.setState({ modalVisibility: true })}
         hideModal={() => this.setState({ modalVisibility: false })}
-        staticPaneSettings={this.state.staticPaneSettings}
         selectSourceLanguage={this.selectSourceLanguage.bind(this)}
         addPane={this.addPane.bind(this)}
-        originalLanguageHeading={this.state.originalLanguageHeading}
-        gatewayLanguageULBHeading={this.state.gatewayLanguageULBHeading}
-        targetLanguageHeading={this.state.targetLanguageHeading}
-        gatewayLanguageUDBHeading={this.state.gatewayLanguageUDBHeading}
         tlDirection={tlDirection}
       />
     );

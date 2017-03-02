@@ -15,9 +15,9 @@ class AddPaneModal extends React.Component {
      * @description The code below generates a list of resource names and saves
      * it in option elements for the user to select from a dropdown list.
     *******************************************************************************/
-    let paneNames = [];
+    let panes = [];
     for (let key in staticPaneSettings) {
-      paneNames.push(
+      panes.push(
         <option key={key} value={staticPaneSettings[key].sourceName.toString()}>
           {staticPaneSettings[key].sourceName}
         </option>
@@ -41,7 +41,7 @@ class AddPaneModal extends React.Component {
           <FormControl componentClass="select" style={{ width: "20%" }}
             onChange={e => { selectSourceLanguage(e) }}>
             <option value=""></option>
-            {paneNames}
+            {panes}
           </FormControl>
         </Modal.Body>
         <Modal.Footer style={{ backgroundColor: "#333333" }}>

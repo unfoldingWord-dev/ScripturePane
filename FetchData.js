@@ -7,62 +7,63 @@ const path = require('path');
 var missingChunks = 0;
 const defaultSave = path.join(pathex.homedir(), 'translationCore');
 var parser = require('usfm-parser');
+const BooksOfBible = require('./js/BooksOfBible.js');
+const NAMESPACE = "ScripturePane";
 
 function fetchData(params, progress, callback) {
   /**
   * @description The code  below sets the default settings for the three
-  *  initial panes (originalLanguage, gatewayLanguageULB and targetLanguage)
+  *  initial panes (originalLanguage, gatewayLanguage and targetLanguage)
   *  As the user adds or removes panes from the scripture pane the current Pane
   *  Settings will change based on the specicic settings of each pane in the current
   *  PaneSettings array in the checkstore.
   ******************************************************************************/
-  let currentPaneSettings = [
-    {
-      "sourceName": "originalLanguage",
-      "dir": "ltr"
-    },
-    {
-      "sourceName": "gatewayLanguageULB",
-      "dir": "ltr"
-    },
-    {
-      "sourceName": "targetLanguage",
-      "dir": null
-    },
-    {
-      "sourceName": "gatewayLanguageUDB",
-      "dir": 'ltr'
-    },
-  ];
+  let targetLanguageName = "";
+  let gatewayLanguageName = "";
+  let gatewayLanguageVersion = "";
+  let originalLanguageName = "";
+  let bookAbbr = "";
+  var tcManifest = api.getDataFromCommon('tcManifest');
+  if (tcManifest && tcManifest.target_language) {
+    targetLanguageName = tcManifest.target_language.name;
+  }
+  if (tcManifest && (tcManifest.source_translations.length !== 0)) {
+    gatewayLanguageName = tcManifest.source_translations[0].language_id.toUpperCase();
+    gatewayLanguageVersion = " (" + tcManifest.source_translations[0].resource_id.toUpperCase() + ")";
+  }
+  let gatewayLanguageHeading = {
+    heading: gatewayLanguageName + " " + gatewayLanguageVersion,
+    headingDescription: "Gateway Language"
+  }
+  let targetLanguageHeading = {
+    heading: targetLanguageName + " (Draft)",
+    headingDescription: "Target Language"
+  }
+  let UDBHeading = {
+    heading: gatewayLanguageName + " (UDB)",
+    headingDescription: "Gateway Language"
+  }
+  if (tcManifest.ts_project) {
+    bookAbbr = tcManifest.ts_project.id;
+  }
+  else if (tcManifest.project) {
+    bookAbbr = tcManifest.project.id;
+  }
+  else {
+    bookAbbr = tcManifest.project_id;
+  }
 
-  api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
-  /**
-  * @description The code  below sets the static settings/set up for the
-  *  originalLanguage, gatewayLanguageULB, targetLanguage and more resources
-  *  settings can be added as the user downloads/loads content for the scripture
-  *  pane. In other words, each resource settings will be saved here so that the
-  *  user is able to recover pane setiings if the pane info was removed from the
-  *  current panes settings.
-  ******************************************************************************/
-  let staticSettings = [
-    {
-      "sourceName": "originalLanguage",
-      "dir": "ltr"
-    },
-    {
-      "sourceName": "gatewayLanguageULB",
-      "dir": "ltr"
-    },
-    {
-      "sourceName": "targetLanguage",
-      "dir": null
-    },
-    {
-      "sourceName": "gatewayLanguageUDB",
-      "dir": 'ltr'
-    },
-  ];
-  api.putDataInCheckStore("ScripturePane", 'staticSettings', staticSettings);
+  if (isOldTestament(bookAbbr)) {
+    originalLanguageName = "Hebrew";
+  } else {
+    originalLanguageName = "Greek (UGNT)";
+  }
+
+  let originalLanguageHeading = {
+    heading: originalLanguageName,
+    headingDescription: "Original Language"
+  }
+
   /**
   * @description
   * Get original language
@@ -91,7 +92,7 @@ function fetchData(params, progress, callback) {
     }
   }
 
-  var gatewayLanguageUDB = api.getDataFromCommon('gatewayLanguageUDB');
+  var gatewayLanguageUDB = api.getDataFromCommon('UDB');
   if (!gatewayLanguageUDB) {
     if (!params.gatewayLanguageUDBPath) {
       params.gatewayLanguageUDBPath = path.join(window.__base, 'static', 'taggedUDB');
@@ -102,9 +103,56 @@ function fetchData(params, progress, callback) {
       });
     }
   }
-  dispatcher.run(callback, progress);
+  dispatcher.run(() => {
+    var originalLanguage = api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') ? api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') : '';
+    var targetLanguage = api.getDataFromCommon('targetLanguage') ? api.getDataFromCommon('targetLanguage') : '';
+    var gatewayLanguage = api.getDataFromCommon('gatewayLanguage') ? api.getDataFromCommon('gatewayLanguage') : '';
+    var UDB = api.getDataFromCommon('UDB') ? api.getDataFromCommon('UDB') : '';
+
+    let currentPaneSettings = [
+      {
+        "sourceName": "originalLanguage",
+        "dir": "ltr",
+        heading: originalLanguageHeading,
+        content: originalLanguage
+      },
+      {
+        "sourceName": "gatewayLanguage",
+        "dir": "ltr",
+        heading: gatewayLanguageHeading,
+        content: gatewayLanguage
+      },
+      {
+        "sourceName": "targetLanguage",
+        "dir": null,
+        heading: targetLanguageHeading,
+        content: targetLanguage
+      },
+      {
+        "sourceName": "UDB",
+        "dir": 'ltr',
+        heading: UDBHeading,
+        content: UDB
+      },
+    ];
+    api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
+    api.putDataInCheckStore("ScripturePane", 'staticPaneSettings', currentPaneSettings);
+    callback();
+  }, progress);
   // I'm not supposed to get the gateway language!
 }
+
+function isOldTestament(projectBook) {
+  var passedBook = false;
+  for (var book in BooksOfBible) {
+    if (book == projectBook) passedBook = true;
+    if (BooksOfBible[book] == "Malachi" && passedBook) {
+      return true;
+    }
+  }
+  return false;
+}
+
 
 function parseUSFM(savePath, bookAbbr, callback) {
   var projectFolder = fs.readdirSync(savePath);
@@ -148,7 +196,7 @@ function saveUDBinAPI(parsedUSFM) {
       targetLanguage.title = books[parsedHeaders['id'].toLowerCase()];
     }
   }
-  api.putDataInCommon('gatewayLanguageUDB', targetLanguage);
+  api.putDataInCommon('UDB', targetLanguage);
   return targetLanguage;
 }
 
