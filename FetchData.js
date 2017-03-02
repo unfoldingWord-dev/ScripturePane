@@ -2,10 +2,13 @@
 
 const api = window.ModuleApi;
 const fs = require(window.__base + 'node_modules/fs-extra');
+const pathex = require('path-extra');
 const path = require('path');
 var missingChunks = 0;
-
+const defaultSave = path.join(pathex.homedir(), 'translationCore');
 var parser = require('usfm-parser');
+const BooksOfBible = require('./js/BooksOfBible.js');
+const NAMESPACE = "ScripturePane";
 
 function fetchData(params, progress, callback) {
   /**
@@ -15,44 +18,52 @@ function fetchData(params, progress, callback) {
   *  Settings will change based on the specicic settings of each pane in the current
   *  PaneSettings array in the checkstore.
   ******************************************************************************/
-  let currentPaneSettings = [
-    {
-      "sourceName": "originalLanguage",
-      "dir": "ltr"
-    },
-    {
-      "sourceName": "gatewayLanguage",
-      "dir": "ltr"
-    },
-    {
-      "sourceName": "targetLanguage",
-      "dir": null
-    }
-  ];
-  api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
-  /**
-  * @description The code  below sets the static settings/set up for the
-  *  originalLanguage, gatewayLanguage, targetLanguage and more resources
-  *  settings can be added as the user downloads/loads content for the scripture
-  *  pane. In other words, each resource settings will be saved here so that the
-  *  user is able to recover pane setiings if the pane info was removed from the
-  *  current panes settings.
-  ******************************************************************************/
-  let staticSettings = [
-    {
-      "sourceName": "originalLanguage",
-      "dir": "ltr"
-    },
-    {
-      "sourceName": "gatewayLanguage",
-      "dir": "ltr"
-    },
-    {
-      "sourceName": "targetLanguage",
-      "dir": null
-    }
-  ];
-  api.putDataInCheckStore("ScripturePane", 'staticSettings', staticSettings);
+  let targetLanguageName = "";
+  let gatewayLanguageName = "";
+  let gatewayLanguageVersion = "";
+  let originalLanguageName = "";
+  let bookAbbr = "";
+  var tcManifest = api.getDataFromCommon('tcManifest');
+  if (tcManifest && tcManifest.target_language) {
+    targetLanguageName = tcManifest.target_language.name;
+  }
+  if (tcManifest && (tcManifest.source_translations.length !== 0)) {
+    gatewayLanguageName = tcManifest.source_translations[0].language_id.toUpperCase();
+    gatewayLanguageVersion = " (" + tcManifest.source_translations[0].resource_id.toUpperCase() + ")";
+  }
+  let gatewayLanguageHeading = {
+    heading: gatewayLanguageName + " " + gatewayLanguageVersion,
+    headingDescription: "Gateway Language"
+  }
+  let targetLanguageHeading = {
+    heading: targetLanguageName + " (Draft)",
+    headingDescription: "Target Language"
+  }
+  let UDBHeading = {
+    heading: gatewayLanguageName + " (UDB)",
+    headingDescription: "Gateway Language"
+  }
+  if (tcManifest.ts_project) {
+    bookAbbr = tcManifest.ts_project.id;
+  }
+  else if (tcManifest.project) {
+    bookAbbr = tcManifest.project.id;
+  }
+  else {
+    bookAbbr = tcManifest.project_id;
+  }
+
+  if (isOldTestament(bookAbbr)) {
+    originalLanguageName = "Hebrew";
+  } else {
+    originalLanguageName = "Greek (UGNT)";
+  }
+
+  let originalLanguageHeading = {
+    heading: originalLanguageName,
+    headingDescription: "Original Language"
+  }
+
   /**
   * @description
   * Get original language
@@ -60,7 +71,6 @@ function fetchData(params, progress, callback) {
   * get it if it isn't using parsers and params
   ******************************************************************************/
   var targetLanguage = api.getDataFromCommon('targetLanguage');
-
   if (!targetLanguage) {
     if (!params.targetLanguagePath) {
       console.error('ScripturePane requires a filepath');
@@ -81,8 +91,113 @@ function fetchData(params, progress, callback) {
       });
     }
   }
-  dispatcher.run(callback, progress);
+
+  var gatewayLanguageUDB = api.getDataFromCommon('UDB');
+  if (!gatewayLanguageUDB) {
+    if (!params.gatewayLanguageUDBPath) {
+      params.gatewayLanguageUDBPath = path.join(window.__base, 'static', 'taggedUDB');
+      console.warn("This project is using old params data")
+    } else {
+      dispatcher.schedule(function (subCallback) {
+        parseUSFM(params.gatewayLanguageUDBPath, api.getDataFromCommon('params').bookAbbr, subCallback)
+      });
+    }
+  }
+  dispatcher.run(() => {
+    var originalLanguage = api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') ? api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') : '';
+    var targetLanguage = api.getDataFromCommon('targetLanguage') ? api.getDataFromCommon('targetLanguage') : '';
+    var gatewayLanguage = api.getDataFromCommon('gatewayLanguage') ? api.getDataFromCommon('gatewayLanguage') : '';
+    var UDB = api.getDataFromCommon('UDB') ? api.getDataFromCommon('UDB') : '';
+
+    let currentPaneSettings = [
+      {
+        "sourceName": "originalLanguage",
+        "dir": "ltr",
+        heading: originalLanguageHeading,
+        content: originalLanguage
+      },
+      {
+        "sourceName": "gatewayLanguage",
+        "dir": "ltr",
+        heading: gatewayLanguageHeading,
+        content: gatewayLanguage
+      },
+      {
+        "sourceName": "targetLanguage",
+        "dir": null,
+        heading: targetLanguageHeading,
+        content: targetLanguage
+      },
+      {
+        "sourceName": "UDB",
+        "dir": 'ltr',
+        heading: UDBHeading,
+        content: UDB
+      },
+    ];
+    api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
+    api.putDataInCheckStore("ScripturePane", 'staticPaneSettings', currentPaneSettings);
+    callback();
+  }, progress);
   // I'm not supposed to get the gateway language!
+}
+
+function isOldTestament(projectBook) {
+  var passedBook = false;
+  for (var book in BooksOfBible) {
+    if (book == projectBook) passedBook = true;
+    if (BooksOfBible[book] == "Malachi" && passedBook) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+function parseUSFM(savePath, bookAbbr, callback) {
+  var projectFolder = fs.readdirSync(savePath);
+  var targetLanguage;
+  for (var file in projectFolder) {
+    var parsedPath = path.parse(projectFolder[file]);
+    if ((parsedPath.ext.toUpperCase() == ".SFM" || parsedPath.ext.toUpperCase() == '.USFM') && parsedPath.name.includes(bookAbbr.toUpperCase())) {
+      var actualFile = path.join(savePath, parsedPath.base);
+      try {
+        var data = fs.readFileSync(actualFile);
+      } catch (err) {
+        console.warn("There was an error getting the UDB")
+      }
+      var usfmData = data.toString();
+      var parsedUSFM = parser.toJSON(usfmData);
+      if (parsedUSFM.headers['id']) parsedUSFM.book = parsedUSFM.headers['id'].split(" ")[0].toLowerCase();
+      targetLanguage = saveUDBinAPI(parsedUSFM);
+    }
+  }
+  callback(targetLanguage);
+}
+
+function saveUDBinAPI(parsedUSFM) {
+  var targetLanguage = {};
+  targetLanguage.title = parsedUSFM.book;
+  // targetLanguage.header = parsedUSFM.headers;
+  var chapters = parsedUSFM.chapters;
+  for (var ch in chapters) {
+    targetLanguage[chapters[ch].number] = {};
+    var verses = chapters[ch].verses;
+    for (var v in verses) {
+      var verseText = verses[v].text.trim();
+      targetLanguage[chapters[ch].number][verses[v].number] = verseText;
+    }
+  }
+  if (parsedUSFM.headers) {
+    var parsedHeaders = parsedUSFM.headers;
+    if (parsedHeaders['mt1']) {
+      targetLanguage.title = parsedHeaders['mt1'];
+    } else if (parsedHeaders['id']) {
+      targetLanguage.title = books[parsedHeaders['id'].toLowerCase()];
+    }
+  }
+  api.putDataInCommon('UDB', targetLanguage);
+  return targetLanguage;
 }
 
 function bookAbbreviationToBookPath(bookAbbr) {
@@ -176,7 +291,7 @@ function readInOriginal(path, bookAbbr, callback) {
   var originalLanguage = api.getDataFromCommon("params").originalLanguage;
   try {
     var data = fs.readFileSync(path).toString();
-    if (!data) {} else {
+    if (!data) { } else {
       var betterData = typeof data == 'object' ? JSON.stringify(data) : data;
       openOriginal(betterData, api.convertToFullBookName(bookAbbr));
       if (originalLanguage == "hebrew") {
@@ -202,7 +317,7 @@ function openUsfmFromChunks(chunk, currentJoined, totalChunk, source, callback) 
     var fileName = chunk[1] + '.txt';
     var chunkLocation = path.join(source, chunk[0], fileName);
     var data = fs.readFileSync(chunkLocation);
-    if (!data) {}
+    if (!data) { }
     joinChunks(data.toString(), currentChapter, currentJoined);
     callback();
   } catch (error) {
@@ -290,7 +405,7 @@ function parseGreek() {
             strong = nextElement;
             brief = lex[strong].brief;
             long = lex[strong].long;
-            verse.push({ word, strong, brief, long});
+            verse.push({ word, strong, brief, long });
           }
         } catch (e) {
           if (word) {
