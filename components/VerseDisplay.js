@@ -62,7 +62,7 @@ class VerseDisplay extends React.Component {
     }else {
       console.warn("The prop input is undefined");
     }
-    if(this.props.isGatewayLanguage && !toHighlight.includes("...")){
+    if(this.props.isGatewayLanguage && !toHighlight.includes("...") && content.includes(toHighlight)){
         let firstPart = content.substr(0, this.props.currentCheck.wordIndex);
         let secondPart = content.substr(this.props.currentCheck.wordIndex + toHighlight.length);
         let newContent = [];
