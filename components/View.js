@@ -51,7 +51,7 @@ class View extends React.Component {
       }
       /**
       * @description This will add/push an array element to the scripturePane array
-      * only when the length of the array is less than or equal to 3. this element
+      * only when the length of the array is less than or equal to 2. this element
       * being added is the button to open the modal that adds more resources to
       * the scripturePane component.
       *******************************************************************************/
