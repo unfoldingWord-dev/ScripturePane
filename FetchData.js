@@ -36,7 +36,7 @@ function fetchData(params, progress, callback) {
     headingDescription: "Gateway Language"
   }
   let targetLanguageHeading = {
-    heading: targetLanguageName + " (Draft)",
+    heading: targetLanguageName,
     headingDescription: "Target Language"
   }
   let UDBHeading = {
