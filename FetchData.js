@@ -109,7 +109,7 @@ function fetchData(params, progress, callback) {
     var gatewayLanguage = api.getDataFromCommon('gatewayLanguage') ? api.getDataFromCommon('gatewayLanguage') : '';
     var UDB = api.getDataFromCommon('UDB') ? api.getDataFromCommon('UDB') : '';
 
-    let currentPaneSettings = [
+    let staticPaneSettings = [
       {
         "sourceName": "originalLanguage",
         "dir": "ltr",
@@ -135,8 +135,28 @@ function fetchData(params, progress, callback) {
         content: UDB
       },
     ];
+    let currentPaneSettings = [
+      {
+        "sourceName": "originalLanguage",
+        "dir": "ltr",
+        heading: originalLanguageHeading,
+        content: originalLanguage
+      },
+      {
+        "sourceName": "gatewayLanguage",
+        "dir": "ltr",
+        heading: gatewayLanguageHeading,
+        content: gatewayLanguage
+      },
+      {
+        "sourceName": "targetLanguage",
+        "dir": null,
+        heading: targetLanguageHeading,
+        content: targetLanguage
+      }
+    ];
     api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
-    api.putDataInCheckStore("ScripturePane", 'staticPaneSettings', currentPaneSettings);
+    api.putDataInCheckStore("ScripturePane", 'staticPaneSettings', staticPaneSettings);
     callback();
   }, progress);
   // I'm not supposed to get the gateway language!
