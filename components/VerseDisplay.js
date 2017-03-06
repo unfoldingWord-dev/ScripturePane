@@ -28,9 +28,7 @@ class VerseDisplay extends React.Component {
                          </span>
       return (<span
                 key={i++}
-                strong={word.strong}
                 style={{cursor: 'pointer'}}
-                speech={word.speech}
                 onClick={function(e){
                   var x = e.target.getBoundingClientRect().left;
                   var y = e.target.getBoundingClientRect().bottom;
