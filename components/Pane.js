@@ -9,7 +9,7 @@ const CloseButton = require('./CloseButton');
 
 class Pane extends React.Component {
     render() {
-      let { content, greek, removePane, heading, dir, currentCheck, id, isGatewayLanguage } = this.props;
+      let { content, greek, removePane, heading, dir, currentCheck, id, isGatewayLanguage, arrayLength } = this.props;
       let { chapter, verse } = currentCheck;
       let contentStyle;
       if(dir == 'ltr'){
@@ -18,11 +18,11 @@ class Pane extends React.Component {
         contentStyle = style.pane.contentRTL;
       }
       return (
-          <Col md={3} sm={3} xs={3} lg={3}>
-          <div style={style.removePane}
-               onClick={() => removePane(id)}>
-            <CloseButton />
-          </div>
+          <Col md={4} sm={4} xs={4} lg={4} style={id < 2 ? {borderRight: '1px solid #95989A'} : {} }>
+            <div style={style.removePane}
+                 onClick={() => removePane(id)}>
+              <CloseButton />
+            </div>
               <span style={style.pane.title}>
                 {heading.heading || ''}
               </span>

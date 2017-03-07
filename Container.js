@@ -9,6 +9,7 @@ const React = api.React;
 const View = require('./components/View');
 const BooksOfBible = require('./js/BooksOfBible.js');
 const NAMESPACE = "ScripturePane";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 class ScripturePane extends React.Component {
   constructor() {
@@ -16,7 +17,8 @@ class ScripturePane extends React.Component {
     this.state = {
       currentPaneSettings: null,
       modalVisibility: false,
-      staticPaneSettings:null
+      expandedPaneVisibility: false,
+      staticPaneSettings: null,
     };
   }
 
@@ -102,6 +104,7 @@ class ScripturePane extends React.Component {
   render() {
     var tlDirection = api.getDataFromCommon('params').direction;
     return (
+      <MuiThemeProvider>
       <View
         currentPaneSettings={this.state.currentPaneSettings}
         staticPaneSettings={this.state.staticPaneSettings}
@@ -110,10 +113,14 @@ class ScripturePane extends React.Component {
         modalVisibility={this.state.modalVisibility}
         showModal={() => this.setState({ modalVisibility: true })}
         hideModal={() => this.setState({ modalVisibility: false })}
+        expandedPaneVisibility={this.state.expandedPaneVisibility}
+        showExpandModal={() => this.setState({ expandedPaneVisibility: true })}
+        hideExpandModal={() => this.setState({ expandedPaneVisibility: false })}
         selectSourceLanguage={this.selectSourceLanguage.bind(this)}
         addPane={this.addPane.bind(this)}
         tlDirection={tlDirection}
       />
+      </MuiThemeProvider>
     );
   }
 }

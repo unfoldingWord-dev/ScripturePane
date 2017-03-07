@@ -10,7 +10,7 @@ const {Modal, Button, FormControl} = RB;
 
 class AddPaneModal extends React.Component {
   render() {
-    let { staticPaneSettings, selectSourceLanguage, addPane } = this.props;
+    let { staticPaneSettings, selectSourceLanguage, addPane, show, onHide } = this.props;
     /**
      * @description The code below generates a list of resource names and saves
      * it in option elements for the user to select from a dropdown list.
@@ -25,7 +25,7 @@ class AddPaneModal extends React.Component {
     }
 
     return (
-      <Modal {...this.props} bsSize="lg" aria-labelledby="contained-modal-title-sm">
+      <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
         <Modal.Header style={{ backgroundColor: "#333333" }} closeButton>
           <Modal.Title id="contained-modal-title-sm"
             style={{ textAlign: "center", color: "#FFFFFF" }}>

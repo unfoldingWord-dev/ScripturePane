@@ -28,9 +28,7 @@ class VerseDisplay extends React.Component {
                          </span>
       return (<span
                 key={i++}
-                strong={word.strong}
                 style={{cursor: 'pointer'}}
-                speech={word.speech}
                 onClick={function(e){
                   var x = e.target.getBoundingClientRect().left;
                   var y = e.target.getBoundingClientRect().bottom;
@@ -62,7 +60,7 @@ class VerseDisplay extends React.Component {
     }else {
       console.warn("The prop input is undefined");
     }
-    if(this.props.isGatewayLanguage && !toHighlight.includes("...")){
+    if(this.props.isGatewayLanguage && !toHighlight.includes("...") && content.includes(toHighlight)){
         let firstPart = content.substr(0, this.props.currentCheck.wordIndex);
         let secondPart = content.substr(this.props.currentCheck.wordIndex + toHighlight.length);
         let newContent = [];
