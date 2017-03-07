@@ -12,9 +12,6 @@ class AddBible extends React.Component {
       <Col md={4} sm={4} xs={4} lg={4} className="fill-height" style={id == 3 ? {position: 'relative', padding: '8.7%'} : {borderRight: '1px solid #95989A', position: 'relative', padding: '8.7%'}}>
         <div style={{ height: "60px", cursor: 'pointer' }} onClick={showModal}>
           <AddBibleSVG />
-          <h5 style={{ marginTop: '0px', textAlign: "center", color: "#989898", fontWeight: "bold" }}>
-            Add Bible
-          </h5>
         </div>
       </Col>
     )
