@@ -12,7 +12,7 @@ const AddBible = require('./AddBible');
 
 class ExpandedPanesModal extends React.Component {
   render() {
-    let { onHide, currentPaneSettings, currentCheck, showModal } = this.props;
+    let { onHide, currentPaneSettings, currentCheck, showModal, show } = this.props;
     let displayExpandedPanes = [];
       currentPaneSettings.forEach((element, index) =>{
         displayExpandedPanes.push(
@@ -35,7 +35,7 @@ class ExpandedPanesModal extends React.Component {
        }
      }
     return (
-      <Modal {...this.props} bsSize="lg" aria-labelledby="contained-modal-title-sm">
+      <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
         <Modal.Header style={{ backgroundColor: "#333333" }} closeButton>
           <Modal.Title id="contained-modal-title-sm"
             style={{ textAlign: "center", color: "#FFFFFF" }}>
