@@ -137,22 +137,10 @@ function fetchData(params, progress, callback) {
     ];
     let currentPaneSettings = [
       {
-        "sourceName": "originalLanguage",
-        "dir": "ltr",
-        heading: originalLanguageHeading,
-        content: originalLanguage
-      },
-      {
         "sourceName": "gatewayLanguage",
         "dir": "ltr",
         heading: gatewayLanguageHeading,
         content: gatewayLanguage
-      },
-      {
-        "sourceName": "targetLanguage",
-        "dir": null,
-        heading: targetLanguageHeading,
-        content: targetLanguage
       }
     ];
     api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
