@@ -16,6 +16,7 @@ class VerseDisplay extends React.Component {
    ******************************************************************************/
   displayGreek(text = []) {
     let i = 0;
+    let { showPopover } = this.props;
     return text.map((word) => {
       var PopoverTitle = <span>
                            {word.word + " | "}
@@ -32,7 +33,8 @@ class VerseDisplay extends React.Component {
                 onClick={function(e){
                   var x = e.target.getBoundingClientRect().left;
                   var y = e.target.getBoundingClientRect().bottom;
-                  api.Popover(true, PopoverTitle, word.brief, x, y);
+                  var positionCoord = [x, y];
+                  showPopover(PopoverTitle, word.brief, positionCoord);
                 }}>
                   {word.word + " "}
                 </span>
