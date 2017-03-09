@@ -12,7 +12,7 @@ const AddBible = require('./AddBible');
 
 class View extends React.Component {
   render() {
-    let { showExpandModal, currentPaneSettings, currentCheck, showModal } = this.props;
+    let { showExpandModal, currentPaneSettings, currentCheck, showModal, showPopover } = this.props;
     let pane = currentPaneSettings;
     let scripturePane = [];
     let greek = false;
@@ -30,6 +30,7 @@ class View extends React.Component {
         if (scripturePane.length <= 3) {
           scripturePane.push(
             <Pane
+              showPopover={showPopover}
               currentCheck={currentCheck}
               isGatewayLanguage={isGatewayLanguage}
               greek={greek}

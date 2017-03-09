@@ -106,6 +106,7 @@ class ScripturePane extends React.Component {
     return (
       <MuiThemeProvider>
       <View
+        {...this.props}
         currentPaneSettings={this.state.currentPaneSettings}
         staticPaneSettings={this.state.staticPaneSettings}
         currentCheck={this.props.currentCheck}
