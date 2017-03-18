@@ -4,26 +4,19 @@ var style = {
       marginTop: "5px",
       overflowY: 'scroll',
       width: '100%',
-      height: '180px',
+      height: '10.35em',
       direction: 'ltr'
     },
     contentRTL: {
       marginTop: "5px",
       overflowY: 'scroll',
       width: '100%',
-      height: '180px',
+      height: '10.35em',
       direction: 'rtl'
-    },
-    header: {
-      margin: '5px 0',
-      width: '100%',
-      color: '#44c6ff',
-      fontWeight: 'bold',
-      fontSize: '28px'
     },
     title: {
       fontWeight: '700',
-      fontSize: '14px',
+      fontSize: '1em',
       marginBottom: "-5px",
       marginTop: "5px",
       display: "flex",
