@@ -9,8 +9,17 @@ const defaultSave = path.join(pathex.homedir(), 'translationCore');
 var parser = require('usfm-parser');
 const BooksOfBible = require('./js/BooksOfBible.js');
 const NAMESPACE = "ScripturePane";
-
-function fetchData(params, progress, callback) {
+/**
+    * Fetch data.
+    * @param {Object} params - .
+    * @param {callback} callback -
+    * @param {callback} addNewBible - redux action to save a bible to
+    * the resources reducer.
+    *        @example take in two arguments bible name/version and bible data
+    * @param {callback} addNewResource -
+    *        @example take in two arguments resource name and resource data
+    */
+function fetchData(params, progress, callback, addNewBible, addNewResource) {
   /**
   * @description The code  below sets the default settings for the three
   *  initial panes (originalLanguage, gatewayLanguage and targetLanguage)
@@ -87,7 +96,7 @@ function fetchData(params, progress, callback) {
       console.error("Can't find original language");
     } else {
       dispatcher.schedule(function (subCallback) {
-        readInOriginal(path.join(params.originalLanguagePath, bookAbbreviationToBookPath(params.bookAbbr)), params.bookAbbr, subCallback);
+        readInOriginal(path.join(params.originalLanguagePath, bookAbbreviationToBookPath(params.bookAbbr)), params.bookAbbr, subCallback, addNewBible);
       });
     }
   }
@@ -99,7 +108,7 @@ function fetchData(params, progress, callback) {
       console.warn("This project is using old params data")
     } else {
       dispatcher.schedule(function (subCallback) {
-        parseUSFM(params.gatewayLanguageUDBPath, api.getDataFromCommon('params').bookAbbr, subCallback)
+        parseUSFM(params.gatewayLanguageUDBPath, api.getDataFromCommon('params').bookAbbr, subCallback, addNewBible)
       });
     }
   }
@@ -162,7 +171,7 @@ function isOldTestament(projectBook) {
 }
 
 
-function parseUSFM(savePath, bookAbbr, callback) {
+function parseUSFM(savePath, bookAbbr, callback, addNewBible) {
   var projectFolder = fs.readdirSync(savePath);
   var targetLanguage;
   for (var file in projectFolder) {
@@ -177,13 +186,13 @@ function parseUSFM(savePath, bookAbbr, callback) {
       var usfmData = data.toString();
       var parsedUSFM = parser.toJSON(usfmData);
       if (parsedUSFM.headers['id']) parsedUSFM.book = parsedUSFM.headers['id'].split(" ")[0].toLowerCase();
-      targetLanguage = saveUDBinAPI(parsedUSFM);
+      targetLanguage = saveUDBinAPI(parsedUSFM, addNewBible);
     }
   }
   callback(targetLanguage);
 }
 
-function saveUDBinAPI(parsedUSFM) {
+function saveUDBinAPI(parsedUSFM, addNewBible) {
   var targetLanguage = {};
   targetLanguage.title = parsedUSFM.book;
   // targetLanguage.header = parsedUSFM.headers;
@@ -204,6 +213,7 @@ function saveUDBinAPI(parsedUSFM) {
       targetLanguage.title = books[parsedHeaders['id'].toLowerCase()];
     }
   }
+  addNewBible('UDB', targetLanguage);
   api.putDataInCommon('UDB', targetLanguage);
   return targetLanguage;
 }
@@ -295,7 +305,7 @@ function readInManifest(manifest, source, callback) {
   }
 }
 
-function readInOriginal(path, bookAbbr, callback) {
+function readInOriginal(path, bookAbbr, callback, addNewBible) {
   var originalLanguage = api.getDataFromCommon("params").originalLanguage;
   try {
     var data = fs.readFileSync(path).toString();
@@ -303,9 +313,9 @@ function readInOriginal(path, bookAbbr, callback) {
       var betterData = typeof data == 'object' ? JSON.stringify(data) : data;
       openOriginal(betterData, api.convertToFullBookName(bookAbbr));
       if (originalLanguage == "hebrew") {
-        parseHebrew();
+        parseHebrew(addNewBible);
       } else {
-        parseGreek();
+        parseGreek(addNewBible);
       }
       callback();
     }
@@ -385,7 +395,7 @@ function len(obj) {
   * @author Evan Wiederspan
   * @description parses the incoming greek and modifies it to be ready
 */
-function parseGreek() {
+function parseGreek(addNewBible) {
   var lex = require("./static/Lexicon.json");
   let origText = api.getDataFromCommon("originalLanguage");
   let parsedText = {};
@@ -423,10 +433,11 @@ function parseGreek() {
       }
     }
   }
+  addNewBible('originalLanguage', parsedText);
   api.putDataInCheckStore("ScripturePane", 'parsedGreek', parsedText);
 }
 
-function parseHebrew() {
+function parseHebrew(addNewBible) {
   var lex = require("./static/HebrewLexicon.json");
   let origText = api.getDataFromCommon("originalLanguage");
   let parsedText = {};
@@ -462,6 +473,7 @@ function parseHebrew() {
       }
     }
   }
+  addNewBible('originalLanguage', parsedText);
   api.putDataInCheckStore("ScripturePane", 'parsedGreek', parsedText);
   //Put the parsed Hebrew into the checkstore in the Object format specified here
 }
