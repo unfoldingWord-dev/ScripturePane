@@ -12,11 +12,12 @@ const NAMESPACE = "ScripturePane";
 /**
     * Fetch data.
     * @param {Object} params - .
-    * @param {callback} callback -
-    * @param {callback} addNewBible - redux action to save a bible to
+    * @param {function} callback -
+    * @param {function} addNewBible (callback) - redux action to save a bible to
     * the resources reducer.
     *        @example take in two arguments bible name/version and bible data
-    * @param {callback} addNewResource -
+    * @param {function} addNewResource (callback )- redux action to save a resource to
+    * the resources reducer.
     *        @example take in two arguments resource name and resource data
     */
 function fetchData(params, progress, callback, addNewBible, addNewResource) {
