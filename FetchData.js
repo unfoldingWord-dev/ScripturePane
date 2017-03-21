@@ -10,7 +10,7 @@ var parser = require('usfm-parser');
 const BooksOfBible = require('./js/BooksOfBible.js');
 const NAMESPACE = "ScripturePane";
 /**
-    * Fetch data.
+    * @description Fetch data.
     * @param {Object} params - .
     * @param {function} callback -
     * @param {function} addNewBible (callback) - redux action to save a bible to
