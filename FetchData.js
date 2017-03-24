@@ -6,7 +6,7 @@ const pathex = require('path-extra');
 const path = require('path');
 var missingChunks = 0;
 const defaultSave = path.join(pathex.homedir(), 'translationCore');
-var parser = require('usfm-parser');
+import * as parser from 'usfm-parser';
 const BooksOfBible = require('./js/BooksOfBible.js');
 const NAMESPACE = "ScripturePane";
 /**
@@ -20,7 +20,10 @@ const NAMESPACE = "ScripturePane";
     * the resources reducer.
     *        @example take in two arguments resource name and resource data
     */
-function fetchData(params, progress, callback, addNewBible, addNewResource) {
+function fetchData(addNewBible, addNewResource, props, progress) {
+  const bibles = props.bibles;
+  const params = props.params;
+  const tcManifest = props.manifest;
   /**
   * @description The code  below sets the default settings for the three
   *  initial panes (originalLanguage, gatewayLanguage and targetLanguage)
@@ -33,7 +36,6 @@ function fetchData(params, progress, callback, addNewBible, addNewResource) {
   let gatewayLanguageVersion = "";
   let originalLanguageName = "";
   let bookAbbr = "";
-  var tcManifest = api.getDataFromCommon('tcManifest');
   if (tcManifest && tcManifest.target_language) {
     targetLanguageName = tcManifest.target_language.name;
   }
@@ -80,44 +82,44 @@ function fetchData(params, progress, callback, addNewBible, addNewResource) {
   * check if original language is already in common
   * get it if it isn't using parsers and params
   ******************************************************************************/
-  var targetLanguage = api.getDataFromCommon('targetLanguage');
+  var targetLanguage = bibles.targetLanguage;
   if (!targetLanguage) {
     if (!params.targetLanguagePath) {
       console.error('ScripturePane requires a filepath');
     } else {
       dispatcher.schedule(function (subCallback) {
-        sendToReader(params.targetLanguagePath, subCallback);
+        sendToReader(params.targetLanguagePath, subCallback, tcManifest);
       });
     }
   }
 
-  var originalLanguage = api.getDataFromCommon('originalLanguage');
+  var originalLanguage = bibles.originalLanguage;
   if (!originalLanguage) {
     if (!params.originalLanguagePath) {
       console.error("Can't find original language");
     } else {
       dispatcher.schedule(function (subCallback) {
-        readInOriginal(path.join(params.originalLanguagePath, bookAbbreviationToBookPath(params.bookAbbr)), params.bookAbbr, subCallback, addNewBible);
+        readInOriginal(path.join(params.originalLanguagePath, bookAbbreviationToBookPath(params.bookAbbr)), params, subCallback, addNewBible);
       });
     }
   }
 
-  var gatewayLanguageUDB = api.getDataFromCommon('UDB');
+  var gatewayLanguageUDB = bibles.UDB;
   if (!gatewayLanguageUDB) {
     if (!params.gatewayLanguageUDBPath) {
       params.gatewayLanguageUDBPath = path.join(window.__base, 'static', 'taggedUDB');
       console.warn("This project is using old params data")
     } else {
       dispatcher.schedule(function (subCallback) {
-        parseUSFM(params.gatewayLanguageUDBPath, api.getDataFromCommon('params').bookAbbr, subCallback, addNewBible)
+        parseUSFM(params.gatewayLanguageUDBPath, params.bookAbbr, subCallback, addNewBible)
       });
     }
   }
   dispatcher.run(() => {
-    var originalLanguage = api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') ? api.getDataFromCheckStore(NAMESPACE, 'parsedGreek') : '';
-    var targetLanguage = api.getDataFromCommon('targetLanguage') ? api.getDataFromCommon('targetLanguage') : '';
-    var gatewayLanguage = api.getDataFromCommon('gatewayLanguage') ? api.getDataFromCommon('gatewayLanguage') : '';
-    var UDB = api.getDataFromCommon('UDB') ? api.getDataFromCommon('UDB') : '';
+    var originalLanguage = bibles.originalLanguage ||  '';
+    var targetLanguage = bibles.targetLanguage || '';
+    var gatewayLanguage = bibles.gatewayLanguage || '';
+    var UDB =  bibles.UDB || '';
 
     let staticPaneSettings = [
       {
@@ -155,7 +157,6 @@ function fetchData(params, progress, callback, addNewBible, addNewResource) {
     ];
     api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
     api.putDataInCheckStore("ScripturePane", 'staticPaneSettings', staticPaneSettings);
-    callback();
   }, progress);
   // I'm not supposed to get the gateway language!
 }
@@ -190,7 +191,7 @@ function parseUSFM(savePath, bookAbbr, callback, addNewBible) {
       targetLanguage = saveUDBinAPI(parsedUSFM, addNewBible);
     }
   }
-  callback(targetLanguage);
+  callback();
 }
 
 function saveUDBinAPI(parsedUSFM, addNewBible) {
@@ -264,10 +265,9 @@ const dispatcher = new Dispatcher();
 * module
 * @param {string} file The path of the directory as specified by the user.
 ******************************************************************************/
-function sendToReader(file, callback) {
+function sendToReader(file, callback, data) {
   try {
     // FileModule.readFile(path.join(file, 'manifest.json'), readInManifest);
-    var data = api.getDataFromCommon('tcManifest');
     readInManifest(data, file, callback);
   } catch (error) {
     console.error(error);
@@ -298,7 +298,6 @@ function readInManifest(manifest, source, callback) {
         done++;
         if (done >= total - missingChunks) {
           missingChunks = 0;
-          api.putDataInCommon('targetLanguage', currentJoined);
           callback();
         }
       });
@@ -306,17 +305,18 @@ function readInManifest(manifest, source, callback) {
   }
 }
 
-function readInOriginal(path, bookAbbr, callback, addNewBible) {
-  var originalLanguage = api.getDataFromCommon("params").originalLanguage;
+function readInOriginal(path, params, callback, addNewBible) {
+  var bookAbbr = params.bookAbbr;
+  var originalLanguage = params.originalLanguage;
   try {
     var data = fs.readFileSync(path).toString();
     if (!data) { } else {
       var betterData = typeof data == 'object' ? JSON.stringify(data) : data;
-      openOriginal(betterData, api.convertToFullBookName(bookAbbr));
+      var origText = openOriginal(betterData, api.convertToFullBookName(bookAbbr));
       if (originalLanguage == "hebrew") {
-        parseHebrew(addNewBible);
+        parseHebrew(addNewBible, origText);
       } else {
-        parseGreek(addNewBible);
+        parseGreek(addNewBible, origText);
       }
       callback();
     }
@@ -343,6 +343,7 @@ function openUsfmFromChunks(chunk, currentJoined, totalChunk, source, callback) 
     missingChunks++;
   }
 }
+
 /**
 * @description This function saves the chunks locally as a window object;
 * @param {string} text - The text being read in from chunks
@@ -355,7 +356,7 @@ function joinChunks(text, currentChapter, currentJoined) {
     if (currentJoined[currentChapter] === undefined) {
       currentJoined[currentChapter] = {};
     }
-    var currentChunk = parser(text);
+    var currentChunk = parser.toJSON(text).chapters[0];
     for (let verse in currentChunk.verses) {
       if (currentChunk.verses.hasOwnProperty(verse)) {
         var currentVerse = currentChunk.verses[verse];
@@ -381,7 +382,7 @@ function openOriginal(text, bookName) {
   }
   // CoreActions.updateOriginalLanguage(input[bookName]);
   //make new function to put straight into common as array?
-  api.putDataInCommon('originalLanguage', input[bookName]);
+ return input[bookName];
 }
 
 function len(obj) {
@@ -396,9 +397,8 @@ function len(obj) {
   * @author Evan Wiederspan
   * @description parses the incoming greek and modifies it to be ready
 */
-function parseGreek(addNewBible) {
+function parseGreek(addNewBible, origText) {
   var lex = require("./static/Lexicon.json");
-  let origText = api.getDataFromCommon("originalLanguage");
   let parsedText = {};
   for (let ch in origText) {
     if (!parseInt(ch)) {
@@ -435,12 +435,10 @@ function parseGreek(addNewBible) {
     }
   }
   addNewBible('originalLanguage', parsedText);
-  api.putDataInCheckStore("ScripturePane", 'parsedGreek', parsedText);
 }
 
-function parseHebrew(addNewBible) {
+function parseHebrew(addNewBible, origText) {
   var lex = require("./static/HebrewLexicon.json");
-  let origText = api.getDataFromCommon("originalLanguage");
   let parsedText = {};
   for (let ch in origText) {
     if (!parseInt(ch)) {
