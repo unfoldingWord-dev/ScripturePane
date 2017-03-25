@@ -12,13 +12,13 @@ const AddBible = require('./AddBible');
 
 class View extends React.Component {
   render() {
-    let { showExpandModal, currentPaneSettings, currentCheck, showModal, showPopover } = this.props;
+    let { showExpandModal, currentPaneSettings, currentCheck, showModal, showPopover, bibles } = this.props;
     let pane = currentPaneSettings;
     let scripturePane = [];
     let greek = false;
     let isGatewayLanguage = false;
     for (let key in pane) {
-      let content = pane[key].content
+      let content = bibles[pane[key].sourceName];
       let heading = pane[key].heading
       if (pane[key].sourceName === "originalLanguage") {
         greek = true;

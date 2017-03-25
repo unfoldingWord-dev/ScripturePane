@@ -88,7 +88,7 @@ function fetchData(addNewBible, addNewResource, props, progress) {
       console.error('ScripturePane requires a filepath');
     } else {
       dispatcher.schedule(function (subCallback) {
-        sendToReader(params.targetLanguagePath, subCallback, tcManifest);
+        sendToReader(params.targetLanguagePath, subCallback, tcManifest, addNewBible);
       });
     }
   }
@@ -116,35 +116,26 @@ function fetchData(addNewBible, addNewResource, props, progress) {
     }
   }
   dispatcher.run(() => {
-    var originalLanguage = bibles.originalLanguage ||  '';
-    var targetLanguage = bibles.targetLanguage || '';
-    var gatewayLanguage = bibles.gatewayLanguage || '';
-    var UDB =  bibles.UDB || '';
-
     let staticPaneSettings = [
       {
         "sourceName": "originalLanguage",
         "dir": "ltr",
         heading: originalLanguageHeading,
-        content: originalLanguage
       },
       {
         "sourceName": "gatewayLanguage",
         "dir": "ltr",
         heading: gatewayLanguageHeading,
-        content: gatewayLanguage
       },
       {
         "sourceName": "targetLanguage",
         "dir": null,
         heading: targetLanguageHeading,
-        content: targetLanguage
       },
       {
         "sourceName": "UDB",
         "dir": 'ltr',
         heading: UDBHeading,
-        content: UDB
       },
     ];
     let currentPaneSettings = [
@@ -152,13 +143,11 @@ function fetchData(addNewBible, addNewResource, props, progress) {
         "sourceName": "gatewayLanguage",
         "dir": "ltr",
         heading: gatewayLanguageHeading,
-        content: gatewayLanguage
       }
     ];
-    api.putDataInCheckStore("ScripturePane", 'currentPaneSettings', currentPaneSettings);
-    api.putDataInCheckStore("ScripturePane", 'staticPaneSettings', staticPaneSettings);
+    addNewResource('currentPaneSettings', currentPaneSettings);
+    addNewResource('staticPaneSettings', staticPaneSettings)
   }, progress);
-  // I'm not supposed to get the gateway language!
 }
 
 function isOldTestament(projectBook) {
@@ -216,7 +205,6 @@ function saveUDBinAPI(parsedUSFM, addNewBible) {
     }
   }
   addNewBible('UDB', targetLanguage);
-  api.putDataInCommon('UDB', targetLanguage);
   return targetLanguage;
 }
 
@@ -265,10 +253,10 @@ const dispatcher = new Dispatcher();
 * module
 * @param {string} file The path of the directory as specified by the user.
 ******************************************************************************/
-function sendToReader(file, callback, data) {
+function sendToReader(file, callback, data, addNewBible) {
   try {
     // FileModule.readFile(path.join(file, 'manifest.json'), readInManifest);
-    readInManifest(data, file, callback);
+    readInManifest(data, file, callback, addNewBible);
   } catch (error) {
     console.error(error);
   }
@@ -277,7 +265,7 @@ function sendToReader(file, callback, data) {
 * @description This function takes the manifest file and parses it to JSON.
 * @param {string} manifest - The manifest.json file
 ******************************************************************************/
-function readInManifest(manifest, source, callback) {
+function readInManifest(manifest, source, callback, addNewBible) {
   var bookTitle;
   if (manifest.ts_project) {
     bookTitle = manifest.ts_project.name;
@@ -298,6 +286,7 @@ function readInManifest(manifest, source, callback) {
         done++;
         if (done >= total - missingChunks) {
           missingChunks = 0;
+          addNewBible('targetLanguage', currentJoined);
           callback();
         }
       });
@@ -473,8 +462,6 @@ function parseHebrew(addNewBible, origText) {
     }
   }
   addNewBible('originalLanguage', parsedText);
-  api.putDataInCheckStore("ScripturePane", 'parsedGreek', parsedText);
-  //Put the parsed Hebrew into the checkstore in the Object format specified here
 }
 
 module.exports = fetchData;
