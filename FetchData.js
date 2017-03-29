@@ -1,5 +1,4 @@
 // FetchData.js//
-
 const api = window.ModuleApi;
 const fs = require(window.__base + 'node_modules/fs-extra');
 const pathex = require('path-extra');
