@@ -1,26 +1,28 @@
 // FetchData.js//
-
-const api = window.ModuleApi;
-const fs = require(window.__base + 'node_modules/fs-extra');
-const pathex = require('path-extra');
-const path = require('path');
-var missingChunks = 0;
-const defaultSave = path.join(pathex.homedir(), 'translationCore');
+import fs from 'fs-extra';
+import pathex from 'path-extra';
+import path from 'path';
 import * as parser from 'usfm-parser';
-const BooksOfBible = require('./js/BooksOfBible.js');
+import BooksOfBible from './js/BooksOfBible.js';
+// constant delcaration
 const NAMESPACE = "ScripturePane";
+const defaultSave = path.join(pathex.homedir(), 'translationCore');
+const api = window.ModuleApi;
+var missingChunks = 0;
+
 /**
-    * @description Fetch data.
-    * @param {Object} params - .
-    * @param {function} callback -
-    * @param {function} addNewBible (callback) - redux action to save a bible to
-    * the resources reducer.
-    *        @example take in two arguments bible name/version and bible data
-    * @param {function} addNewResource (callback )- redux action to save a resource to
-    * the resources reducer.
-    *        @example take in two arguments resource name and resource data
-    */
-function fetchData(addNewBible, addNewResource, props, progress) {
+  * @description Fetch data.
+  * @param {function} addNewBible - redux action to save a bible to
+  * the resources reducer.
+  *        @example take in two arguments bible name/version and bible data
+  * @param {function} addNewResource - redux action to save a resource to
+  * the resources reducer.
+  *        @example take in two arguments resource name and resource data
+  * @param {*} props -  .
+  * @param {function} progress - updates the progress of the fetch data process.
+  * @param {function} setModuleSettings - redux action that handles adding modules settings.
+  */
+function fetchData(addNewBible, addNewResource, props, progress, setModuleSettings) {
   const bibles = props.bibles;
   const params = props.params;
   const tcManifest = props.manifest;
@@ -118,35 +120,35 @@ function fetchData(addNewBible, addNewResource, props, progress) {
   dispatcher.run(() => {
     let staticPaneSettings = [
       {
-        "sourceName": "originalLanguage",
-        "dir": "ltr",
-        heading: originalLanguageHeading,
+        sourceName: "originalLanguage",
+        dir: "ltr",
+        heading: originalLanguageHeading
       },
       {
-        "sourceName": "gatewayLanguage",
-        "dir": "ltr",
-        heading: gatewayLanguageHeading,
+        sourceName: "gatewayLanguage",
+        dir: "ltr",
+        heading: gatewayLanguageHeading
       },
       {
-        "sourceName": "targetLanguage",
-        "dir": null,
-        heading: targetLanguageHeading,
+        sourceName: "targetLanguage",
+        dir: null,
+        heading: targetLanguageHeading
       },
       {
-        "sourceName": "UDB",
-        "dir": 'ltr',
-        heading: UDBHeading,
-      },
+        sourceName: "UDB",
+        dir: 'ltr',
+        heading: UDBHeading
+      }
     ];
     let currentPaneSettings = [
       {
-        "sourceName": "gatewayLanguage",
-        "dir": "ltr",
-        heading: gatewayLanguageHeading,
+        sourceName: "gatewayLanguage",
+        dir: "ltr",
+        heading: gatewayLanguageHeading
       }
     ];
-    addNewResource('currentPaneSettings', currentPaneSettings);
-    addNewResource('staticPaneSettings', staticPaneSettings)
+    setModuleSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
+    setModuleSettings(NAMESPACE, 'staticPaneSettings', staticPaneSettings);
   }, progress);
 }
 

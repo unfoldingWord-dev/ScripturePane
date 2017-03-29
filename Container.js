@@ -1,15 +1,15 @@
 /**
-* @author Manny Colon
 * @description This component displays the Original Language, Gateway Language,
 * the Target Language and other Resources can be loaded in. It takes it's input
 * from uploads and from the scripture content manager.
 ******************************************************************************/
-const api = window.ModuleApi;
-const React = api.React;
-const View = require('./components/View');
-const BooksOfBible = require('./js/BooksOfBible.js');
+import React from 'react';
+import View from './components/View';
+import BooksOfBible from './js/BooksOfBible.js';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// constant declaration
 const NAMESPACE = "ScripturePane";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+const api = window.ModuleApi;
 
 class ScripturePane extends React.Component {
   constructor() {
@@ -18,7 +18,7 @@ class ScripturePane extends React.Component {
       currentPaneSettings: null,
       modalVisibility: false,
       expandedPaneVisibility: false,
-      staticPaneSettings: null,
+      staticPaneSettings: null
     };
   }
   /**
@@ -27,10 +27,13 @@ class ScripturePane extends React.Component {
    *        in the currentPaneSettings array.
    ******************************************************************************/
   removePane(key) {
-    let paneSettings = JSON.parse(JSON.stringify(this.props.currentPaneSettings));
+    let {
+      modulesSettingsReducer,
+      actions
+    } = this.props;
+    let paneSettings = modulesSettingsReducer.ScripturePane.currentPaneSettings;
     paneSettings.splice(key, 1);
-    this.props.addNewResource('currentPaneSettings', paneSettings);
-    api.saveProject();
+    actions.changeModuleSettings(NAMESPACE, 'currentPaneSettings', paneSettings);
   }
   /**
    * @description this methos is called when an user selects a resource name to
@@ -42,12 +45,16 @@ class ScripturePane extends React.Component {
    * @return {state} This will set the state to the selectedPane object
   *******************************************************************************/
   selectSourceLanguage(event) {
+    let {
+      modulesSettingsReducer
+    } = this.props;
+    let staticPaneSettings = modulesSettingsReducer[NAMESPACE].staticPaneSettings;
     let sourceLanguageName = event.target.value;
     if (sourceLanguageName !== '') {
       let selectedPane = {};
-      for (let key in this.props.staticPaneSettings) {
-        if (this.props.staticPaneSettings[key].sourceName === sourceLanguageName) {
-          selectedPane = this.props.staticPaneSettings[key];
+      for (let key in staticPaneSettings) {
+        if (staticPaneSettings[key].sourceName === sourceLanguageName) {
+          selectedPane = staticPaneSettings[key];
         }
       }
       this.setState({ selectedPane: selectedPane });
@@ -63,23 +70,23 @@ class ScripturePane extends React.Component {
    * sets the modalVisibility to false to close the modal.
   *******************************************************************************/
   addPane() {
-    let currentPaneSettings = this.props.currentPaneSettings;
+    let {
+      modulesSettingsReducer,
+      actions
+    } = this.props;
+    let currentPaneSettings = modulesSettingsReducer[NAMESPACE].currentPaneSettings;
     if (this.state.selectedPane) {
       currentPaneSettings.push(this.state.selectedPane);
-      this.props.addNewResource('currentPaneSettings', currentPaneSettings);
-      api.saveProject();
+      actions.changeModuleSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
       this.setState({ modalVisibility: false });
     }
   }
 
   render() {
-    var tlDirection = this.props.params.direction;
     return (
       <MuiThemeProvider>
         <View
           {...this.props}
-          currentPaneSettings={this.props.currentPaneSettings}
-          staticPaneSettings={this.props.staticPaneSettings}
           currentCheck={this.props.currentCheck}
           removePane={this.removePane.bind(this)}
           modalVisibility={this.state.modalVisibility}
@@ -90,7 +97,6 @@ class ScripturePane extends React.Component {
           hideExpandModal={() => this.setState({ expandedPaneVisibility: false })}
           selectSourceLanguage={this.selectSourceLanguage.bind(this)}
           addPane={this.addPane.bind(this)}
-          tlDirection={tlDirection}
         />
       </MuiThemeProvider>
     );
