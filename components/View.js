@@ -1,14 +1,13 @@
-
-const api = window.ModuleApi;
-const React = api.React;
-const RB = api.ReactBootstrap;
-const {Row, Glyphicon, Col} = RB;
-const Pane = require('./Pane');
-const AddPaneModal = require('./AddPaneModal');
-const ExpandedPanesModal = require('./ExpandedPanesModal');
-const style = require('../css/Style');
+import React from 'react';
+import {Row, Glyphicon, Col} from 'react-bootstrap';
+import Pane from './Pane';
+import AddPaneModal from './AddPaneModal';
+import ExpandedPanesModal from './ExpandedPanesModal';
+import style from '../css/Style';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-const AddBible = require('./AddBible');
+import AddBible from './AddBible';
+// const declaration
+const api = window.ModuleApi;
 
 class View extends React.Component {
   render() {
@@ -56,7 +55,7 @@ class View extends React.Component {
       * being added is the button to open the modal that adds more resources to
       * the scripturePane component.
       *******************************************************************************/
-      for(let index = scripturePane.length + 1;  scripturePane.length <= 2; index++ ){
+      for (let index = scripturePane.length + 1; scripturePane.length <= 2; index++ ) {
         scripturePane.push(
           <AddBible
             key={index}

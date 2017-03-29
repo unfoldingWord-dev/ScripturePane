@@ -1,15 +1,15 @@
-  /**
-  * @author Manny Colon
-  * @description This component displays the Original Language, Gateway Language,
-  * the Target Language and other Resources can be loaded in. It takes it's input
-  * from uploads and from the scripture content manager.
-  ******************************************************************************/
-const api = window.ModuleApi;
-const React = api.React;
-const View = require('./components/View');
-const BooksOfBible = require('./js/BooksOfBible.js');
+/**
+ * @description This component displays the Original Language, Gateway Language,
+ * the Target Language and other Resources can be loaded in. It takes it's input
+ * from uploads and from the scripture content manager.
+ */
+import React from 'react';
+import View from './components/View';
+import BooksOfBible from './js/BooksOfBible.js';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// constant declaration
 const NAMESPACE = "ScripturePane";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+const api = window.ModuleApi;
 
 class ScripturePane extends React.Component {
   constructor() {
@@ -18,12 +18,12 @@ class ScripturePane extends React.Component {
       currentPaneSettings: null,
       modalVisibility: false,
       expandedPaneVisibility: false,
-      staticPaneSettings: null,
+      staticPaneSettings: null
     };
   }
 
   componentWillMount() {
-    //get default resources (originalLang, targetLang, gatewayLang) content
+    // get default resources (originalLang, targetLang, gatewayLang) content
     this.getContentFromCheckStore();
   }
 
@@ -46,7 +46,7 @@ class ScripturePane extends React.Component {
     let staticPaneSettings = api.getDataFromCheckStore(NAMESPACE, 'staticPaneSettings');
     this.setState({
       currentPaneSettings: currentPaneSettings,
-      staticPaneSettings:staticPaneSettings
+      staticPaneSettings: staticPaneSettings
     });
   }
   /**
@@ -91,13 +91,13 @@ class ScripturePane extends React.Component {
    * adds the new pane information and saves it in the checkstore. Finally, it
    * sets the modalVisibility to false to close the modal.
   *******************************************************************************/
-  addPane(){
+  addPane() {
     let currentPaneSettings = api.getDataFromCheckStore(NAMESPACE, 'currentPaneSettings');
-    if(this.state.selectedPane){
+    if (this.state.selectedPane) {
       currentPaneSettings.push(this.state.selectedPane);
       api.putDataInCheckStore(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
       api.saveProject();
-      this.setState({ modalVisibility: false, currentPaneSettings:currentPaneSettings });
+      this.setState({ modalVisibility: false, currentPaneSettings: currentPaneSettings });
     }
   }
 
@@ -129,4 +129,4 @@ class ScripturePane extends React.Component {
 module.exports = {
   name: NAMESPACE,
   container: ScripturePane
-}
+};
