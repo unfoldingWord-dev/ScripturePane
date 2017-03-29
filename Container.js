@@ -1,8 +1,8 @@
 /**
-* @description This component displays the Original Language, Gateway Language,
-* the Target Language and other Resources can be loaded in. It takes it's input
-* from uploads and from the scripture content manager.
-******************************************************************************/
+ * @description This component displays the Original Language, Gateway Language,
+ * the Target Language and other Resources can be loaded in. It takes it's input
+ * from uploads and from the scripture content manager.
+ */
 import React from 'react';
 import View from './components/View';
 import BooksOfBible from './js/BooksOfBible.js';
@@ -106,4 +106,4 @@ class ScripturePane extends React.Component {
 module.exports = {
   name: NAMESPACE,
   container: ScripturePane
-}
+};

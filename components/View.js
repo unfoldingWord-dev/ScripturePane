@@ -7,7 +7,6 @@ import style from '../css/Style';
 import AddBible from './AddBible';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
-
 class View extends React.Component {
   render() {
     let {
