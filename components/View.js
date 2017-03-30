@@ -4,28 +4,41 @@ import Pane from './Pane';
 import AddPaneModal from './AddPaneModal';
 import ExpandedPanesModal from './ExpandedPanesModal';
 import style from '../css/Style';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import AddBible from './AddBible';
-// const declaration
-const api = window.ModuleApi;
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 class View extends React.Component {
   render() {
-    let { showExpandModal, currentPaneSettings, currentCheck, showModal, showPopover } = this.props;
+    let {
+      modulesSettingsReducer,
+      selectSourceLanguage,
+      showExpandModal,
+      modalVisibility,
+      showModal,
+      showPopover,
+      addPane,
+      bibles,
+      expandedPaneVisibility,
+      hideExpandModal,
+      hideModal,
+      currentCheck
+    } = this.props;
+    let staticPaneSettings = modulesSettingsReducer.ScripturePane.staticPaneSettings;
+    let currentPaneSettings = modulesSettingsReducer.ScripturePane.currentPaneSettings;
     let pane = currentPaneSettings;
     let scripturePane = [];
     let greek = false;
     let isGatewayLanguage = false;
     for (let key in pane) {
-      let content = pane[key].content
-      let heading = pane[key].heading
+      let content = bibles[pane[key].sourceName];
+      let heading = pane[key].heading;
       if (pane[key].sourceName === "originalLanguage") {
         greek = true;
       }
         if (pane[key].sourceName === "gatewayLanguage") {
           isGatewayLanguage = true;
         }
-       var dir = pane[key].dir || "ltr";
+       let dir = pane[key].dir || "ltr";
         if (scripturePane.length <= 3) {
           scripturePane.push(
             <Pane
@@ -88,15 +101,15 @@ class View extends React.Component {
           </Row>
         </Card>
         <AddPaneModal
-          show={this.props.modalVisibility}
-          onHide={this.props.hideModal}
-          staticPaneSettings={this.props.staticPaneSettings}
-          selectSourceLanguage={this.props.selectSourceLanguage}
-          addPane={this.props.addPane}
+          show={modalVisibility}
+          onHide={hideModal}
+          staticPaneSettings={staticPaneSettings}
+          selectSourceLanguage={selectSourceLanguage}
+          addPane={addPane}
         />
         <ExpandedPanesModal
-          show={this.props.expandedPaneVisibility}
-          onHide={this.props.hideExpandModal}
+          show={expandedPaneVisibility}
+          onHide={hideExpandModal}
           currentPaneSettings={currentPaneSettings}
           currentCheck={currentCheck}
           showModal={showModal}
