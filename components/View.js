@@ -17,7 +17,6 @@ class View extends React.Component {
       showModal,
       showPopover,
       addPane,
-      bibles,
       expandedPaneVisibility,
       hideExpandModal,
       hideModal,
@@ -29,6 +28,7 @@ class View extends React.Component {
     let scripturePane = [];
     let greek = false;
     let isGatewayLanguage = false;
+    let bibles = this.props.resourcesReducer.bibles
     for (let key in pane) {
       let content = bibles[pane[key].sourceName];
       let heading = pane[key].heading;
@@ -42,8 +42,8 @@ class View extends React.Component {
         if (scripturePane.length <= 3) {
           scripturePane.push(
             <Pane
+              {...this.props}
               showPopover={showPopover}
-              currentCheck={currentCheck}
               isGatewayLanguage={isGatewayLanguage}
               greek={greek}
               key={key}

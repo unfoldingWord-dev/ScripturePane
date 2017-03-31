@@ -20,7 +20,7 @@ class Pane extends React.Component {
         isGatewayLanguage,
         arrayLength,
         showPopover } = this.props;
-      let { chapter, verse } = currentCheck;
+      let { chapter, verse } = this.props.contextId.reference;
       let contentStyle;
       if(dir == 'ltr'){
         contentStyle = style.pane.contentLTR;
@@ -42,12 +42,10 @@ class Pane extends React.Component {
 
               <div style={contentStyle}>
                   <VerseDisplay
-                    chapter={chapter}
-                    verse={verse}
+                    {...this.props}
                     input={content}
                     greek={greek}
                     isGatewayLanguage = {isGatewayLanguage}
-                    currentCheck={this.props.currentCheck}
                     showPopover={showPopover}
                   />
               </div>
