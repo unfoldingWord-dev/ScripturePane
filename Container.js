@@ -87,7 +87,7 @@ class ScripturePane extends React.Component {
       <MuiThemeProvider>
         <View
           {...this.props}
-          currentCheck={this.props.currentCheck}
+          contextId={this.props.contextIdReducer.contextId}
           removePane={this.removePane.bind(this)}
           modalVisibility={this.state.modalVisibility}
           showModal={() => this.setState({ modalVisibility: true })}

@@ -44,17 +44,16 @@ class VerseDisplay extends React.Component {
 
   render() {
     let content = "";
-    let verseNumber = this.props.verse;
-    let chapterNumber = this.props.chapter;
-    let toHighlight = this.props.currentCheck.phrase;
+    let {chapter, verse} = this.props.contextId.reference
+    let quote = this.props.contextId.quote;
     if(this.props.input){
       if(this.props.greek){
-        var greekVerse =  this.props.input[chapterNumber][verseNumber];
+        var greekVerse =  this.props.input[chapter][verse];
         content = this.displayGreek(greekVerse);
       }else{
         var list = this.props.input;
         try {
-          content = list[chapterNumber][verseNumber];
+          content = list[chapter][verse];
         } catch (err) {
           // Happens when the file is not complete
         }
@@ -62,33 +61,32 @@ class VerseDisplay extends React.Component {
     }else {
       console.warn("The prop input is undefined");
     }
-    if(this.props.isGatewayLanguage && !toHighlight.includes("...") && content.includes(toHighlight)){
-        let firstPart = content.substr(0, this.props.currentCheck.wordIndex);
-        let secondPart = content.substr(this.props.currentCheck.wordIndex + toHighlight.length);
+    if(this.props.isGatewayLanguage && !quote.includes("...") && content.includes(quote)){
+        let contentArray = content.split(quote)
         let newContent = [];
         newContent.push(
           <span key={1}>
             <span>
-              {firstPart}
+              {contentArray[0]}
             </span>
             <span style={{backgroundColor: "#FDD910"}}>
-              {toHighlight}
+              {quote}
             </span>
             <span>
-              {secondPart}
+              {contentArray[1]}
             </span>
           </span>
         );
       return (
         <div>
-          <b>{chapterNumber + ":" + verseNumber + " "}</b>
+          <b>{chapter + ":" + verse + " "}</b>
           {newContent}
         </div>
       )
     }
     return (
       <div>
-        <b>{chapterNumber + ":" + verseNumber + " "}</b>
+        <b>{chapter + ":" + verse + " "}</b>
         {content}
       </div>
     );
