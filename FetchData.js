@@ -11,7 +11,7 @@ const api = window.ModuleApi;
 var missingChunks = 0;
 
 
-export default function fetchData(projectDetails, bibles, actions) {
+export default function fetchData(projectDetails, bibles, actions, progress) {
   return new Promise(function (resolve, reject) {
     /**
       * @description Fetch data.
@@ -26,7 +26,7 @@ export default function fetchData(projectDetails, bibles, actions) {
       */
     const params = projectDetails.params;
     const tcManifest = projectDetails.manifest;
-    const { addNewBible, addNewResource, progress, setModuleSettings } = actions;
+    const { addNewBible, addNewResource, setModuleSettings } = actions;
     /**
     * @description The code  below sets the default settings for the three
     *  initial panes (originalLanguage, gatewayLanguage and targetLanguage)
@@ -135,7 +135,16 @@ export default function fetchData(projectDetails, bibles, actions) {
       });
     }
 
-    getTargetLanguage().then(getOriginalLanguage).then(getUDB).then(resolve);
+    getTargetLanguage().then(()=>{
+      progress(33);
+      getOriginalLanguage();
+    }).then(()=>{
+      progress(66);
+      getUDB();
+    }).then(()=>{
+      progress(100);
+      resolve();
+    });
 
     function isOldTestament(projectBook) {
       var passedBook = false;
@@ -197,13 +206,8 @@ export default function fetchData(projectDetails, bibles, actions) {
 
     function bookAbbreviationToBookPath(bookAbbr) {
       var bookName = api.convertToFullBookName(bookAbbr);
-      bookName = stripSpaces(bookName) + '.json';
+      bookName =  bookName.replace(/\s/g, '') + '.json';
       return bookName;
-    }
-
-    const spaceRegex = new RegExp('\\s', 'g');
-    function stripSpaces(str) {
-      return str.replace(spaceRegex, '');
     }
 
     /**
