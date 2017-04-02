@@ -14,7 +14,6 @@ import path from 'path';
 import * as parser from 'usfm-parser';
 import BooksOfBible from './js/BooksOfBible.js';
 const NAMESPACE = "ScripturePane";
-const defaultSave = path.join(pathex.homedir(), 'translationCore');
 var missingChunks = 0;
 
 /**
