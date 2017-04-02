@@ -1,133 +1,84 @@
-// FetchData.js//
+/**
+ * @file The methods to put all the data used by the ScripturePane
+ * module into the store. The progress is self contained inside 
+ * this file, measures are not 100% true to real speed of load.
+ * @author RoyalSix/Manny Colon/Ian Hoegen
+ *
+ * @exports fetchData
+ * @version 1.0.2
+ */
+
 import fs from 'fs-extra';
 import pathex from 'path-extra';
 import path from 'path';
 import * as parser from 'usfm-parser';
 import BooksOfBible from './js/BooksOfBible.js';
-// constant delcaration
 const NAMESPACE = "ScripturePane";
 const defaultSave = path.join(pathex.homedir(), 'translationCore');
-const api = window.ModuleApi;
 var missingChunks = 0;
 
-
+/**
+ * @description - This is method initiates the data loading for the scripture pane
+ * 
+ * @param {object} projectDetails - Contains the project details that a tool may use to load data,
+ * such as the params and manifest
+ * @param {object} bibles - The bibles stored in the resources for the entire project
+ * @param {object} actions - The functions that a tool has access to in order to store data
+ * after it is loaded
+ * @param {function} progress - Function to send to fetch data container to show progress
+ * @returns {Promise} - Function that gets called when all the data is finished loading
+ */
 export default function fetchData(projectDetails, bibles, actions, progress) {
   return new Promise(function (resolve, reject) {
-    /**
-      * @description Fetch data.
-      * @param {function} addNewBible - redux action to save a bible to
-      * the resources reducer.
-      *        @example take in two arguments bible name/version and bible data
-      * @param {function} addNewResource - redux action to save a resource to
-      * the resources reducer.
-      *        @example take in two arguments resource name and resource data
-      * @param {function} progress - updates the progress of the fetch data process.
-      * @param {function} setModuleSettings - redux action that handles adding modules settings.
-      */
     const params = projectDetails.params;
     const tcManifest = projectDetails.manifest;
     const { addNewBible, addNewResource, setModuleSettings } = actions;
-    /**
-    * @description The code  below sets the default settings for the three
-    *  initial panes (originalLanguage, gatewayLanguage and targetLanguage)
-    *  As the user adds or removes panes from the scripture pane the current Pane
-    *  Settings will change based on the specicic settings of each pane in the current
-    *  PaneSettings array in the checkstore.
-    ******************************************************************************/
-    let targetLanguageName = "";
-    let gatewayLanguageName = "";
-    let gatewayLanguageVersion = "";
-    let originalLanguageName = "";
-    let bookAbbr = "";
-    if (tcManifest && tcManifest.target_language) {
-      targetLanguageName = tcManifest.target_language.name;
-    }
-    if (tcManifest && (tcManifest.source_translations.length !== 0)) {
-      gatewayLanguageName = tcManifest.source_translations[0].language_id.toUpperCase();
-      gatewayLanguageVersion = " (" + tcManifest.source_translations[0].resource_id.toUpperCase() + ")";
-    }
-    let gatewayLanguageHeading = {
-      heading: gatewayLanguageName + " " + gatewayLanguageVersion,
-      headingDescription: "Gateway Language"
-    }
-    let targetLanguageHeading = {
-      heading: targetLanguageName,
-      headingDescription: "Target Language"
-    }
-    let UDBHeading = {
-      heading: gatewayLanguageName + " (UDB)",
-      headingDescription: "Gateway Language"
-    }
-    if (tcManifest.ts_project) {
-      bookAbbr = tcManifest.ts_project.id;
-    }
-    else if (tcManifest.project) {
-      bookAbbr = tcManifest.project.id;
-    }
-    else {
-      bookAbbr = tcManifest.project_id;
-    }
-
-    if (isOldTestament(bookAbbr)) {
-      originalLanguageName = "Hebrew";
-    } else {
-      originalLanguageName = "Greek (UGNT)";
-    }
-
-    let originalLanguageHeading = {
-      heading: originalLanguageName,
-      headingDescription: "Original Language"
-    }
-    let staticPaneSettings = [
-      {
-        sourceName: "originalLanguage",
-        dir: "ltr",
-        heading: originalLanguageHeading
-      },
-      {
-        sourceName: "gatewayLanguage",
-        dir: "ltr",
-        heading: gatewayLanguageHeading
-      },
-      {
-        sourceName: "targetLanguage",
-        dir: null,
-        heading: targetLanguageHeading
-      },
-      {
-        sourceName: "UDB",
-        dir: 'ltr',
-        heading: UDBHeading
-      }
-    ];
-    let currentPaneSettings = [
-      {
-        sourceName: "gatewayLanguage",
-        dir: "ltr",
-        heading: gatewayLanguageHeading
-      }
-    ];
+    const { currentPaneSettings, staticPaneSettings } = getPaneSettings(tcManifest);
     setModuleSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
     setModuleSettings(NAMESPACE, 'staticPaneSettings', staticPaneSettings);
+    getTargetLanguage().then(() => {
+      progress(33);
+      getOriginalLanguage();
+    }).then(() => {
+      progress(66);
+      getUDB();
+    }).then(() => {
+      progress(100);
+      resolve();
+    });
 
     /**
-    * @description
-    * Get original language
-    * check if original language is already in common
-    * get it if it isn't using parsers and params
-    ******************************************************************************/
+     * @description - Gets the target language based on the finished finished_frames
+     * specified in the manifest, and stores it in the resourcesReducer
+     * 
+     * @returns {Promise} - Resource has been read in
+     */
     function getTargetLanguage() {
       return new Promise((resolve, reject) => {
         if (bibles.targetLanguage) resolve();
-        else sendToReader(params.targetLanguagePath, tcManifest, addNewBible, resolve);
+        else readInManifest(params.targetLanguagePath, tcManifest, addNewBible, resolve);
       });
     }
+
+    /**
+     * @description - Gets the original language based on the path specified in the params
+     * and stores it in the resourcesReducer
+     * 
+     * @returns {Promise} - Resource has been read in
+     */
     function getOriginalLanguage() {
       return new Promise((resolve, reject) => {
         var originalPath = path.join(params.originalLanguagePath, bookAbbreviationToBookPath(params.bookAbbr))
         readInOriginal(originalPath, params, addNewBible, resolve);
       });
     }
+
+    /**
+     * @description - Gets the UDB based on a static resource located in the tC directory 
+     * and stores it in the resourcesReducer
+     * 
+     * @returns {Promise} - Resource has been read in
+     */
     function getUDB() {
       return new Promise((resolve, reject) => {
         var gatewayLanguageUDBPath = path.join(window.__base, 'static', 'taggedUDB');
@@ -135,17 +86,11 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
       });
     }
 
-    getTargetLanguage().then(()=>{
-      progress(33);
-      getOriginalLanguage();
-    }).then(()=>{
-      progress(66);
-      getUDB();
-    }).then(()=>{
-      progress(100);
-      resolve();
-    });
-
+    /**
+     * @description - Checks if the book is an old testament one or not
+     * 
+     * @param {string} projectBook - the abbreviation of the book to check
+     */
     function isOldTestament(projectBook) {
       var passedBook = false;
       for (var book in BooksOfBible) {
@@ -157,7 +102,15 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
       return false;
     }
 
-
+    /**
+     * @description - This method parse the USFM for the gateway language which is loaded form the 
+     * location specified in the params
+     * 
+     * @param {string} savePath - Path of the project folder
+     * @param {string} bookAbbr - Book abbreviation of the current project book
+     * @param {function} addNewBible - Tool action to store a Bible in the resources
+     * @param {function} callback - Callback when data is finished being loaded
+     */
     function parseUSFM(savePath, bookAbbr, addNewBible, callback) {
       var projectFolder = fs.readdirSync(savePath);
       var targetLanguage;
@@ -173,16 +126,22 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
           var usfmData = data.toString();
           var parsedUSFM = parser.toJSON(usfmData);
           if (parsedUSFM.headers['id']) parsedUSFM.book = parsedUSFM.headers['id'].split(" ")[0].toLowerCase();
-          targetLanguage = saveUDBinAPI(parsedUSFM, addNewBible);
+          saveUDBinAPI(parsedUSFM, addNewBible);
         }
       }
       callback();
     }
 
+
+    /**
+     * @description - This method saves the parsed USFM according to tC standards
+     * 
+     * @param {object} parsedUSFM - Parsed gatewayLanguage USFM
+     * @param {function} addNewBible - Tool action to store a Bible in the resources
+     */
     function saveUDBinAPI(parsedUSFM, addNewBible) {
       var targetLanguage = {};
       targetLanguage.title = parsedUSFM.book;
-      // targetLanguage.header = parsedUSFM.headers;
       var chapters = parsedUSFM.chapters;
       for (var ch in chapters) {
         targetLanguage[chapters[ch].number] = {};
@@ -201,32 +160,26 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
         }
       }
       addNewBible('UDB', targetLanguage);
-      return targetLanguage;
     }
 
+
+    /**
+     * @description - A method to convert a book abbreviation to a
+     * path for reading in a book from the file system.
+     * 
+     * @param {string} bookAbbr 
+     * @returns {string}
+     */
     function bookAbbreviationToBookPath(bookAbbr) {
-      var bookName = api.convertToFullBookName(bookAbbr);
-      bookName =  bookName.replace(/\s/g, '') + '.json';
+      var bookName = convertToFullBookName(bookAbbr);
+      bookName = bookName.replace(/\s/g, '') + '.json';
       return bookName;
     }
 
     /**
-    * @description This function is used to send a file path to the readFile()
-    * module
-    * @param {string} file The path of the directory as specified by the user.
-    ******************************************************************************/
-    function sendToReader(file, data, addNewBible, done) {
-      try {
-        // FileModule.readFile(path.join(file, 'manifest.json'), readInManifest);
-        readInManifest(data, file, addNewBible, done);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    /**
-    * @description This function takes the manifest file and parses it to JSON.
-    * @param {string} manifest - The manifest.json file
-    ******************************************************************************/
+     * @description This function takes the manifest file and parses it to JSON.
+     * @param {string} manifest - The manifest.json file
+     */
     function readInManifest(manifest, source, addNewBible, callback) {
       var bookTitle;
       if (manifest.ts_project) {
@@ -256,14 +209,23 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
       }
     }
 
-    function readInOriginal(path, params, addNewBible, callback) {
+    /**
+     * @description - Method to read in the original language from a path specified
+     *  in the params.
+     * 
+     * @param {string} originalLanguagePath - The path to load originalLanguage from
+     * @param {object} params - Project specific parameters (metadata)
+     * @param {function} addNewBible - Tool action to store a Bible in the resources
+     * @param {function} callback - Callback invoked when data is finished being loaded
+     */
+    function readInOriginal(originalLanguagePath, params, addNewBible, callback) {
       var bookAbbr = params.bookAbbr;
       var originalLanguage = params.originalLanguage;
       try {
-        var data = fs.readFileSync(path).toString();
+        var data = fs.readFileSync(originalLanguagePath).toString();
         if (!data) { } else {
           var betterData = typeof data == 'object' ? JSON.stringify(data) : data;
-          var origText = openOriginal(betterData, api.convertToFullBookName(bookAbbr));
+          var origText = openOriginal(betterData, convertToFullBookName(bookAbbr));
           if (originalLanguage == "hebrew") {
             parseHebrew(addNewBible, origText);
           } else {
@@ -317,10 +279,14 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
       }
     }
 
+
     /**
-    * @description This function processes the original text.
-    * @param {string} text - The text being read from the JSON bible object
-    ******************************************************************************/
+     * @description - Method to parse a JSON string and format by chapter and verse
+     * 
+     * @param {string} text - JSON string of original language to be parsed
+     * @param {string} bookName - The book abbreviation of the current project book
+     * @returns {object}
+     */
     function openOriginal(text, bookName) {
       var input = JSON.parse(text);
       input[bookName].title = bookName;
@@ -331,11 +297,14 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
           newData[parseInt(chapter)][parseInt(verse)] = input[bookName][chapter][verse];
         }
       }
-      // CoreActions.updateOriginalLanguage(input[bookName]);
-      //make new function to put straight into common as array?
       return input[bookName];
     }
 
+    /**
+     * @description - Returns the length of key fields in an object
+     * 
+     * @param {object} obj - The object to be evaluated
+     */
     function len(obj) {
       var length = 0;
       for (let item in obj) {
@@ -344,10 +313,14 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
       return length;
     }
 
+
     /**
-      * @author Evan Wiederspan
-      * @description parses the incoming greek and modifies it to be ready
-    */
+     * @description - This method stores the original language with the matching lexicon
+     * and strong number so that the scripture pane is able to access it.
+     * 
+     * @param {function} addNewBible - Tool action to store a Bible in the resources
+     * @param {object} origText - Parsed original language by chapter / verse
+     */
     function parseGreek(addNewBible, origText) {
       var lex = require("./static/Lexicon.json");
       let parsedText = {};
@@ -388,6 +361,13 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
       addNewBible('originalLanguage', parsedText);
     }
 
+    /**
+     * @description - This method stores the original language with the matching lexicon
+     * and strong number so that the scripture pane is able to access it.
+     * 
+     * @param {function} addNewBible - Tool action to store a Bible in the resources
+     * @param {object} origText - Parsed original language by chapter / verse
+     */
     function parseHebrew(addNewBible, origText) {
       var lex = require("./static/HebrewLexicon.json");
       let parsedText = {};
@@ -425,5 +405,99 @@ export default function fetchData(projectDetails, bibles, actions, progress) {
       }
       addNewBible('originalLanguage', parsedText);
     }
+
+    /**
+     * @description - Method to convert a book abbreviation to the full name
+     * 
+     * @param {string} bookAbbr 
+     */
+    function convertToFullBookName(bookAbbr) {
+      if (!bookAbbr) return;
+      return BooksOfBible[bookAbbr.toString().toLowerCase()];
+    }
+
+    /**
+     * @description - Method to initalize the data to be displayed in the ScripturePane
+     * 
+     * @param {object} tcManifest - Project manifest
+     */
+    function getPaneSettings(tcManifest) {
+      let targetLanguageName = "";
+      let gatewayLanguageName = "";
+      let gatewayLanguageVersion = "";
+      let originalLanguageName = "";
+      let bookAbbr = "";
+      if (tcManifest && tcManifest.target_language) {
+        targetLanguageName = tcManifest.target_language.name;
+      }
+      if (tcManifest && (tcManifest.source_translations.length !== 0)) {
+        gatewayLanguageName = tcManifest.source_translations[0].language_id.toUpperCase();
+        gatewayLanguageVersion = " (" + tcManifest.source_translations[0].resource_id.toUpperCase() + ")";
+      }
+      let gatewayLanguageHeading = {
+        heading: gatewayLanguageName + " " + gatewayLanguageVersion,
+        headingDescription: "Gateway Language"
+      }
+      let targetLanguageHeading = {
+        heading: targetLanguageName,
+        headingDescription: "Target Language"
+      }
+      let UDBHeading = {
+        heading: gatewayLanguageName + " (UDB)",
+        headingDescription: "Gateway Language"
+      }
+      if (tcManifest.ts_project) {
+        bookAbbr = tcManifest.ts_project.id;
+      }
+      else if (tcManifest.project) {
+        bookAbbr = tcManifest.project.id;
+      }
+      else {
+        bookAbbr = tcManifest.project_id;
+      }
+
+      if (isOldTestament(bookAbbr)) {
+        originalLanguageName = "Hebrew";
+      } else {
+        originalLanguageName = "Greek (UGNT)";
+      }
+
+      let originalLanguageHeading = {
+        heading: originalLanguageName,
+        headingDescription: "Original Language"
+      }
+      let staticPaneSettings = [
+        {
+          sourceName: "originalLanguage",
+          dir: "ltr",
+          heading: originalLanguageHeading
+        },
+        {
+          sourceName: "gatewayLanguage",
+          dir: "ltr",
+          heading: gatewayLanguageHeading
+        },
+        {
+          sourceName: "targetLanguage",
+          dir: null,
+          heading: targetLanguageHeading
+        },
+        {
+          sourceName: "UDB",
+          dir: 'ltr',
+          heading: UDBHeading
+        }
+      ];
+      let currentPaneSettings = [
+        {
+          sourceName: "gatewayLanguage",
+          dir: "ltr",
+          heading: gatewayLanguageHeading
+        }
+      ];
+
+      return { staticPaneSettings, currentPaneSettings }
+    }
+
   })
 }
