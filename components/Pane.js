@@ -19,7 +19,6 @@ class Pane extends React.Component {
     let {
       showPopover
     } = actions;
-    console.log(this.props)
     let contentStyle;
     if (dir == 'ltr') {
       contentStyle = style.pane.contentLTR;
