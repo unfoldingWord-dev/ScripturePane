@@ -17,7 +17,12 @@ class VerseDisplay extends React.Component {
    ******************************************************************************/
   displayGreek(text = []) {
     let i = 0;
-    let { showPopover } = this.props;
+    let {
+      actions
+    } = this.props;
+    let {
+      showPopover
+    } = actions;
     return text.map((word) => {
       var PopoverTitle = <span>
                            {word.word + " | "}
@@ -45,8 +50,8 @@ class VerseDisplay extends React.Component {
 
   render() {
     let content = "";
-    let {chapter, verse} = this.props.contextId.reference
-    let quote = this.props.contextId.quote;
+    let {chapter, verse} = this.props;
+    let quote = this.props.contextIdReducer.contextId.quote;
     if(this.props.input){
       if(this.props.greek){
         var greekVerse =  this.props.input[chapter][verse];

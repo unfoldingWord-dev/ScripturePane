@@ -1,39 +1,38 @@
 /**
-  * @author Manny Colon
   * @description This component displays a modal when the user clicks the add
   * resources button on the scripture pane module.
 ******************************************************************************/
-const api = window.ModuleApi;
-const React = api.React;
-const RB = api.ReactBootstrap;
-const { Modal, Button } = RB;
-const ExpandedPane = require('./ExpandedPane');
-const AddBible = require('./AddBible');
+import React from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import ExpandedPane from './ExpandedPane';
+import AddBible from './AddBible';
 
 class ExpandedPanesModal extends React.Component {
   render() {
-    let { onHide, currentPaneSettings, currentCheck, showModal, show } = this.props;
+    let { onHide, currentPaneSettings, contextIdReducer, showModal, show, bibles } = this.props;
     let displayExpandedPanes = [];
-      currentPaneSettings.forEach((element, index) =>{
+    currentPaneSettings.forEach((element, index) => {
+      displayExpandedPanes.push(
+        <ExpandedPane
+          {...this.props}
+          key={index}
+          paneInfo={element}
+          contextIdReducer={contextIdReducer}
+          bibles={bibles}
+        />
+      )
+    });
+    if (displayExpandedPanes.length <= 2) {
+      for (let index = displayExpandedPanes.length + 1; displayExpandedPanes.length <= 2; index++) {
         displayExpandedPanes.push(
-          <ExpandedPane
+          <AddBible
             key={index}
-            paneInfo={element}
-            currentCheck={currentCheck}
+            scripturePane={displayExpandedPanes}
+            showModal={showModal}
           />
-        )
-       });
-      if(displayExpandedPanes.length <= 2){
-       for(let index = displayExpandedPanes.length + 1;  displayExpandedPanes.length <= 2; index++ ){
-         displayExpandedPanes.push(
-           <AddBible
-             key={index}
-             scripturePane={displayExpandedPanes}
-             showModal={showModal}
-           />
-         );
-       }
-     }
+        );
+      }
+    }
     return (
       <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
         <Modal.Header style={{ backgroundColor: "#333333" }} closeButton>
