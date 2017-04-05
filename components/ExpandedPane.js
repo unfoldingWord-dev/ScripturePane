@@ -1,51 +1,54 @@
-const api = window.ModuleApi;
 import React, { Component } from 'react';
-const RB = api.ReactBootstrap;
-const { Row, Col } = RB;
-const style = require('../css/Style');
-const VerseDisplay = require('./VerseDisplay');
+import ReactDOM from 'react-dom';
+import style from '../css/Style';
+import VerseDisplay from './VerseDisplay';
+import { Col } from 'react-bootstrap';
 
 class ExpandedPane extends Component {
-  componentDidMount(){
-    let currentChapterNumber = this.props.currentCheck.chapter;
-    let verseNum = this.props.currentCheck.verse;
-    let verseReference = currentChapterNumber.toString() + verseNum.toString();
+  componentDidMount() {
+    let {contextIdReducer} = this.props;
+    let chapterNumber = contextIdReducer.contextId.reference.chapter;
+    let verseNumber = contextIdReducer.contextId.reference.verse;
+    let verseReference = chapterNumber.toString() + verseNumber.toString();
     let currentVerse = this.refs[verseReference];
-    let element = api.findDOMNode(currentVerse);
+    let element = ReactDOM.findDOMNode(currentVerse);
     if (element) {
       element.scrollIntoView();
     }
   }
   render() {
-    let { currentCheck, paneInfo } = this.props;
+    let { contextIdReducer, paneInfo, bibles } = this.props;
     let displayContent = [];
-    let currentChapterNumber = currentCheck.chapter;
+    let chapterNumber = contextIdReducer.contextId.reference.chapter;
     let greek = paneInfo.sourceName === "originalLanguage" ? true : false;
     let isGatewayLanguage = paneInfo.sourceName === "gatewayLanguage" ? true : false;
-    let currentChapter = paneInfo.content[currentChapterNumber];
-    for(var verseNum in currentChapter){
+    let currentChapter = bibles[paneInfo.sourceName][chapterNumber];
+    console.log(currentChapter)
+    for (var verseNum in currentChapter) {
       let versePaneStyle = {};
-      if(verseNum == currentCheck.verse){
-        if(verseNum % 2 == 0){
+      if (verseNum == contextIdReducer.contextId.reference.verse) {
+        if (verseNum % 2 == 0) {
           versePaneStyle = {borderLeft: '3px solid #2196F3', backgroundColor: '#e7e7e7', marginTop: '10px', color: '#000000', padding: '10px'}
-        }else{
+        } else {
           versePaneStyle = {borderLeft: '3px solid #2196F3', marginTop: '10px', color: '#000000', padding: '10px'}
         }
-      }else if (verseNum % 2 == 0) {
+      } else if (verseNum % 2 == 0) {
         versePaneStyle = {backgroundColor: '#e7e7e7', marginTop: '10px', color: '#000000', padding: '10px'}
-      }else{
-        versePaneStyle =  {marginTop: '10px', color: '#000000', padding: '10px'}
+      } else {
+        versePaneStyle = {marginTop: '10px', color: '#000000', padding: '10px'}
       }
+      console.log(chapterNumber, verseNum)
       displayContent.push(
         <Col key={verseNum} md={12} sm={12} xs={12} lg={12} style={versePaneStyle}>
           <VerseDisplay
-            chapter={currentChapterNumber}
+            {...this.props}
+            chapter={chapterNumber}
             verse={verseNum}
-            input={paneInfo.content}
+            input={bibles[paneInfo.sourceName]}
             greek={greek}
             isGatewayLanguage={isGatewayLanguage}
-            currentCheck={currentCheck}
-            ref={currentChapterNumber.toString() + verseNum.toString()}
+            contextIdReducer={contextIdReducer}
+            ref={chapterNumber.toString() + verseNum.toString()}
           />
         </Col>
       );
