@@ -1,2 +1,2 @@
 # ScripturePane
-A sub-module for scripture display
+A sub-module for scripture display.
