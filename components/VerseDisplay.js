@@ -23,28 +23,31 @@ class VerseDisplay extends React.Component {
     let {
       showPopover
     } = actions;
-    return text.map((word) => {
-      var PopoverTitle = <span>
-                           {word.word + " | "}
-                           <a href={'http://studybible.info/mac/' + word.speech}
-                              target="_blank">
-                             <b>
-                              {word.speech}
-                             </b>
-                           </a>
-                         </span>
-      return (<span
-                key={i++}
-                style={{cursor: 'pointer'}}
-                onClick={function(e){
-                  var x = e.target.getBoundingClientRect().left;
-                  var y = e.target.getBoundingClientRect().bottom;
-                  var positionCoord = [x, y];
-                  showPopover(PopoverTitle, word.brief, positionCoord);
-                }}>
-                  {word.word + " "}
-                </span>
-              );
+    return text.map(word => {
+      const PopoverTitle = (
+        <span>
+          {word.word + " | "}
+          <a href={'http://studybible.info/mac/' + word.speech}
+            target="_blank">
+            <b>
+            {word.speech}
+            </b>
+          </a>
+        </span>
+      );
+      return (
+        <span
+          key={i++}
+          style={{cursor: 'pointer'}}
+          onClick={
+            (e) => {
+              let positionCoord = e.target;
+              showPopover(PopoverTitle, word.brief, positionCoord);
+            }
+          }>
+            {word.word + " "}
+          </span>
+      );
     });
   }
 
