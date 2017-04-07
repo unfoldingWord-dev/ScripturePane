@@ -1,25 +1,23 @@
 /**
-  * @author      Manny Colon
-  * @description This component displays a modal when the user clicks the add
-  * resources button on the scripture pane module.
-******************************************************************************/
-const api = window.ModuleApi;
-const React = api.React;
-const RB = api.ReactBootstrap;
-const {Modal, Button, FormControl} = RB;
+ * @description This component displays a modal when the user clicks the add
+ * resources button on the scripture pane module.
+ */
+import React from 'react';
+import {Modal, Button, FormControl} from 'react-bootstrap';
 
-class AddPaneModal extends React.Component {
+
+export default class AddPaneModal extends React.Component {
   render() {
     let { staticPaneSettings, selectSourceLanguage, addPane, show, onHide } = this.props;
     /**
      * @description The code below generates a list of resource names and saves
      * it in option elements for the user to select from a dropdown list.
-    *******************************************************************************/
+     */
     let panes = [];
     for (let key in staticPaneSettings) {
       panes.push(
         <option key={key} value={staticPaneSettings[key].sourceName.toString()}>
-          {staticPaneSettings[key].sourceName}
+          {staticPaneSettings[key].heading.heading}
         </option>
       );
     }
@@ -51,5 +49,3 @@ class AddPaneModal extends React.Component {
     );
   }
 }
-
-module.exports = AddPaneModal;
