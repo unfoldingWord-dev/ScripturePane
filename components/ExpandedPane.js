@@ -23,7 +23,6 @@ class ExpandedPane extends Component {
     let greek = paneInfo.sourceName === "originalLanguage" ? true : false;
     let isGatewayLanguage = paneInfo.sourceName === "gatewayLanguage" ? true : false;
     let currentChapter = bibles[paneInfo.sourceName][chapterNumber];
-    console.log(currentChapter)
     for (var verseNum in currentChapter) {
       let versePaneStyle = {};
       if (verseNum == contextIdReducer.contextId.reference.verse) {
@@ -37,7 +36,6 @@ class ExpandedPane extends Component {
       } else {
         versePaneStyle = {marginTop: '10px', color: '#000000', padding: '10px'}
       }
-      console.log(chapterNumber, verseNum)
       displayContent.push(
         <Col key={verseNum} md={12} sm={12} xs={12} lg={12} style={versePaneStyle}>
           <VerseDisplay
