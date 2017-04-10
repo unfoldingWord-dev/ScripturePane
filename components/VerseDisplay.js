@@ -1,10 +1,7 @@
 /**
- * @author: Manny Colon
  * @description: This Component generates the current verse to be displayed
- *               and updates on to 'goToVerse' event
- ******************************************************************************/
-
-const api = window.ModuleApi
+ * and updates on to 'goToVerse' event
+ */
 import React from 'react'
 import XRegExp from 'xregexp'
 
@@ -14,7 +11,7 @@ class VerseDisplay extends React.Component {
    * the greek language. it generates Popover with Lexicon info about eahc word.
    * @param {Object} text - The current verse.
    * @return {String} - The current verse.
-   ******************************************************************************/
+   */
   displayGreek(text = []) {
     let i = 0;
     let {
