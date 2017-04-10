@@ -6,7 +6,6 @@ import { Col } from 'react-bootstrap';
 
 class ExpandedPane extends Component {
   componentDidMount() {
-    console.log(this.refs)
     let {contextIdReducer} = this.props;
     let chapterNumber = contextIdReducer.contextId.reference.chapter;
     let verseNumber = contextIdReducer.contextId.reference.verse;
