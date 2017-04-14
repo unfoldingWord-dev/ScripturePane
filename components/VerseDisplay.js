@@ -23,13 +23,7 @@ class VerseDisplay extends React.Component {
     return text.map(word => {
       const PopoverTitle = (
         <span>
-          {word.word + " | "}
-          <a href={'http://studybible.info/mac/' + word.speech}
-            target="_blank">
-            <b>
-            {word.speech}
-            </b>
-          </a>
+          {word.word}
         </span>
       );
       return (
