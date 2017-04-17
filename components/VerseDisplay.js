@@ -62,15 +62,15 @@ class VerseDisplay extends React.Component {
       console.warn("The prop input is undefined");
     }
     if(this.props.isGatewayLanguage && !quote.includes("...") && content.includes(quote)){
-        let regex = XRegExp('\\PL' + quote + '\\PL', 'g')
+        let regex = XRegExp('(?:^|\\PL)' + quote + '(?:$|\\PL)', 'g')
         let contentArray = XRegExp.split(content, regex)
         let {occurrence} = this.props.contextIdReducer.contextId
         let aroundQuote = []
         XRegExp.forEach(content, regex, function (match, i) {
           if (i == occurrence-1) aroundQuote = match[0].split(quote)
         })
-        let beforeText = contentArray.splice(0,occurrence).join(quote) + aroundQuote[0]
-        let afterText = aroundQuote[1] + contentArray.splice(occurrence-1).join(quote)
+        let beforeText = contentArray.slice(0,occurrence).join(quote) + aroundQuote[0]
+        let afterText = aroundQuote[1] + contentArray.slice(occurrence).join(quote)
         let newContent = [];
         newContent.push(
           <span key={1}>
