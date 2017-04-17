@@ -12,10 +12,10 @@ class Pane extends React.Component {
       removePane,
       heading,
       id,
+      dir,
       isGatewayLanguage,
       actions
     } = this.props;
-    let dir = this.props.projectDetailsReducer.manifest.target_language.direction
     let {
       showPopover
     } = actions;
