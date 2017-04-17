@@ -11,8 +11,8 @@ class Pane extends React.Component {
       greek,
       removePane,
       heading,
-      dir,
       id,
+      dir,
       isGatewayLanguage,
       actions
     } = this.props;

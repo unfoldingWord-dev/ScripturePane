@@ -44,7 +44,7 @@ class View extends React.Component {
       if (pane[key].sourceName === "gatewayLanguage") {
         isGatewayLanguage = true;
       }
-      let dir = pane[key].dir || "ltr";
+      let dir = pane[key].dir || this.props.projectDetailsReducer.manifest.target_language.direction;
       if (scripturePane.length <= 3) {
         scripturePane.push(
           <Pane
