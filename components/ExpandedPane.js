@@ -23,6 +23,10 @@ class ExpandedPane extends Component {
     let greek = paneInfo.sourceName === "originalLanguage" ? true : false;
     let isGatewayLanguage = paneInfo.sourceName === "gatewayLanguage" ? true : false;
     let currentChapter = bibles[paneInfo.sourceName][chapterNumber];
+    let dir = "ltr";
+    if(paneInfo.sourceName === "targetLanguage"){
+      dir = this.props.projectDetailsReducer.manifest.target_language.direction
+    }
     for (var verseNum in currentChapter) {
       let versePaneStyle = {};
       if (verseNum == contextIdReducer.contextId.reference.verse) {
@@ -40,6 +44,7 @@ class ExpandedPane extends Component {
         <Col key={verseNum} md={12} sm={12} xs={12} lg={12} style={versePaneStyle}>
           <VerseDisplay
             {...this.props}
+            dir={dir}
             chapter={chapterNumber}
             verse={verseNum}
             input={bibles[paneInfo.sourceName]}
