@@ -86,14 +86,14 @@ class VerseDisplay extends React.Component {
           </span>
         );
       return (
-        <div>
+        <div style={{direction: this.props.dir}}>
           <b>{chapter + ":" + verse + " "}</b>
           {newContent}
         </div>
       )
     }
     return (
-      <div>
+      <div style={{direction: this.props.dir}}>
         <b>{chapter + ":" + verse + " "}</b>
         {content}
       </div>
