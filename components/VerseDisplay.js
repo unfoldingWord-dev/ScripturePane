@@ -62,15 +62,34 @@ class VerseDisplay extends React.Component {
       console.warn("The prop input is undefined");
     }
     if(this.props.isGatewayLanguage && !quote.includes("...") && content.includes(quote)){
-        let regex = XRegExp('(?:^|\\PL)' + quote + '(?:$|\\PL)', 'g')
-        let contentArray = XRegExp.split(content, regex)
+        let regex = XRegExp('(?:^|\\PL)' + quote + '(?:$|\\PL)', 'g') // use a regexp to capture the surrounding characters to use in rebuilding the verse
+        let contentArray = XRegExp.split(content, regex) // split the verse into all of the pieces
         let {occurrence} = this.props.contextIdReducer.contextId
-        let aroundQuote = []
+        let aroundQuote = [] // store all of the characters surrounding the quote here
         XRegExp.forEach(content, regex, function (match, i) {
-          if (i == occurrence-1) aroundQuote = match[0].split(quote)
+          aroundQuote[i] = match[0].split(quote) // store all of the characters surrounding the matches
         })
-        let beforeText = contentArray.slice(0,occurrence).join(quote) + aroundQuote[0]
-        let afterText = aroundQuote[1] + contentArray.slice(occurrence).join(quote)
+        let aroundQuoteIndex = occurrence - 1 // this ensures we can find the characters around the highlighted quote
+        // for all of the content before the current quote
+        // append the split quotes with their associated characters
+        let beforeTextArray = contentArray.slice(0,occurrence).map( (text, i) => {
+          if (i < occurrence-1) {   // if not the last one
+            text = text + aroundQuote[i][0] + quote + aroundQuote[i][1] // append the quote with the surrounding character
+          }
+          return text
+        })
+        let beforeText = beforeTextArray.join('') // join the pieces
+        beforeText = beforeText + aroundQuote[aroundQuoteIndex][0] // append the current quote's preceding char
+        // for all of the content after the current quote
+        // append the split quotes with their associated characters
+        let afterTextArray = contentArray.slice(occurrence).map( (text, i) => {
+          if (i < contentArray.length - occurrence - 1) { // if not the last one
+            text = text + aroundQuote[i + occurrence][0] + quote + aroundQuote[i + occurrence][1] // append the quote with the surrounding character
+          }
+          return text
+        })
+        let afterText = afterTextArray.join('')  // join the pieces
+        afterText = aroundQuote[aroundQuoteIndex][1] + afterText  // prepend the current quote's preceding char
         let newContent = [];
         newContent.push(
           <span key={1}>
