@@ -9,7 +9,7 @@ class AddBible extends React.Component {
   render() {
     let { scripturePane, showModal, id } = this.props;
     return(
-      <Col md={4} sm={4} xs={4} lg={4} className="fill-height" style={id == 3 ? {position: 'relative', padding: '8.7%'} : {borderRight: '1px solid #95989A', position: 'relative', padding: '8.7%'}}>
+      <Col md={4} sm={4} xs={4} lg={4} className="fill-height" style={id == 3 ? {position: 'relative', padding: '65px'} : {borderRight: '1px solid #95989A', position: 'relative', padding: '65px'}}>
         <div style={{ height: "60px", cursor: 'pointer' }} onClick={showModal}>
           <AddBibleSVG />
         </div>

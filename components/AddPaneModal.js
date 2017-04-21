@@ -8,7 +8,7 @@ import {Modal, Button, FormControl} from 'react-bootstrap';
 
 export default class AddPaneModal extends React.Component {
   render() {
-    let { staticPaneSettings, selectSourceLanguage, addPane, show, onHide } = this.props;
+    let { staticPaneSettings, selectSourceLanguage, addPane, show, onHide, selectedPane } = this.props;
     /**
      * @description The code below generates a list of resource names and saves
      * it in option elements for the user to select from a dropdown list.
@@ -38,12 +38,12 @@ export default class AddPaneModal extends React.Component {
           <label>Select source language name</label>
           <FormControl componentClass="select" style={{ width: "20%" }}
             onChange={e => { selectSourceLanguage(e) }}>
-            <option value=""></option>
+            <option value="">Select</option>
             {panes}
           </FormControl>
         </Modal.Body>
         <Modal.Footer style={{ backgroundColor: "#333333" }}>
-          <Button bsStyle="success" onClick={() => addPane()}>Load</Button>
+          <Button bsStyle="success" disabled={ !selectedPane } onClick={() => addPane()}>Load</Button>
         </Modal.Footer>
       </Modal>
     );

@@ -50,17 +50,15 @@ class ScripturePane extends React.Component {
     } = this.props;
     let staticPaneSettings = modulesSettingsReducer[NAMESPACE].staticPaneSettings;
     let sourceLanguageName = event.target.value;
-    if (sourceLanguageName !== '') {
-      let selectedPane = {};
+    let selectedPane = false;
+    if (sourceLanguageName) {
       for (let key in staticPaneSettings) {
         if (staticPaneSettings[key].sourceName === sourceLanguageName) {
           selectedPane = staticPaneSettings[key];
         }
       }
-      this.setState({ selectedPane: selectedPane });
-    } else {
-      this.setState({ selectedPane: null });
     }
+    this.setState({ selectedPane: selectedPane });
   }
   /**
    * @description This handles loading a new resource to the scripture pane
@@ -90,9 +88,10 @@ class ScripturePane extends React.Component {
           contextId={this.props.contextIdReducer.contextId}
           removePane={this.removePane.bind(this)}
           modalVisibility={this.state.modalVisibility}
-          showModal={() => this.setState({ modalVisibility: true })}
+          showModal={() => this.setState({ modalVisibility: true, selectedPane: false })}
           hideModal={() => this.setState({ modalVisibility: false })}
           expandedPaneVisibility={this.state.expandedPaneVisibility}
+          selectedPane={this.state.selectedPane}
           showExpandModal={() => this.setState({ expandedPaneVisibility: true })}
           hideExpandModal={() => this.setState({ expandedPaneVisibility: false })}
           selectSourceLanguage={this.selectSourceLanguage.bind(this)}
