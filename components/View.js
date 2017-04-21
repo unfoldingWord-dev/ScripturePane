@@ -24,6 +24,7 @@ class View extends React.Component {
       showModal,
       addPane,
       expandedPaneVisibility,
+      selectedPane,
       hideExpandModal,
       hideModal,
       contextIdReducer
@@ -111,6 +112,7 @@ class View extends React.Component {
         staticPaneSettings={staticPaneSettings}
         selectSourceLanguage={selectSourceLanguage}
         addPane={addPane}
+        selectedPane={selectedPane}
       />
       <ExpandedPanesModal
         {...this.props}
