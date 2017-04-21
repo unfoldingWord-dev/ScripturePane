@@ -8,6 +8,7 @@ import ExpandedPane from './ExpandedPane';
 import AddBible from './AddBible';
 
 class ExpandedPanesModal extends React.Component {
+
   render() {
     let { onHide, currentPaneSettings, contextIdReducer, showModal, show, bibles } = this.props;
     let displayExpandedPanes = [];
@@ -22,6 +23,7 @@ class ExpandedPanesModal extends React.Component {
         />
       )
     });
+
     if (displayExpandedPanes.length <= 2) {
       for (let index = displayExpandedPanes.length + 1; displayExpandedPanes.length <= 2; index++) {
         displayExpandedPanes.push(
@@ -33,6 +35,7 @@ class ExpandedPanesModal extends React.Component {
         );
       }
     }
+
     return (
       <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
         <Modal.Header style={{ backgroundColor: "#333333" }} closeButton>
@@ -54,4 +57,4 @@ class ExpandedPanesModal extends React.Component {
   }
 }
 
-module.exports = ExpandedPanesModal;
+export default ExpandedPanesModal;
