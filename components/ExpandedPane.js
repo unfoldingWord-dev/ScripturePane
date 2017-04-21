@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Col } from 'react-bootstrap';
 import style from '../css/Style';
 import VerseDisplay from './VerseDisplay';
-import { Col } from 'react-bootstrap';
+
 
 class ExpandedPane extends Component {
+
   componentDidMount() {
     let {contextIdReducer} = this.props;
     let chapterNumber = contextIdReducer.contextId.reference.chapter;
@@ -16,6 +18,7 @@ class ExpandedPane extends Component {
       element.scrollIntoView();
     }
   }
+
   render() {
     let { contextIdReducer, paneInfo, bibles } = this.props;
     let displayContent = [];
@@ -24,7 +27,8 @@ class ExpandedPane extends Component {
     let isGatewayLanguage = paneInfo.sourceName === "gatewayLanguage" ? true : false;
     let currentChapter = bibles[paneInfo.sourceName][chapterNumber];
     let dir = "ltr";
-    if(paneInfo.sourceName === "targetLanguage"){
+
+    if (paneInfo.sourceName === "targetLanguage") {
       dir = this.props.projectDetailsReducer.manifest.target_language.direction
     }
     for (var verseNum in currentChapter) {
@@ -40,6 +44,7 @@ class ExpandedPane extends Component {
       } else {
         versePaneStyle = {marginTop: '10px', color: '#000000', padding: '10px'}
       }
+
       displayContent.push(
         <Col key={verseNum} md={12} sm={12} xs={12} lg={12} style={versePaneStyle}>
           <VerseDisplay
@@ -59,18 +64,17 @@ class ExpandedPane extends Component {
 
     return (
       <Col md={4} sm={4} xs={4} lg={4} style={{borderRight: '1px solid #95989A', backgroundColor: '#FFFFFF', padding: '0px'}}>
-        <Col md={12} sm={12} xs={12} lg={12} style={{ padding: '10px', backgroundColor: 'white'}}>
+        <Col md={12} sm={12} xs={12} lg={12} style={{ padding: '10px', backgroundColor: '#FFFFFF', height: "70px", borderBottom: "3px solid #b8b8b8"}}>
           <span style={{ fontSize: '16px', color: '#000000', fontWeight: 'bold' }}>
             {paneInfo.heading.heading}
           </span>
         </Col><br />
-        <Col md={12} sm={12} xs={12} lg={12} style={{overflowY: 'scroll', height: '500px'}}>
+        <Col md={12} sm={12} xs={12} lg={12} style={{overflowY: 'scroll', height: '480px'}}>
           {displayContent}
         </Col>
-
       </Col>
     );
   }
 }
 
-module.exports = ExpandedPane;
+export default ExpandedPane;
