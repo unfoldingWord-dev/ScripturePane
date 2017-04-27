@@ -30,12 +30,10 @@ export default class AddPaneModal extends React.Component {
             Add Resources
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ backgroundColor: "#333333", color: "#FFFFFF", padding: "45px 80px" }}>
-          <h4 style={{ textAlign: "center", marginBottom: "45px" }}>
-            Select the settings for the scripture source you want
-                to load in to the scripture pane
+        <Modal.Body style={{ backgroundColor: "#333333", color: "#FFFFFF", padding: "45px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <h4 style={{ marginBottom: "30px" }}>
+            Select source language
             </h4>
-          <label>Select source language name</label>
           <FormControl componentClass="select" style={{ width: "20%" }}
             onChange={e => { selectSourceLanguage(e) }}>
             <option value="">Select</option>
@@ -43,6 +41,7 @@ export default class AddPaneModal extends React.Component {
           </FormControl>
         </Modal.Body>
         <Modal.Footer style={{ backgroundColor: "#333333" }}>
+          <Button bsStyle="danger" onClick={onHide}>Close</Button>
           <Button bsStyle="success" disabled={ !selectedPane } onClick={() => addPane()}>Load</Button>
         </Modal.Footer>
       </Modal>
