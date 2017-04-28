@@ -44,6 +44,7 @@ class VerseDisplay extends React.Component {
 
   render() {
     let content = "";
+    let chapterVerse = "";
     let {chapter, verse} = this.props;
     let quote = this.props.contextIdReducer.contextId.quote;
     if(this.props.input){
@@ -61,6 +62,13 @@ class VerseDisplay extends React.Component {
     }else {
       console.warn("The prop input is undefined");
     }
+
+    if(this.props.dir == "rtl"){
+      chapterVerse = verse + ":" + chapter + " "
+    }else{
+      chapterVerse = chapter + ":" + verse + " "
+    }
+
     if(this.props.isGatewayLanguage && !quote.includes("...") && content.includes(quote)){
         let regex = XRegExp('(?:^|\\PL)' + quote + '(?:$|\\PL)', 'g') // use a regexp to capture the surrounding characters to use in rebuilding the verse
         let contentArray = XRegExp.split(content, regex) // split the verse into all of the pieces
@@ -106,14 +114,14 @@ class VerseDisplay extends React.Component {
         );
       return (
         <div style={{direction: this.props.dir}}>
-          <b>{chapter + ":" + verse + " "}</b>
+          <b>{chapterVerse}</b>
           {newContent}
         </div>
       )
     }
     return (
       <div style={{direction: this.props.dir}}>
-        <b>{chapter + ":" + verse + " "}</b>
+        <b>{chapterVerse}</b>
         {content}
       </div>
     );
