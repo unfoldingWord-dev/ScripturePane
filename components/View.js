@@ -85,7 +85,7 @@ class View extends React.Component {
       );
     }
     const title = (
-      <div style={{'fontSize':'16px', 'fontWeight':'bold', color: '#ffffff', margin: "0px"}}>
+      <div style={{'fontSize':'16px', 'fontWeight':'bold', color: 'var(--reverse-color)', margin: "0px"}}>
         <span>Step 1. Read</span>
         <Glyphicon
           onClick={showExpandModal}
@@ -98,7 +98,7 @@ class View extends React.Component {
       <div style={{ margin: '10px' }}>
       <Card zDepth={2}>
         <CardHeader
-          style={{ background: '#2196F3', padding: "10px"}}
+          style={{ background: 'var(--accent-color)', padding: "10px"}}
           textStyle={{display: "block"}}
           children={title}
         />

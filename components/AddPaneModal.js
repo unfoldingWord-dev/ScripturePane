@@ -24,13 +24,13 @@ export default class AddPaneModal extends React.Component {
 
     return (
       <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
-        <Modal.Header style={{ backgroundColor: "#333333" }} closeButton>
+        <Modal.Header style={{ backgroundColor: "var(--accent-color-dark)" }} closeButton>
           <Modal.Title id="contained-modal-title-sm"
-            style={{ textAlign: "center", color: "#FFFFFF" }}>
+            style={{ textAlign: "center", color: "var(--reverse-color)" }}>
             Add Resources
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ backgroundColor: "#333333", color: "#FFFFFF", padding: "45px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Modal.Body style={{ backgroundColor: "var(--reverse-color)", color: "var(--accent-color-dark)", padding: "45px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <h4 style={{ marginBottom: "30px" }}>
             Select source language
             </h4>
@@ -40,9 +40,9 @@ export default class AddPaneModal extends React.Component {
             {panes}
           </FormControl>
         </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: "#333333" }}>
-          <Button bsStyle="danger" onClick={onHide}>Close</Button>
-          <Button bsStyle="success" disabled={ !selectedPane } onClick={() => addPane()}>Load</Button>
+        <Modal.Footer style={{ backgroundColor: "var(--reverse-color)" }}>
+          <button className="btn-second" onClick={onHide}>Close</button>
+          <Button bsStyle="prime" disabled={ !selectedPane } onClick={() => addPane()}>Load</Button>
         </Modal.Footer>
       </Modal>
     );

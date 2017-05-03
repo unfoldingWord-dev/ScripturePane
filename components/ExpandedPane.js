@@ -35,14 +35,14 @@ class ExpandedPane extends Component {
       let versePaneStyle = {};
       if (verseNum == contextIdReducer.contextId.reference.verse) {
         if (verseNum % 2 == 0) {
-          versePaneStyle = {borderLeft: '3px solid #2196F3', backgroundColor: '#e7e7e7', marginTop: '10px', color: '#000000', padding: '10px'}
+          versePaneStyle = {borderLeft: '3px solid var(--accent-color)', backgroundColor: 'var(--background-color-light)', marginTop: '10px', color: 'var(--text-color-dark)', padding: '10px'}
         } else {
-          versePaneStyle = {borderLeft: '3px solid #2196F3', marginTop: '10px', color: '#000000', padding: '10px'}
+          versePaneStyle = {borderLeft: '3px solid var(--accent-color)', marginTop: '10px', color: 'var(--text-color-dark)', padding: '10px'}
         }
       } else if (verseNum % 2 == 0) {
-        versePaneStyle = {backgroundColor: '#e7e7e7', marginTop: '10px', color: '#000000', padding: '10px'}
+        versePaneStyle = {backgroundColor: 'var(--background-color-light)', marginTop: '10px', color: 'var(--text-color-dark)', padding: '10px'}
       } else {
-        versePaneStyle = {marginTop: '10px', color: '#000000', padding: '10px'}
+        versePaneStyle = {marginTop: '10px', color: 'var(--text-color-dark)', padding: '10px'}
       }
 
       displayContent.push(
@@ -63,9 +63,9 @@ class ExpandedPane extends Component {
     }
 
     return (
-      <Col md={4} sm={4} xs={4} lg={4} style={{borderRight: '1px solid #95989A', backgroundColor: '#FFFFFF', padding: '0px'}}>
-        <Col md={12} sm={12} xs={12} lg={12} style={{ padding: '10px', backgroundColor: '#FFFFFF', height: "70px", borderBottom: "3px solid #b8b8b8"}}>
-          <span style={{ fontSize: '16px', color: '#000000', fontWeight: 'bold' }}>
+      <Col md={4} sm={4} xs={4} lg={4} style={{borderRight: '1px solid var(--border-color)', backgroundColor: 'var(--reverse-color)', padding: '0px'}}>
+        <Col md={12} sm={12} xs={12} lg={12} style={{ padding: '10px', backgroundColor: 'var(--reverse-color)', height: "70px", borderBottom: "3px solid var(--border-color)"}}>
+          <span style={{ fontSize: '16px', color: 'var(--text-color-dark)', fontWeight: 'bold' }}>
             {paneInfo.heading.heading}
           </span>
         </Col><br />
