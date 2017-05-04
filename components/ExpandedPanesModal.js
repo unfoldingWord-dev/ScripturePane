@@ -38,19 +38,19 @@ class ExpandedPanesModal extends React.Component {
 
     return (
       <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
-        <Modal.Header style={{ backgroundColor: "#333333" }} closeButton>
+        <Modal.Header style={{ backgroundColor: "var(--accent-color-dark)" }} closeButton>
           <Modal.Title id="contained-modal-title-sm"
-            style={{ textAlign: "center", color: "#FFFFFF" }}>
+            style={{ textAlign: "center", color: "var(--reverse-color)" }}>
 
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ padding: '0px', height: "550px", backgroundColor: "#333333", color: "#FFFFFF" }}>
-          <div style={{height: "550px", backgroundColor: "#ffffff"}}>
+        <Modal.Body style={{ padding: '0px', height: "550px", backgroundColor: "var(--reverse-color)", color: "var(--text-color)" }}>
+          <div style={{height: "550px"}}>
             {displayExpandedPanes}
           </div>
         </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: "#333333" }}>
-          <Button bsStyle="danger" onClick={onHide}>Close</Button>
+        <Modal.Footer style={{ backgroundColor: "var(--reverse-color)" }}>
+          <Button bsStyle="second" onClick={onHide}>Close</Button>
         </Modal.Footer>
       </Modal>
     );

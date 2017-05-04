@@ -104,7 +104,7 @@ class VerseDisplay extends React.Component {
             <span>
               {beforeText}
             </span>
-            <span style={{backgroundColor: "#FDD910"}}>
+            <span style={{backgroundColor: "var(--highlight-color)"}}>
               {quote}
             </span>
             <span>

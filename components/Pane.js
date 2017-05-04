@@ -26,7 +26,7 @@ class Pane extends React.Component {
       contentStyle = style.pane.contentRTL;
     }
     return (
-        <Col md={4} sm={4} xs={4} lg={4} style={id == 0 ? {} : {borderLeft: '1px solid #95989A'} }>
+        <Col md={4} sm={4} xs={4} lg={4} style={id == 0 ? {} : {borderLeft: '1px solid var(--border-color)'} }>
           <div style={style.removePane}
                 onClick={() => removePane(id)}>
             <CloseButton />
