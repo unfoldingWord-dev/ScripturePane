@@ -25,6 +25,8 @@ class Pane extends React.Component {
     } else {
       contentStyle = style.pane.contentRTL;
     }
+    let headingText = heading.resource_id ? heading.language_name + " (" + heading.resource_id.toUpperCase() + ")" : heading.language_name;
+
     return (
         <Col md={4} sm={4} xs={4} lg={4} style={id == 0 ? {} : {borderLeft: '1px solid var(--border-color)'} }>
           <div style={style.removePane}
@@ -32,7 +34,7 @@ class Pane extends React.Component {
             <CloseButton />
           </div>
             <span style={style.pane.title}>
-              {heading.heading || ''}
+              {headingText}
             </span>
             <span style={style.headingDescription}>
               {heading.headingDescription || ''}

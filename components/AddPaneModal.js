@@ -15,9 +15,11 @@ export default class AddPaneModal extends React.Component {
      */
     let panes = [];
     for (let key in staticPaneSettings) {
+      var resourceText = staticPaneSettings[key].heading.resource_name ? " (" + staticPaneSettings[key].heading.resource_name + ")" : "";
+      var displayText = staticPaneSettings[key].heading.language_name + resourceText;
       panes.push(
         <option key={key} value={staticPaneSettings[key].sourceName.toString()}>
-          {staticPaneSettings[key].heading.heading}
+          {displayText}
         </option>
       );
     }
@@ -34,7 +36,7 @@ export default class AddPaneModal extends React.Component {
           <h4 style={{ marginBottom: "30px" }}>
             Select source language
             </h4>
-          <FormControl componentClass="select" style={{ width: "20%" }}
+          <FormControl componentClass="select" style={{ width: "300px" }}
             onChange={e => { selectSourceLanguage(e) }}>
             <option value="">Select</option>
             {panes}
