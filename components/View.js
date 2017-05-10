@@ -98,7 +98,7 @@ class View extends React.Component {
       <div style={{ margin: '10px' }}>
       <Card zDepth={2}>
         <CardHeader
-          style={{ background: 'var(--accent-color)', padding: "10px"}}
+          style={{ background: 'var(--accent-color-dark)', padding: "10px"}}
           textStyle={{display: "block"}}
           children={title}
         />
