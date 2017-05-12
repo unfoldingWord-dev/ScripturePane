@@ -1,8 +1,7 @@
 import React from 'react';
-import {Col, Well, Glyphicon} from 'react-bootstrap';
+import {Glyphicon} from 'react-bootstrap';
 import style from '../css/Style';
 import VerseDisplay from './VerseDisplay';
-import CloseButton from './CloseButton';
 
 class Pane extends React.Component {
   render() {
@@ -28,30 +27,31 @@ class Pane extends React.Component {
     let headingText = heading.resource_id ? heading.language_name + " (" + heading.resource_id.toUpperCase() + ")" : heading.language_name;
 
     return (
-        <Col md={4} sm={4} xs={4} lg={4} style={id == 0 ? {} : {borderLeft: '1px solid var(--border-color)'} }>
-          <div style={style.removePane}
-                onClick={() => removePane(id)}>
-            <CloseButton />
-          </div>
-            <span style={style.pane.title}>
-              {headingText}
-            </span>
-            <span style={style.headingDescription}>
-              {heading.headingDescription || ''}
-            </span>
-
-            <div style={contentStyle}>
-                <VerseDisplay
-                  {...this.props}
-                  chapter={this.props.contextId.reference.chapter}
-                  verse={this.props.contextId.reference.verse}
-                  input={content}
-                  greek={greek}
-                  isGatewayLanguage = {isGatewayLanguage}
-                  showPopover={showPopover}
-                />
+        <div style={id > 0 ? style.otherPane : style.firstPane}>
+          <div style={style.verseTitle}>
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+              <span style={style.pane.title}>
+                {headingText}
+              </span>
+              <span style={style.headingDescription}>
+                {heading.headingDescription || ''}
+              </span>
             </div>
-        </Col>
+            <Glyphicon glyph={"remove"} style={{color: "var(--text-color-light)", cursor: 'pointer'}}
+                       onClick={() => removePane(id)} title="Click to remove pane"/>
+          </div>
+          <div style={contentStyle}>
+            <VerseDisplay
+                {...this.props}
+                chapter={this.props.contextId.reference.chapter}
+                verse={this.props.contextId.reference.verse}
+                input={content}
+                greek={greek}
+                isGatewayLanguage = {isGatewayLanguage}
+                showPopover={showPopover}
+            />
+          </div>
+        </div>
     );
   }
 }
