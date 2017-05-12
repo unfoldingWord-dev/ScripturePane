@@ -62,11 +62,13 @@ class ExpandedPane extends Component {
       );
     }
 
+    let headingText = paneInfo.heading.resource_id ? paneInfo.heading.language_name + " (" + paneInfo.heading.resource_id.toUpperCase() + ")" : paneInfo.heading.language_name;
+
     return (
       <Col md={4} sm={4} xs={4} lg={4} style={{borderRight: '1px solid var(--border-color)', backgroundColor: 'var(--reverse-color)', padding: '0px'}}>
         <Col md={12} sm={12} xs={12} lg={12} style={{ padding: '10px', backgroundColor: 'var(--reverse-color)', height: "70px", borderBottom: "3px solid var(--border-color)"}}>
           <span style={{ fontSize: '16px', color: 'var(--text-color-dark)', fontWeight: 'bold' }}>
-            {paneInfo.heading.heading}
+            {headingText}
           </span>
         </Col><br />
         <Col md={12} sm={12} xs={12} lg={12} style={{overflowY: 'scroll', height: '480px'}}>
