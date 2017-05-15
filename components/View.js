@@ -68,12 +68,12 @@ class View extends React.Component {
     */
     for (let index = scripturePane.length; index < 3; index++ ) {
       scripturePane.push(
-        <AddBible
-          key={index}
-          id={index}
-          scripturePane={scripturePane}
-          showModal={this.props.showModal}
-        />
+          <div key={index} style={index > 0 ? style.otherBible : style.firstBible}>
+            <AddBible
+                scripturePane={scripturePane}
+                showModal={this.props.showModal}
+            />
+          </div>
       );
     }
 
