@@ -5,14 +5,6 @@ import AddPaneModal from './AddPaneModal';
 import ExpandedPanesModal from './ExpandedPanesModal';
 import style from '../css/Style';
 import AddBible from './AddBible';
-import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from 'material-ui/Card';
 
 class View extends React.Component {
   render() {
@@ -74,38 +66,32 @@ class View extends React.Component {
     * being added is the button to open the modal that adds more resources to
     * the scripturePane component.
     */
-    for (let index = scripturePane.length + 1; scripturePane.length <= 2; index++ ) {
+    for (let index = scripturePane.length; index < 3; index++ ) {
       scripturePane.push(
-        <AddBible
-          key={index}
-          id={index}
-          scripturePane={scripturePane}
-          showModal={this.props.showModal}
-        />
+          <div key={index} style={index > 0 ? style.otherBible : style.firstBible}>
+            <AddBible
+                scripturePane={scripturePane}
+                showModal={this.props.showModal}
+            />
+          </div>
       );
     }
-    const title = (
-      <div style={{'fontSize':'16px', 'fontWeight':'bold', color: 'var(--reverse-color)', margin: "0px"}}>
-        <span>Step 1. Read</span>
-        <Glyphicon
-          onClick={showExpandModal}
-          glyph={"fullscreen"}
-          style={{cursor: "pointer", fontSize: "20px", float: "right"}}
-        />
-      </div>
-    );
+
     return (
-      <div style={{ margin: '10px' }}>
-      <Card zDepth={2}>
-        <CardHeader
-          style={{ background: 'var(--accent-color-dark)', padding: "10px"}}
-          textStyle={{display: "block"}}
-          children={title}
-        />
-        <Row style={{marginLeft: '0px', marginRight: '0px', height: "100%"}}>
-          {scripturePane}
-        </Row>
-      </Card>
+      <div style={style.scripturePane}>
+        <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+          <div style={style.titleBar}>
+            <span>Step 1. Read</span>
+            <Glyphicon
+                onClick={showExpandModal}
+                glyph={"fullscreen"}
+                style={{cursor: "pointer"}}
+            />
+          </div>
+          <div style={style.body}>
+            {scripturePane}
+          </div>
+        </div>
       <AddPaneModal
         show={modalVisibility}
         onHide={hideModal}

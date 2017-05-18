@@ -34,7 +34,7 @@ export default class AddPaneModal extends React.Component {
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: "var(--reverse-color)", color: "var(--accent-color-dark)", padding: "45px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <h4 style={{ marginBottom: "30px" }}>
-            Select source language
+            Select language
             </h4>
           <FormControl componentClass="select" style={{ width: "300px" }}
             onChange={e => { selectSourceLanguage(e) }}>

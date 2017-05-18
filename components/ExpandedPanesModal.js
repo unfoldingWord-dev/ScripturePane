@@ -6,6 +6,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import ExpandedPane from './ExpandedPane';
 import AddBible from './AddBible';
+import style from '../css/Style';
 
 class ExpandedPanesModal extends React.Component {
 
@@ -27,11 +28,12 @@ class ExpandedPanesModal extends React.Component {
     if (displayExpandedPanes.length <= 2) {
       for (let index = displayExpandedPanes.length + 1; displayExpandedPanes.length <= 2; index++) {
         displayExpandedPanes.push(
-          <AddBible
-            key={index}
-            scripturePane={displayExpandedPanes}
-            showModal={showModal}
-          />
+            <div key={index} style={index > 0 ? style.otherBible : style.firstBible}>
+                <AddBible
+                    scripturePane={displayExpandedPanes}
+                    showModal={showModal}
+                />
+            </div>
         );
       }
     }
@@ -45,7 +47,7 @@ class ExpandedPanesModal extends React.Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ padding: '0px', height: "550px", backgroundColor: "var(--reverse-color)", color: "var(--text-color)" }}>
-          <div style={{height: "550px"}}>
+          <div style={{height: "550px", display: 'flex'}}>
             {displayExpandedPanes}
           </div>
         </Modal.Body>
