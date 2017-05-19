@@ -24,7 +24,7 @@ var style = {
     fontFamily: "noto sans"
   },
   scripturePane: {
-    flex: '1 1 200px',
+    flex: '1 0 200px',
     margin: '10px',
     boxShadow: '0 3px 10px var(--background-color)',
     borderRadius: '2px',
