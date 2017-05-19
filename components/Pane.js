@@ -33,7 +33,7 @@ class Pane extends React.Component {
               <span style={style.pane.title}>
                 {headingText}
               </span>
-              <span style={style.headingDescription}>
+              <span style={style.pane.subtitle}>
                 {heading.headingDescription || ''}
               </span>
             </div>

@@ -16,15 +16,15 @@ var style = {
       fontWeight: '700',
       fontSize: '1em',
       marginBottom: "-5px",
-    }
-  },
-  headingDescription:{
-    color: "var(--text-color-light)",
-    fontStyle: 'bold',
-    fontFamily: "noto sans"
+    },
+    subtitle:{
+      color: "var(--text-color-light)",
+      fontStyle: 'bold',
+      fontFamily: "noto sans"
+    },
   },
   scripturePane: {
-    flex: '1 1 200px',
+    flex: '1 0 190px',
     margin: '10px',
     boxShadow: '0 3px 10px var(--background-color)',
     borderRadius: '2px',
@@ -41,7 +41,7 @@ var style = {
     fontWeight: 'bold',
   },
   body: {
-    flex: '1 1 160px',
+    flex: '1 1 150px',
     display: 'flex'
   },
   firstBible: {
