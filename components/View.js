@@ -86,6 +86,7 @@ class View extends React.Component {
                 onClick={showExpandModal}
                 glyph={"fullscreen"}
                 style={{cursor: "pointer"}}
+                title="Click to show expanded resource panes"
             />
           </div>
           <div style={style.body}>

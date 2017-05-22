@@ -38,7 +38,7 @@ class Pane extends React.Component {
               </span>
             </div>
             <Glyphicon glyph={"remove"} style={{color: "var(--text-color-light)", cursor: 'pointer'}}
-                       onClick={() => removePane(id)} title="Click to remove pane"/>
+                       onClick={() => removePane(id)} title="Click to remove resource"/>
           </div>
           <div style={contentStyle}>
             <VerseDisplay
