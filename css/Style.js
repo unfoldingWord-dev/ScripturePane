@@ -24,7 +24,7 @@ var style = {
     },
   },
   scripturePane: {
-    flex: '1 0 190px',
+    flex: '1 0 180px',
     margin: '10px',
     boxShadow: '0 3px 10px var(--background-color)',
     borderRadius: '2px',
@@ -41,7 +41,7 @@ var style = {
     fontWeight: 'bold',
   },
   body: {
-    flex: '1 1 150px',
+    flex: '1 1 140px',
     display: 'flex'
   },
   firstBible: {
