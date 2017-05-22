@@ -71,7 +71,7 @@ class ExpandedPane extends Component {
             {headingText}
           </span>
         </Col><br />
-        <Col md={12} sm={12} xs={12} lg={12} style={{overflowY: 'scroll', height: '480px'}}>
+        <Col md={12} sm={12} xs={12} lg={12} style={{overflowY: 'scroll', height: '430px'}}>
           {displayContent}
         </Col>
       </Col>

@@ -3,8 +3,7 @@
  * resources button on the scripture pane module.
  */
 import React from 'react';
-import {Modal, Button, FormControl} from 'react-bootstrap';
-
+import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
 
 export default class AddPaneModal extends React.Component {
   render() {
@@ -26,10 +25,15 @@ export default class AddPaneModal extends React.Component {
 
     return (
       <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
-        <Modal.Header style={{ backgroundColor: "var(--accent-color-dark)" }} closeButton>
+        <Modal.Header style={{ backgroundColor: "var(--accent-color-dark)" }}>
           <Modal.Title id="contained-modal-title-sm"
             style={{ textAlign: "center", color: "var(--reverse-color)" }}>
             Add Resources
+            <Glyphicon
+                onClick={onHide}
+                glyph={"remove"}
+                style={{color: "var(--reverse-color)", cursor: "pointer", fontSize: "18px", float: "right"}}
+            />
           </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: "var(--reverse-color)", color: "var(--accent-color-dark)", padding: "45px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -42,9 +46,9 @@ export default class AddPaneModal extends React.Component {
             {panes}
           </FormControl>
         </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: "var(--reverse-color)" }}>
+        <Modal.Footer style={{ padding: '0', backgroundColor: "var(--reverse-color)" }}>
           <button className="btn-second" onClick={onHide}>Close</button>
-          <Button bsStyle="prime" disabled={ !selectedPane } onClick={() => addPane()}>Load</Button>
+          <button className="btn-prime" disabled={ !selectedPane } onClick={() => addPane()}>Load</button>
         </Modal.Footer>
       </Modal>
     );
