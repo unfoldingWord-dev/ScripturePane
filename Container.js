@@ -9,7 +9,6 @@ import BooksOfBible from './js/BooksOfBible.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // constant declaration
 const NAMESPACE = "ScripturePane";
-const api = window.ModuleApi;
 
 class ScripturePane extends React.Component {
   constructor() {
