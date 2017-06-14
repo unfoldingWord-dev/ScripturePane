@@ -2,7 +2,7 @@ import React from 'react';
 import {Row, Glyphicon, Col} from 'react-bootstrap';
 import Pane from './Pane';
 import AddPaneModal from './AddPaneModal';
-import ExpandedPanesModal from './ExpandedPanesModal';
+import ChapterViewModal from './ChapterViewModal';
 import style from '../css/Style';
 import AddBible from './AddBible';
 
@@ -101,7 +101,7 @@ class View extends React.Component {
         addPane={addPane}
         selectedPane={selectedPane}
       />
-      <ExpandedPanesModal
+    <ChapterViewModal
         {...this.props}
         bibles={this.props.resourcesReducer.bibles}
         show={expandedPaneVisibility}
