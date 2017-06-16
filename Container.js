@@ -24,7 +24,7 @@ class ScripturePane extends React.Component {
    * @description - This removes a scripture source from the scripture pane.
    * @param {number} key - position index of the scripture source language
    *        in the currentPaneSettings array.
-   ******************************************************************************/
+   */
   removePane(key) {
     let {
       modulesSettingsReducer,
@@ -35,14 +35,14 @@ class ScripturePane extends React.Component {
     actions.changeModuleSettings(NAMESPACE, 'currentPaneSettings', paneSettings);
   }
   /**
-   * @description this methos is called when an user selects a resource name to
-   * be added to the scripture pane and it sets the state with this name in the
-   * selectedPane property. it matches that name that was sleected with the
-   * staticPaneSettings.
-   * @param {object} event - An event object that we use to get the value
-   * selected by the user from the select element
-   * @return {state} This will set the state to the selectedPane object
-  *******************************************************************************/
+  * @description this methos is called when an user selects a resource name to
+  * be added to the scripture pane and it sets the state with this name in the
+  * selectedPane property. it matches that name that was sleected with the
+  * staticPaneSettings.
+  * @param {object} event - An event object that we use to get the value
+  * selected by the user from the select element
+  * @return {state} This will set the state to the selectedPane object
+  */
   selectSourceLanguage(event) {
     let {
       modulesSettingsReducer
@@ -65,7 +65,7 @@ class ScripturePane extends React.Component {
    * rendered in the scripture pane component) from the checkstore. and then it
    * adds the new pane information and saves it in the checkstore. Finally, it
    * sets the modalVisibility to false to close the modal.
-  *******************************************************************************/
+   */
   addPane() {
     let {
       modulesSettingsReducer,

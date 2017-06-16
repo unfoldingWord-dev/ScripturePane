@@ -27,9 +27,10 @@ class View extends React.Component {
     let scripturePane = [];
     let greek = false;
     let isGatewayLanguage = false;
-    let bibles = this.props.resourcesReducer.bibles
+    let bibles = this.props.resourcesReducer.bibles;
+    let targetLanguageName = this.props.projectDetailsReducer.manifest.target_language.name;
     for (let key in pane) {
-      let content = bibles[pane[key].sourceName];
+      let content = bibles[pane[key].heading.resource_id];
       let heading = pane[key].heading;
       if (pane[key].sourceName === "originalLanguage") {
         greek = true;
@@ -115,4 +116,4 @@ class View extends React.Component {
   }
 }
 
-module.exports = View;
+export default View;
