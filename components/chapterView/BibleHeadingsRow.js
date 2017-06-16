@@ -10,7 +10,7 @@ class BibleHeadingsRow extends React.Component {
     // if required data, then populate bibleHeadings
     let bibleHeadings = [];
     if (currentPaneSettings.length > 0) {
-      bibleHeadings = currentPaneSettings.map(resource => {
+      bibleHeadings = currentPaneSettings.map((resource, index) => {
         let {language_name, resource_id} = resource.heading;
         let headingText = language_name;
         if (resource_id) headingText = language_name + '(' + resource_id.toUpperCase() + ')';
@@ -24,7 +24,7 @@ class BibleHeadingsRow extends React.Component {
         };
 
         return (
-          <Col key={resource.sourceName} md={4} sm={4} xs={4} lg={4} style={colStyle} >
+          <Col key={index} md={4} sm={4} xs={4} lg={4} style={colStyle} >
             <span>{headingText}</span>
           </Col>
         );
@@ -39,7 +39,7 @@ class BibleHeadingsRow extends React.Component {
     while (bibleHeadings.length < 3) {
       let remaining = 3 - bibleHeadings.length;
       bibleHeadings.push(
-        <Col key={remaining} md={4} sm={4} xs={4} lg={4} style={colStyle} >
+        <Col key={3-remaining} md={4} sm={4} xs={4} lg={4} style={colStyle} >
           <AddBible showModal={this.props.showModal} />
         </Col>
       );

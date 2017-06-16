@@ -18,49 +18,22 @@ class View extends React.Component {
       expandedPaneVisibility,
       selectedPane,
       hideExpandModal,
-      hideModal,
-      contextIdReducer
+      hideModal
     } = this.props;
     let staticPaneSettings = modulesSettingsReducer.ScripturePane.staticPaneSettings;
     let currentPaneSettings = modulesSettingsReducer.ScripturePane.currentPaneSettings;
-    let pane = currentPaneSettings;
-    let scripturePane = [];
-    let greek = false;
-    let isGatewayLanguage = false;
-    let bibles = this.props.resourcesReducer.bibles;
-    let targetLanguageName = this.props.projectDetailsReducer.manifest.target_language.name;
-    for (let key in pane) {
-      let content = bibles[pane[key].heading.resource_id];
-      let heading = pane[key].heading;
-      if (pane[key].sourceName === "originalLanguage") {
-        greek = true;
-      }
-      if (pane[key].sourceName === "gatewayLanguage") {
-        isGatewayLanguage = true;
-      }
-      let dir = pane[key].dir || this.props.projectDetailsReducer.manifest.target_language.direction;
-      if (scripturePane.length <= 3) {
-        scripturePane.push(
-          <Pane
-            {...this.props}
-            isGatewayLanguage={isGatewayLanguage}
-            greek={greek}
-            key={key}
-            id={key}
-            content={content}
-            heading={heading}
-            dir={dir}
-            removePane={this.props.removePane}
-            arrayLength={pane.length}
-          />
-        );
-        greek = false;
-        isGatewayLanguage = false;
-      } else {
-        // will prompt user that only 4 scripture sources can be loaded at once
-        console.warn("Only 4 scripture sources can be loaded at once");
-      }
-    }
+
+    let scripturePane = currentPaneSettings.map( (paneSettings, index) => {
+      return (<Pane
+        {...this.props}
+        key={index}
+        index={index}
+        paneSettings={paneSettings}
+        removePane={this.props.removePane}
+        arrayLength={currentPaneSettings.length}
+      />);
+    });
+
     /**
     * @description This will add/push an array element to the scripturePane array
     * only when the length of the array is less than or equal to 2. this element
@@ -108,7 +81,6 @@ class View extends React.Component {
         show={expandedPaneVisibility}
         onHide={hideExpandModal}
         currentPaneSettings={currentPaneSettings}
-        contextIdReducer={contextIdReducer}
         showModal={showModal}
       />
       </div>
