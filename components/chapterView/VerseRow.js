@@ -1,6 +1,7 @@
 import React from 'react';
 import {Col, Row} from 'react-bootstrap';
-import Verse from './Verse';
+import Verse from '../Verse';
+import {bibleIdFromSourceName} from '../../helpers/bibleHelpers';
 
 class VerseRow extends React.Component {
 
@@ -19,15 +20,16 @@ class VerseRow extends React.Component {
     let isCurrent = verseNumber == verse;
     if (isCurrent) colStyle.borderLeft = '3px solid var(--accent-color)';
     if (currentPaneSettings.length > 0) {
-      verseCells = currentPaneSettings.map(resource => {
-        let verseText = bibles[resource.sourceName][chapter][verseNumber];
+      verseCells = currentPaneSettings.map((resource, index) => {
+        let bibleId = bibleIdFromSourceName(resource.sourceName);
+        let verseText = bibles[bibleId][chapter][verseNumber];
         let dir = resource.dir;
-        if (resource.sourceName === "targetLanguage") {
+        if (bibleId === 'targetLanguage') {
           dir = this.props.projectDetailsReducer.manifest.target_language.direction
         }
 
         return (
-          <Col key={resource.sourceName} md={4} sm={4} xs={4} lg={4} style={colStyle}>
+          <Col key={index} md={4} sm={4} xs={4} lg={4} style={colStyle}>
             <Verse {...this.props}
               sourceName={resource.sourceName}
               isCurrent={isCurrent}
