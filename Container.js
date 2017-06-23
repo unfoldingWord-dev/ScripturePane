@@ -17,7 +17,8 @@ class ScripturePane extends React.Component {
       currentPaneSettings: null,
       modalVisibility: false,
       expandedPaneVisibility: false,
-      staticPaneSettings: null
+      staticPaneSettings: null,
+      selectedPane: false
     };
   }
   /**
@@ -26,13 +27,10 @@ class ScripturePane extends React.Component {
    *        in the currentPaneSettings array.
    */
   removePane(key) {
-    let {
-      modulesSettingsReducer,
-      actions
-    } = this.props;
+    let { modulesSettingsReducer, actions } = this.props;
     let paneSettings = modulesSettingsReducer.ScripturePane.currentPaneSettings;
     paneSettings.splice(key, 1);
-    actions.changeModuleSettings(NAMESPACE, 'currentPaneSettings', paneSettings);
+    actions.setModuleSettings(NAMESPACE, 'currentPaneSettings', paneSettings);
   }
   /**
   * @description this methos is called when an user selects a resource name to
@@ -44,20 +42,10 @@ class ScripturePane extends React.Component {
   * @return {state} This will set the state to the selectedPane object
   */
   selectSourceLanguage(event) {
-    let {
-      modulesSettingsReducer
-    } = this.props;
-    let staticPaneSettings = modulesSettingsReducer[NAMESPACE].staticPaneSettings;
-    let sourceLanguageName = event.target.value;
-    let selectedPane = false;
-    if (sourceLanguageName) {
-      for (let key in staticPaneSettings) {
-        if (staticPaneSettings[key].sourceName === sourceLanguageName) {
-          selectedPane = staticPaneSettings[key];
-        }
-      }
-    }
-    this.setState({ selectedPane: selectedPane });
+    // let { modulesSettingsReducer } = this.props;
+    // let staticPaneSettings = modulesSettingsReducer[NAMESPACE].staticPaneSettings;
+    let selectedBibleId = event.target.value;
+    this.setState({ selectedPane: selectedBibleId });
   }
   /**
    * @description This handles loading a new resource to the scripture pane
@@ -67,14 +55,11 @@ class ScripturePane extends React.Component {
    * sets the modalVisibility to false to close the modal.
    */
   addPane() {
-    let {
-      modulesSettingsReducer,
-      actions
-    } = this.props;
+    let { modulesSettingsReducer, actions } = this.props;
     let currentPaneSettings = modulesSettingsReducer[NAMESPACE].currentPaneSettings;
     if (this.state.selectedPane) {
       currentPaneSettings.push(this.state.selectedPane);
-      actions.changeModuleSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
+      actions.setModuleSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
       this.setState({ modalVisibility: false });
     }
   }

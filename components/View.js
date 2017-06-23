@@ -23,15 +23,17 @@ class View extends React.Component {
     let staticPaneSettings = modulesSettingsReducer.ScripturePane.staticPaneSettings;
     let currentPaneSettings = modulesSettingsReducer.ScripturePane.currentPaneSettings;
 
-    let scripturePane = currentPaneSettings.map( (paneSettings, index) => {
-      return (<Pane
-        {...this.props}
-        key={index}
-        index={index}
-        paneSettings={paneSettings}
-        removePane={this.props.removePane}
-        arrayLength={currentPaneSettings.length}
-      />);
+    let scripturePane = currentPaneSettings.map((bibleId, index) => {
+      return (
+        <Pane
+          {...this.props}
+          key={index}
+          index={index}
+          bibleId={bibleId}
+          removePane={this.props.removePane}
+          arrayLength={currentPaneSettings.length}
+        />
+      );
     });
 
     /**
@@ -68,6 +70,7 @@ class View extends React.Component {
           </div>
         </div>
       <AddPaneModal
+        {...this.props}
         show={modalVisibility}
         onHide={hideModal}
         staticPaneSettings={staticPaneSettings}

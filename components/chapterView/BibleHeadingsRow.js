@@ -6,16 +6,15 @@ class BibleHeadingsRow extends React.Component {
 
   render() {
     let {currentPaneSettings} = this.props.modulesSettingsReducer.ScripturePane;
-
+    let {bibles} = this.props.resourcesReducer;
     // if required data, then populate bibleHeadings
     let bibleHeadings = [];
     if (currentPaneSettings.length > 0) {
-      bibleHeadings = currentPaneSettings.map((resource, index) => {
-        let {language_name, resource_id} = resource.heading;
-        let headingText = language_name;
-        if (resource_id) headingText = language_name + '(' + resource_id.toUpperCase() + ')';
-
-        let dir = resource.dir;
+      bibleHeadings = currentPaneSettings.map((bibleId, index) => {
+        let { language_name, resource_title, resource_id, direction } = bibles[bibleId]["manifest"];
+        let resourceText = bibleId !== "targetLanguage" ? " (" + bibleId.toUpperCase() + ")" : "" ;
+        let headingText = language_name + resourceText;
+        let dir = direction;
         if (!dir) dir = this.props.projectDetailsReducer.manifest.target_language.direction;
         let colStyle = {
           alignItems: 'stretch', padding: '10px', fontSize: '16px', fontWeight: 'bold',

@@ -2,27 +2,25 @@ import React from 'react';
 import {Glyphicon} from 'react-bootstrap';
 import style from '../css/Style';
 import Verse from './Verse';
-import {bibleIdFromSourceName} from '../helpers/bibleHelpers';
+// import {bibleIdFromSourceName} from '../helpers/bibleHelpers';
 
 class Pane extends React.Component {
   render() {
-    let { removePane, index, paneSettings } = this.props;
+    let { removePane, index, bibleId } = this.props;
     let { showPopover } = this.props.actions;
-    let { dir, sourceName, heading } = paneSettings;
     let { reference } = this.props.contextIdReducer.contextId;
     let { bibles } = this.props.resourcesReducer;
-
+    let { direction, language_name, resource_id, description } = bibles[bibleId]["manifest"];
     // look up verseText
-    let bibleId = bibleIdFromSourceName(sourceName);
     let verseText = bibles[bibleId][reference.chapter][reference.verse];
-
+    let headingText = bibleId !== "targetLanguage" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name;
     let contentStyle;
-    if (dir == 'ltr') {
+
+    if (direction == 'ltr') {
       contentStyle = style.pane.contentLTR;
     } else {
       contentStyle = style.pane.contentRTL;
     }
-    let headingText = heading.resource_id ? heading.language_name + " (" + heading.resource_id.toUpperCase() + ")" : heading.language_name;
 
     return (
       <div style={index > 0 ? style.otherPane : style.firstPane}>
@@ -32,7 +30,7 @@ class Pane extends React.Component {
               {headingText}
             </span>
             <span style={style.pane.subtitle}>
-              {heading.headingDescription || ''}
+              {description || ''}
             </span>
           </div>
           <Glyphicon glyph={"remove"} style={{color: "var(--text-color-light)", cursor: 'pointer'}}
@@ -44,8 +42,8 @@ class Pane extends React.Component {
             verseText={verseText}
             chapter={reference.chapter}
             verse={reference.verse}
-            dir={dir}
-            sourceName={sourceName}
+            direction={direction}
+            bibleId={resource_id}
             isCurrent={true}
           />
         </div>
@@ -54,4 +52,4 @@ class Pane extends React.Component {
   }
 }
 
-module.exports = Pane;
+export default Pane;

@@ -66,10 +66,10 @@ class Verse extends React.Component {
 
   render() {
     let verseSpan = <span/>;
-    let { verseText, chapter, verse, dir, sourceName, isCurrent} = this.props;
+    let { verseText, chapter, verse, direction, bibleId, isCurrent} = this.props;
     if (typeof verseText === 'string') {
       let {quote, occurrence} = this.props.contextIdReducer.contextId;
-      if ( isCurrent && sourceName === 'gatewayLanguage' && !quote.includes("...") && verseText.includes(quote)) {
+      if ( isCurrent && bibleId === 'ulb-en' && !quote.includes("...") && verseText.includes(quote)) {
         verseSpan = this.highlightQuoteInVerse(verseText, quote, occurrence);
       } else {
         verseSpan = <span>{verseText}</span>;
@@ -79,8 +79,8 @@ class Verse extends React.Component {
     }
 
     let chapterVerse = <strong>{chapter}:{verse} </strong>;
-    if (dir === 'rtl') chapterVerse = <strong>{verse}:{chapter} </strong>;
-    let divStyle = {direction: dir};
+    if (direction === 'rtl') chapterVerse = <strong>{verse}:{chapter} </strong>;
+    let divStyle = {direction: direction};
 
     return (
       <div style={divStyle}>
