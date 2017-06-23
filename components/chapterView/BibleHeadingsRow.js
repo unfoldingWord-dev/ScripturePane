@@ -12,7 +12,7 @@ class BibleHeadingsRow extends React.Component {
     if (currentPaneSettings.length > 0) {
       bibleHeadings = currentPaneSettings.map((bibleId, index) => {
         let { language_name, resource_title, resource_id, direction } = bibles[bibleId]["manifest"];
-        let resourceText = bibleId !== "targetLanguage" ? " (" + resource_title.toUpperCase() + ")" : "" ;
+        let resourceText = bibleId !== "targetLanguage" ? " (" + bibleId.toUpperCase() + ")" : "" ;
         let headingText = language_name + resourceText;
         let dir = direction;
         if (!dir) dir = this.props.projectDetailsReducer.manifest.target_language.direction;
