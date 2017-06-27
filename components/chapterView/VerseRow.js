@@ -8,7 +8,7 @@ class VerseRow extends React.Component {
   render() {
     let {verseNumber} = this.props;
     let {bibles} = this.props.resourcesReducer;
-    let {currentPaneSettings} = this.props.modulesSettingsReducer.ScripturePane;
+    let {currentPaneSettings} = this.props.settingsReducer.toolSettings.ScripturePane;
     let {chapter, verse} = this.props.contextIdReducer.contextId.reference;
 
     // if required data, then populate verse

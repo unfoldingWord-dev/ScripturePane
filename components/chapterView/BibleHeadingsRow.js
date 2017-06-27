@@ -5,7 +5,7 @@ import AddBible from '../AddBible';
 class BibleHeadingsRow extends React.Component {
 
   render() {
-    let {currentPaneSettings} = this.props.modulesSettingsReducer.ScripturePane;
+    let {currentPaneSettings} = this.props.settingsReducer.toolSettings.ScripturePane;
     let {bibles} = this.props.resourcesReducer;
     // if required data, then populate bibleHeadings
     let bibleHeadings = [];
