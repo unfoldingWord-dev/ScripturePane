@@ -28,7 +28,11 @@ class ScripturePane extends React.Component {
    */
   removePane(key) {
     let { modulesSettingsReducer, actions } = this.props;
-    let paneSettings = modulesSettingsReducer.ScripturePane.currentPaneSettings;
+    try {
+      let paneSettings = modulesSettingsReducer.ScripturePane.currentPaneSettings;
+    } catch (e) {
+      consle.warn(e);
+    }
     paneSettings.splice(key, 1);
     actions.setModuleSettings(NAMESPACE, 'currentPaneSettings', paneSettings);
   }
@@ -42,8 +46,6 @@ class ScripturePane extends React.Component {
   * @return {state} This will set the state to the selectedPane object
   */
   selectSourceLanguage(event) {
-    // let { modulesSettingsReducer } = this.props;
-    // let staticPaneSettings = modulesSettingsReducer[NAMESPACE].staticPaneSettings;
     let selectedBibleId = event.target.value;
     this.setState({ selectedPane: selectedBibleId });
   }
@@ -56,11 +58,15 @@ class ScripturePane extends React.Component {
    */
   addPane() {
     let { modulesSettingsReducer, actions } = this.props;
-    let currentPaneSettings = modulesSettingsReducer[NAMESPACE].currentPaneSettings;
-    if (this.state.selectedPane) {
-      currentPaneSettings.push(this.state.selectedPane);
-      actions.setModuleSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
-      this.setState({ modalVisibility: false });
+    try {
+      let currentPaneSettings = modulesSettingsReducer[NAMESPACE].currentPaneSettings;
+      if (this.state.selectedPane) {
+        currentPaneSettings.push(this.state.selectedPane);
+        actions.setModuleSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
+        this.setState({ modalVisibility: false });
+      }
+    } catch (e) {
+      console.warn(e);
     }
   }
 
