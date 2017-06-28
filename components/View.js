@@ -20,8 +20,8 @@ class View extends React.Component {
       hideExpandModal,
       hideModal
     } = this.props;
-    let staticPaneSettings = settingsReducer.toolSettings.ScripturePane.staticPaneSettings;
-    let currentPaneSettings = settingsReducer.toolSettings.ScripturePane.currentPaneSettings;
+    let staticPaneSettings = settingsReducer.toolsSettings.ScripturePane.staticPaneSettings;
+    let currentPaneSettings = settingsReducer.toolsSettings.ScripturePane.currentPaneSettings;
 
     let scripturePane = currentPaneSettings.map((bibleId, index) => {
       return (

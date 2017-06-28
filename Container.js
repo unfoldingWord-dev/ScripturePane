@@ -28,8 +28,8 @@ class ScripturePane extends React.Component {
      */
     removePane(key) {
         let { settingsReducer, actions } = this.props;
-        if (settingsReducer.toolSettings.ScripturePane) {
-            let paneSettings = settingsReducer.toolSettings.ScripturePane.currentPaneSettings;
+        if (settingsReducer.toolsSettings.ScripturePane) {
+            let paneSettings = settingsReducer.toolsSettings.ScripturePane.currentPaneSettings;
             paneSettings.splice(key, 1);
             actions.setToolSettings(NAMESPACE, 'currentPaneSettings', paneSettings);
         }
@@ -45,7 +45,7 @@ class ScripturePane extends React.Component {
     */
     selectSourceLanguage(event) {
         // let { settingsReducer } = this.props;
-        // let staticPaneSettings = settingsReducer.toolSettings[NAMESPACE].staticPaneSettings;
+        // let staticPaneSettings = settingsReducer.toolsSettings[NAMESPACE].staticPaneSettings;
         let selectedBibleId = event.target.value;
         this.setState({ selectedPane: selectedBibleId });
     }
@@ -58,8 +58,8 @@ class ScripturePane extends React.Component {
      */
     addPane() {
         let { settingsReducer, actions } = this.props;
-        if (settingsReducer.toolSettings[NAMESPACE]) {
-            let currentPaneSettings = settingsReducer.toolSettings[NAMESPACE].currentPaneSettings;
+        if (settingsReducer.toolsSettings[NAMESPACE]) {
+            let currentPaneSettings = settingsReducer.toolsSettings[NAMESPACE].currentPaneSettings;
             if (this.state.selectedPane) {
                 currentPaneSettings.push(this.state.selectedPane);
                 actions.setToolSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
