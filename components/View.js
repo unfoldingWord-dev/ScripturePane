@@ -9,7 +9,7 @@ import AddBible from './AddBible';
 class View extends React.Component {
   render() {
     let {
-      modulesSettingsReducer,
+      settingsReducer,
       selectSourceLanguage,
       showExpandModal,
       modalVisibility,
@@ -20,8 +20,8 @@ class View extends React.Component {
       hideExpandModal,
       hideModal
     } = this.props;
-    let staticPaneSettings = modulesSettingsReducer.ScripturePane.staticPaneSettings;
-    let currentPaneSettings = modulesSettingsReducer.ScripturePane.currentPaneSettings;
+    let staticPaneSettings = settingsReducer.toolsSettings.ScripturePane.staticPaneSettings;
+    let currentPaneSettings = settingsReducer.toolsSettings.ScripturePane.currentPaneSettings;
 
     let scripturePane = currentPaneSettings.map((bibleId, index) => {
       return (

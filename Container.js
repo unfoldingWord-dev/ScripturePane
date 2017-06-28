@@ -27,10 +27,16 @@ class ScripturePane extends React.Component {
    *        in the currentPaneSettings array.
    */
   removePane(key) {
-    let { modulesSettingsReducer, actions } = this.props;
-    let paneSettings = modulesSettingsReducer.ScripturePane.currentPaneSettings;
-    paneSettings.splice(key, 1);
-    actions.setModuleSettings(NAMESPACE, 'currentPaneSettings', paneSettings);
+    let { settingsReducer, actions } = this.props;
+    try {
+      if (settingsReducer.toolsSettings.ScripturePane) {
+        let paneSettings = settingsReducer.toolsSettings.ScripturePane.currentPaneSettings;
+        paneSettings.splice(key, 1);
+        actions.setToolSettings(NAMESPACE, 'currentPaneSettings', paneSettings);
+      }
+    } catch (e) {
+      console.warn(e);
+    }
   }
   /**
   * @description this methos is called when an user selects a resource name to
@@ -42,8 +48,6 @@ class ScripturePane extends React.Component {
   * @return {state} This will set the state to the selectedPane object
   */
   selectSourceLanguage(event) {
-    // let { modulesSettingsReducer } = this.props;
-    // let staticPaneSettings = modulesSettingsReducer[NAMESPACE].staticPaneSettings;
     let selectedBibleId = event.target.value;
     this.setState({ selectedPane: selectedBibleId });
   }
@@ -55,12 +59,18 @@ class ScripturePane extends React.Component {
    * sets the modalVisibility to false to close the modal.
    */
   addPane() {
-    let { modulesSettingsReducer, actions } = this.props;
-    let currentPaneSettings = modulesSettingsReducer[NAMESPACE].currentPaneSettings;
-    if (this.state.selectedPane) {
-      currentPaneSettings.push(this.state.selectedPane);
-      actions.setModuleSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
-      this.setState({ modalVisibility: false });
+    let { settingsReducer, actions } = this.props;
+    try {
+      if (settingsReducer.toolsSettings[NAMESPACE]) {
+        let currentPaneSettings = settingsReducer.toolsSettings[NAMESPACE].currentPaneSettings;
+        if (this.state.selectedPane) {
+          currentPaneSettings.push(this.state.selectedPane);
+          actions.setToolSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
+          this.setState({ modalVisibility: false });
+        }
+      }
+    } catch (e) {
+      console.warn(e);
     }
   }
 
