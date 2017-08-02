@@ -16,7 +16,7 @@ class ChapterView extends React.Component {
   render() {
     let {bibles} = this.props.resourcesReducer;
     let {chapter} = this.props.contextIdReducer.contextId.reference;
-    let verseNumbers = Object.keys(bibles['ulb-en'][chapter]);
+    let verseNumbers = Object.keys(bibles['ulb'][chapter]);
 
     // for verses in chapter
     let verseRows = <div/>;

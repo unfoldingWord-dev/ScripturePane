@@ -10,6 +10,7 @@ class Pane extends React.Component {
     let { showPopover } = this.props.actions;
     let { reference } = this.props.contextIdReducer.contextId;
     let { bibles } = this.props.resourcesReducer;
+
     let { direction, language_name, resource_id, description } = bibles[bibleId]["manifest"];
     // look up verseText
     let verseText = bibles[bibleId][reference.chapter][reference.verse];

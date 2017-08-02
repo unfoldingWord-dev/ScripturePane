@@ -69,7 +69,7 @@ class Verse extends React.Component {
     let { verseText, chapter, verse, direction, bibleId, isCurrent} = this.props;
     if (typeof verseText === 'string') {
       let {quote, occurrence} = this.props.contextIdReducer.contextId;
-      if ( isCurrent && bibleId === 'ulb-en' && !quote.includes("...") && verseText.includes(quote)) {
+      if ( isCurrent && bibleId === 'ulb' && !quote.includes("...") && verseText.includes(quote)) {
         verseSpan = this.highlightQuoteInVerse(verseText, quote, occurrence);
       } else {
         verseSpan = <span>{verseText}</span>;
