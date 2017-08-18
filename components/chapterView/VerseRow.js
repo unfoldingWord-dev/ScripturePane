@@ -20,10 +20,10 @@ class VerseRow extends React.Component {
     let isCurrent = verseNumber == verse;
     if (isCurrent) colStyle.borderLeft = '3px solid var(--accent-color)';
     if (currentPaneSettings.length > 0) {
-      verseCells = currentPaneSettings.map((resource, index) => {
-        let bibleId = bibleIdFromSourceName(resource.sourceName);
+      verseCells = currentPaneSettings.map((bibleId, index) => {
+        let manifest = bibles[bibleId].manifest;
         let verseText = bibles[bibleId][chapter][verseNumber];
-        let dir = resource.dir;
+        let dir = manifest.dir;
         if (bibleId === 'targetLanguage') {
           dir = this.props.projectDetailsReducer.manifest.target_language.direction
         }
@@ -31,7 +31,7 @@ class VerseRow extends React.Component {
         return (
           <Col key={index} md={4} sm={4} xs={4} lg={4} style={colStyle}>
             <Verse {...this.props}
-              sourceName={resource.sourceName}
+              sourceName={bibleId}
               isCurrent={isCurrent}
               verseText={verseText}
               chapter={chapter}
