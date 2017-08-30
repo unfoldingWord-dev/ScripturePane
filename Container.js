@@ -5,10 +5,7 @@
  */
 import React from 'react';
 import View from './components/View';
-import BooksOfBible from './js/BooksOfBible.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// constant declaration
-const NAMESPACE = "ScripturePane";
 
 class ScripturePane extends React.Component {
   constructor() {
@@ -96,7 +93,4 @@ class ScripturePane extends React.Component {
   }
 }
 
-module.exports = {
-  name: NAMESPACE,
-  container: ScripturePane
-};
+export default ScripturePane;
