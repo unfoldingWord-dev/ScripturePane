@@ -6,6 +6,8 @@
 import React from 'react';
 import View from './components/View';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// constant
+const NAMESPACE = 'ScripturePane';
 
 class ScripturePane extends React.Component {
   constructor() {
