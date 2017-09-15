@@ -1,5 +1,7 @@
 import React from 'react';
-import XRegExp from 'xregexp'
+import XRegExp from 'xregexp';
+// helpers
+import * as highlightHelpers from '../helpers/highlightHelpers';
 
 class Verse extends React.Component {
 
@@ -24,33 +26,33 @@ class Verse extends React.Component {
 
   highlightQuoteInVerse(content, quote, occurrence) {
     let verseSpan = [];
-    let regex = XRegExp('(?:^|\\PL)' + quote + '(?:$|\\PL)', 'g') // use a regexp to capture the surrounding characters to use in rebuilding the verse
-    let contentArray = XRegExp.split(content, regex) // split the verse into all of the pieces
-    let aroundQuote = [] // store all of the characters surrounding the quote here
+    let regex = XRegExp('(?:^|\\PL)' + quote + '(?:$|\\PL)', 'g'); // use a regexp to capture the surrounding characters to use in rebuilding the verse
+    let contentArray = XRegExp.split(content, regex); // split the verse into all of the pieces
+    let aroundQuote = []; // store all of the characters surrounding the quote here
     XRegExp.forEach(content, regex, function (match, i) {
-      aroundQuote[i] = match[0].split(quote) // store all of the characters surrounding the matches
+      aroundQuote[i] = match[0].split(quote); // store all of the characters surrounding the matches
     })
-    let aroundQuoteIndex = occurrence - 1 // this ensures we can find the characters around the highlighted quote
+    let aroundQuoteIndex = occurrence - 1; // this ensures we can find the characters around the highlighted quote
     // for all of the content before the current quote
     // append the split quotes with their associated characters
     let beforeTextArray = contentArray.slice(0,occurrence).map( (text, i) => {
       if (i < occurrence-1) {   // if not the last one
-        text = text + aroundQuote[i][0] + quote + aroundQuote[i][1] // append the quote with the surrounding character
+        text = text + aroundQuote[i][0] + quote + aroundQuote[i][1]; // append the quote with the surrounding character
       }
-      return text
+      return text;
     })
-    let beforeText = beforeTextArray.join('') // join the pieces
-    beforeText = beforeText + aroundQuote[aroundQuoteIndex][0] // append the current quote's preceding char
+    let beforeText = beforeTextArray.join(''); // join the pieces
+    beforeText = beforeText + aroundQuote[aroundQuoteIndex][0]; // append the current quote's preceding char
     // for all of the content after the current quote
     // append the split quotes with their associated characters
     let afterTextArray = contentArray.slice(occurrence).map( (text, i) => {
       if (i < contentArray.length - occurrence - 1) { // if not the last one
-        text = text + aroundQuote[i + occurrence][0] + quote + aroundQuote[i + occurrence][1] // append the quote with the surrounding character
+        text = text + aroundQuote[i + occurrence][0] + quote + aroundQuote[i + occurrence][1]; // append the quote with the surrounding character
       }
-      return text
+      return text;
     })
-    let afterText = afterTextArray.join('')  // join the pieces
-    afterText = aroundQuote[aroundQuoteIndex][1] + afterText  // prepend the current quote's preceding char
+    let afterText = afterTextArray.join('');  // join the pieces
+    afterText = aroundQuote[aroundQuoteIndex][1] + afterText;  // prepend the current quote's preceding char
     verseSpan.push(
       <span key={1}>
         <span>{beforeText}</span>
@@ -60,8 +62,7 @@ class Verse extends React.Component {
         <span>{afterText}</span>
       </span>
     );
-
-    return verseSpan
+    return verseSpan;
   }
 
   render() {
@@ -69,7 +70,8 @@ class Verse extends React.Component {
     let { verseText, chapter, verse, direction, bibleId, isCurrent} = this.props;
     if (typeof verseText === 'string') {
       let {quote, occurrence} = this.props.contextIdReducer.contextId;
-      if (quote && verseText && isCurrent && bibleId === 'ulb' && !quote.includes("...") && verseText.includes(quote)) {
+      const isQuoteInVerse = highlightHelpers.isQuoteInVerse(verseText, quote);
+      if (quote && verseText && isCurrent && bibleId === 'ulb' && !quote.includes("...") && isQuoteInVerse) {
         verseSpan = this.highlightQuoteInVerse(verseText, quote, occurrence);
       } else {
         verseSpan = <span>{verseText}</span>;
