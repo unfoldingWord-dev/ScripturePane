@@ -15,5 +15,5 @@ export const bibleIdFromSourceName = (sourceName) => {
       bibleId = 'targetLanguage';
       break;
   }
-  return bibleId
+  return bibleId;
 }
