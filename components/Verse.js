@@ -2,20 +2,36 @@ import React from 'react';
 import XRegExp from 'xregexp';
 // helpers
 import * as highlightHelpers from '../helpers/highlightHelpers';
+import * as lexiconHelpers from '../helpers/lexiconHelpers';
+// components
+import WordDetails from './WordDetails';
 
 class Verse extends React.Component {
 
-  verseArray(verseText = []) {
-    let { showPopover } = this.props.actions;
-    let verseSpan = verseText.map( (word, index) => {
-      const PopoverTitle = <span>{word.word}</span>;
-      let click = (e) => {
-        let positionCoord = e.target;
-        showPopover(PopoverTitle, word.brief, positionCoord);
-      }
+  componentWillMount() {
+    const {verseText} = this.props;
+    if (verseText.constructor == Array) {
+      this.props.verseText.forEach((word) => {
+        const {strongs} = word
+        const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
+        const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
+        this.props.actions.loadLexiconEntry(lexiconId, entryId);
+      });
+    }
+  }
 
+  onClick(e, word) {
+    let positionCoord = e.target;
+    const PopoverTitle = <strong style={{fontSize: '1.2em'}}>{word.word}</strong>;
+    let { showPopover } = this.props.actions;
+    const wordDetails = <WordDetails {...this.props} word={word} />;
+    showPopover(PopoverTitle, wordDetails, positionCoord);
+  }
+
+  verseArray(verseText = []) {
+    let verseSpan = verseText.map( (word, index) => {
       return (
-        <span style={{cursor: 'pointer'}} onClick={click} key={index}>
+        <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
           {word.word + " "}
         </span>
       );
