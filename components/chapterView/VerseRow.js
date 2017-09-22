@@ -24,9 +24,9 @@ class VerseRow extends React.Component {
       verseCells = currentPaneSettings.map((bibleId, index) => {
         let manifest = bibles[bibleId].manifest;
         let verseText = bibles[bibleId][chapter] ? bibles[bibleId][chapter][verseNumber] : PLACE_HOLDER_TEXT;
-        let dir = manifest.dir;
+        let direction = manifest.direction;
         if (bibleId === 'targetLanguage') {
-          dir = this.props.projectDetailsReducer.manifest.target_language.direction
+          direction = this.props.projectDetailsReducer.manifest.target_language.direction
         }
 
         return (
@@ -37,7 +37,7 @@ class VerseRow extends React.Component {
               verseText={verseText}
               chapter={chapter}
               verse={verseNumber}
-              dir={dir}
+              direction={direction}
             />
           </Col>
         )
