@@ -2,6 +2,7 @@ import React from 'react';
 import {Col, Row} from 'react-bootstrap';
 import Verse from '../Verse';
 import {bibleIdFromSourceName} from '../../helpers/bibleHelpers';
+const PLACE_HOLDER_TEXT = 'This Bible version does not include text for this reference.';
 
 class VerseRow extends React.Component {
 
@@ -22,7 +23,7 @@ class VerseRow extends React.Component {
     if (currentPaneSettings.length > 0) {
       verseCells = currentPaneSettings.map((bibleId, index) => {
         let manifest = bibles[bibleId].manifest;
-        let verseText = bibles[bibleId][chapter][verseNumber];
+        let verseText = bibles[bibleId][chapter] ? bibles[bibleId][chapter][verseNumber] : PLACE_HOLDER_TEXT;
         let dir = manifest.dir;
         if (bibleId === 'targetLanguage') {
           dir = this.props.projectDetailsReducer.manifest.target_language.direction
