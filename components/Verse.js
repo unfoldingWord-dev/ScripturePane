@@ -1,5 +1,6 @@
 import React from 'react';
 import XRegExp from 'xregexp';
+import usfmjs from 'usfm-js';
 // helpers
 import * as highlightHelpers from '../helpers/highlightHelpers';
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
@@ -71,11 +72,11 @@ class Verse extends React.Component {
     afterText = aroundQuote[aroundQuoteIndex][1] + afterText;  // prepend the current quote's preceding char
     verseSpan.push(
       <span key={1}>
-        <span>{beforeText}</span>
+        <span>{usfmjs.removeMarker(beforeText)}</span>
         <span style={{backgroundColor: "var(--highlight-color)"}}>
           {quote}
         </span>
-        <span>{afterText}</span>
+        <span>{usfmjs.removeMarker(afterText)}</span>
       </span>
     );
     return verseSpan;
