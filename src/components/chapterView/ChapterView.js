@@ -35,7 +35,7 @@ class ChapterView extends React.Component {
           {verseRows}
         </div>
       </div>
-    )
+    );
   }
 }
 

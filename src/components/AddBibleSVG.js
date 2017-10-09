@@ -20,7 +20,7 @@ class AddBibleSVG extends React.Component {
            </g>
          </g>
        </svg>
-     )
+     );
    }
  }
 

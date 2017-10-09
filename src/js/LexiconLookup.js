@@ -6,7 +6,7 @@ function LexiconLookup(strong, concise){
   } else if (Lexicon[strong] && !concise) {
     return Lexicon[strong].long;
   } else {
-    return 'No definition found.'
+    return 'No definition found.';
   }
 }
 
