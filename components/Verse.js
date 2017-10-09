@@ -91,7 +91,7 @@ class Verse extends React.Component {
       if (quote && verseText && isCurrent && bibleId === 'ulb' && !quote.includes("...") && isQuoteInVerse) {
         verseSpan = this.highlightQuoteInVerse(verseText, quote, occurrence);
       } else {
-        verseSpan = <span>{verseText}</span>;
+        verseSpan = <span>{usfmjs.removeMarker(verseText)}</span>;
       }
     } else {
       verseSpan = this.verseArray(verseText);
