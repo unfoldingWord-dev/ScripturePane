@@ -7,5 +7,5 @@ import XRegExp from 'xregexp';
 export const isQuoteInVerse = (verse, quote) => {
   const regex = XRegExp('(?:^|\\PL)' + quote + '(?:$|\\PL)', 'g');
   const matches = verse.match(regex);
-  return !!matches
-}
+  return !!matches;
+};

@@ -13,7 +13,7 @@ class Verse extends React.Component {
     const {verseText} = this.props;
     if (verseText.constructor == Array) {
       this.props.verseText.forEach((word) => {
-        const {strongs} = word
+        const {strongs} = word;
         const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
         const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
         this.props.actions.loadLexiconEntry(lexiconId, entryId);
@@ -48,7 +48,7 @@ class Verse extends React.Component {
     let aroundQuote = []; // store all of the characters surrounding the quote here
     XRegExp.forEach(content, regex, function (match, i) {
       aroundQuote[i] = match[0].split(quote); // store all of the characters surrounding the matches
-    })
+    });
     let aroundQuoteIndex = occurrence - 1; // this ensures we can find the characters around the highlighted quote
     // for all of the content before the current quote
     // append the split quotes with their associated characters
@@ -57,7 +57,7 @@ class Verse extends React.Component {
         text = text + aroundQuote[i][0] + quote + aroundQuote[i][1]; // append the quote with the surrounding character
       }
       return text;
-    })
+    });
     let beforeText = beforeTextArray.join(''); // join the pieces
     beforeText = beforeText + aroundQuote[aroundQuoteIndex][0]; // append the current quote's preceding char
     // for all of the content after the current quote
@@ -67,7 +67,7 @@ class Verse extends React.Component {
         text = text + aroundQuote[i + occurrence][0] + quote + aroundQuote[i + occurrence][1]; // append the quote with the surrounding character
       }
       return text;
-    })
+    });
     let afterText = afterTextArray.join('');  // join the pieces
     afterText = aroundQuote[aroundQuoteIndex][1] + afterText;  // prepend the current quote's preceding char
     verseSpan.push(

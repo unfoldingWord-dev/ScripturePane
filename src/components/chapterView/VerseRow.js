@@ -26,7 +26,7 @@ class VerseRow extends React.Component {
         let verseText = bibles[bibleId][chapter] ? bibles[bibleId][chapter][verseNumber] : PLACE_HOLDER_TEXT;
         let direction = manifest.direction;
         if (bibleId === 'targetLanguage') {
-          direction = this.props.projectDetailsReducer.manifest.target_language.direction
+          direction = this.props.projectDetailsReducer.manifest.target_language.direction;
         }
 
         return (
@@ -40,7 +40,7 @@ class VerseRow extends React.Component {
               direction={direction}
             />
           </Col>
-        )
+        );
       });
     }
 
@@ -51,7 +51,7 @@ class VerseRow extends React.Component {
       <Row style={rowStyle}>
         {verseCells}
       </Row>
-    )
+    );
   }
 }
 

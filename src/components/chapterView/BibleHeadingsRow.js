@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Row} from 'react-bootstrap'
+import {Col, Row} from 'react-bootstrap';
 import AddBible from '../AddBible';
 
 class BibleHeadingsRow extends React.Component {
@@ -31,8 +31,12 @@ class BibleHeadingsRow extends React.Component {
     }
 
     let colStyle = {
-      display: 'flex', flex: '1 1 0%', justifyContent: 'center', alignItems: 'center',
-      alignItems: 'stretch', padding: '10px', borderRight: '1px solid var(--border-color)',
+      display: 'flex',
+      flex: '1 1 0%',
+      justifyContent: 'center',
+      alignItems: 'stretch',
+      padding: '10px',
+      borderRight: '1px solid var(--border-color)',
       borderBottom: '3px solid var(--border-color)'
     };
     while (bibleHeadings.length < 3) {
@@ -53,7 +57,7 @@ class BibleHeadingsRow extends React.Component {
       <Row style={rowStyle}>
         {bibleHeadings}
       </Row>
-    )
+    );
   }
 }
 
