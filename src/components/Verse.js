@@ -24,16 +24,16 @@ class Verse extends React.Component {
 
   onClick(e, word) {
     let positionCoord = e.target;
-    const PopoverTitle = <strong style={{ fontSize: '1.2em' }}>{word.word}</strong>;
+    const PopoverTitle = <strong style={{fontSize: '1.2em'}}>{word.word}</strong>;
     let { showPopover } = this.props.actions;
     const wordDetails = <WordDetails {...this.props} word={word} />;
     showPopover(PopoverTitle, wordDetails, positionCoord);
   }
 
   verseArray(verseText = []) {
-    let verseSpan = verseText.map((word, index) => {
+    let verseSpan = verseText.map( (word, index) => {
       return (
-        <span style={{ cursor: 'pointer' }} onClick={(e) => this.onClick(e, word)} key={index}>
+        <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
           {word.word + " "}
         </span>
       );
@@ -53,8 +53,8 @@ class Verse extends React.Component {
     let aroundQuoteIndex = occurrence - 1; // this ensures we can find the characters around the highlighted quote
     // for all of the content before the current quote
     // append the split quotes with their associated characters
-    let beforeTextArray = contentArray.slice(0, occurrence).map((text, i) => {
-      if (i < occurrence - 1) {   // if not the last one
+    let beforeTextArray = contentArray.slice(0,occurrence).map( (text, i) => {
+      if (i < occurrence-1) {   // if not the last one
         text = text + aroundQuote[i][0] + quote + aroundQuote[i][1]; // append the quote with the surrounding character
       }
       return text;
@@ -63,7 +63,7 @@ class Verse extends React.Component {
     beforeText = beforeText + aroundQuote[aroundQuoteIndex][0]; // append the current quote's preceding char
     // for all of the content after the current quote
     // append the split quotes with their associated characters
-    let afterTextArray = contentArray.slice(occurrence).map((text, i) => {
+    let afterTextArray = contentArray.slice(occurrence).map( (text, i) => {
       if (i < contentArray.length - occurrence - 1) { // if not the last one
         text = text + aroundQuote[i + occurrence][0] + quote + aroundQuote[i + occurrence][1]; // append the quote with the surrounding character
       }
@@ -74,7 +74,7 @@ class Verse extends React.Component {
     verseSpan.push(
       <span key={1}>
         <span>{usfmjs.removeMarker(beforeText)}</span>
-        <span style={{ backgroundColor: "var(--highlight-color)" }}>
+        <span style={{backgroundColor: "var(--highlight-color)"}}>
           {quote}
         </span>
         <span>{usfmjs.removeMarker(afterText)}</span>
@@ -84,10 +84,10 @@ class Verse extends React.Component {
   }
 
   render() {
-    let verseSpan = <span />;
-    let { verseText, chapter, verse, direction, bibleId, isCurrent } = this.props;
+    let verseSpan = <span/>;
+    let { verseText, chapter, verse, direction, bibleId, isCurrent} = this.props;
     if (typeof verseText === 'string') {
-      let { quote, occurrence } = this.props.contextIdReducer.contextId;
+      let {quote, occurrence} = this.props.contextIdReducer.contextId;
       const isQuoteInVerse = highlightHelpers.isQuoteInVerse(verseText, quote);
       if (quote && verseText && isCurrent && bibleId === 'ulb' && !quote.includes("...") && isQuoteInVerse) {
         verseSpan = this.highlightQuoteInVerse(verseText, quote, occurrence);
@@ -100,7 +100,7 @@ class Verse extends React.Component {
 
     let chapterVerse = <strong>{chapter}:{verse} </strong>;
     if (direction === 'rtl') chapterVerse = <strong>{verse}:{chapter} </strong>;
-    let divStyle = { direction: direction };
+    let divStyle = {direction: direction};
 
     return (
       <div style={divStyle}>
