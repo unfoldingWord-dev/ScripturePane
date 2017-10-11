@@ -11,7 +11,7 @@ class Verse extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.verseText !== nextProps.verseText) {
-      if (verseText.constructor == Array) {
+      if (nextProps.verseText.constructor == Array) {
         nextProps.verseText.forEach((word) => {
           const { strongs } = word;
           const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
