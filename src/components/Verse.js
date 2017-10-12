@@ -9,15 +9,16 @@ import WordDetails from './WordDetails';
 
 class Verse extends React.Component {
 
-  componentWillMount() {
-    const {verseText} = this.props;
-    if (verseText.constructor == Array) {
-      this.props.verseText.forEach((word) => {
-        const {strongs} = word;
-        const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
-        const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
-        this.props.actions.loadLexiconEntry(lexiconId, entryId);
-      });
+  componentWillReceiveProps(nextProps) {
+    if (this.props.verseText !== nextProps.verseText) {
+      if (nextProps.verseText.constructor == Array) {
+        nextProps.verseText.forEach((word) => {
+          const { strongs } = word;
+          const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
+          const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
+          nextProps.actions.loadLexiconEntry(lexiconId, entryId);
+        });
+      }
     }
   }
 
