@@ -2,8 +2,7 @@
 
 import React from 'react';
 import AddPaneModal from '../src/components/AddPaneModal';
-import {mount, shallow} from 'enzyme';
-import {Modal, FormControl} from 'react-bootstrap';
+import {shallow} from 'enzyme';
 
 // Tests for ToolCardProgress React Component
 describe('Test AddPaneModal component',()=>{
