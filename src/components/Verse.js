@@ -6,11 +6,12 @@ import * as highlightHelpers from '../helpers/highlightHelpers';
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 // components
 import WordDetails from './WordDetails';
+const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text for this reference.]';
 
 class Verse extends React.Component {
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.verseText !== nextProps.verseText) {
+    if (this.props.verseText !== nextProps.verseText && nextProps.verseText !== null) {
       if (nextProps.verseText.constructor == Array) {
         nextProps.verseText.forEach((word) => {
           const { strongs } = word;
@@ -85,7 +86,12 @@ class Verse extends React.Component {
 
   render() {
     let verseSpan = <span/>;
-    let { verseText, chapter, verse, direction, bibleId, isCurrent} = this.props;
+    let {verseText, chapter, verse, direction, bibleId, isCurrent} = this.props;
+    let verseIsPlaceHolder = false;
+    if(verseText === null) {
+      verseText = PLACE_HOLDER_TEXT;
+      verseIsPlaceHolder = true;
+    }
     if (typeof verseText === 'string') {
       let {quote, occurrence} = this.props.contextIdReducer.contextId;
       const isQuoteInVerse = highlightHelpers.isQuoteInVerse(verseText, quote);
@@ -101,6 +107,7 @@ class Verse extends React.Component {
     let chapterVerse = <strong>{chapter}:{verse} </strong>;
     if (direction === 'rtl') chapterVerse = <strong>{verse}:{chapter} </strong>;
     let divStyle = {direction: direction};
+    if (verseIsPlaceHolder) divStyle['fontStyle'] = 'italic';
 
     return (
       <div style={divStyle}>
@@ -112,3 +119,4 @@ class Verse extends React.Component {
 }
 
 export default Verse;
+export {PLACE_HOLDER_TEXT};
