@@ -1,9 +1,8 @@
 /* eslint-env jest */
 
 import React from 'react';
-import Verse from '../src/components/Verse';
+import Verse, {PLACE_HOLDER_TEXT} from '../src/components/Verse';
 import {mount} from 'enzyme';
-import {PLACE_HOLDER_TEXT} from '../src/components/Verse';
 
 // Tests for ToolCardProgress React Component
 describe('Test Verse component',()=>{
