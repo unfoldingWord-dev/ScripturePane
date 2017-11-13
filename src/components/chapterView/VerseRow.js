@@ -15,7 +15,7 @@ class VerseRow extends React.Component {
     let verseCells = <div />;
     let colStyle = {
       alignItems: 'stretch', padding: '10px', paddingTop: '20px',
-      borderRight: '1px solcontextIdid var(--border-color)'
+      borderRight: '1px solid var(--border-color)'
     };
     let isCurrent = verseNumber == verse;
     if (isCurrent) colStyle.borderLeft = '3px solid var(--accent-color)';
