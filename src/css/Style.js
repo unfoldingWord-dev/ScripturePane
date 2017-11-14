@@ -74,6 +74,10 @@ var style = {
     display: 'flex',
     justifyContent: 'space-between',
     margin: '5px 10px 5px 15px'
+  },
+  modalTitle:{
+    textAlign: "center",
+    color: "var(--reverse-color)"
   }
 };
 

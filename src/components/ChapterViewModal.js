@@ -12,12 +12,13 @@ import ChapterView from './chapterView/ChapterView';
 class ChapterViewModal extends React.Component {
 
   render() {
-    let { onHide, currentPaneSettings, contextIdReducer, showModal, show, bibles } = this.props;
-
+    let { onHide, currentPaneSettings, contextIdReducer, showModal, show, bibles, projectDetailsReducer } = this.props;
+    const title = projectDetailsReducer.manifest.project.name;
     return (
       <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
         <Modal.Header style={{ backgroundColor: "var(--accent-color-dark)" }}>
-          <Modal.Title id="contained-modal-title-sm">
+          <Modal.Title id="contained-modal-title-sm" style={style.modalTitle}>
+              {title}
               <Glyphicon
                   onClick={onHide}
                   glyph={"remove"}
