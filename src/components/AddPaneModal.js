@@ -21,7 +21,11 @@ export default class AddPaneModal extends React.Component {
         let resourceText = bibleId !== "targetLanguage" ? " (" + resource_title + ")" : "" ;
         let displayText = language_name + resourceText;
         panes.push(
-          <option disabled={currentPaneSettings.includes(bibleId)} key={bibleId} value={bibleId.toString()}>
+          <option 
+            key={bibleId}
+            value={bibleId.toString()}
+            disabled={currentPaneSettings.includes(bibleId)} 
+          >
             {displayText}
           </option>
         );
