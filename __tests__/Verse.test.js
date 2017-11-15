@@ -4,7 +4,7 @@ import React from 'react';
 import Verse, {PLACE_HOLDER_TEXT} from '../src/components/Verse';
 import {mount} from 'enzyme';
 
-// Tests for ToolCardProgress React Component
+// Tests for Verse React Component
 describe('Test Verse component',()=>{
   test('Test when verse is null that the WARNING placeholder is displayed', () => {
     const props = {
