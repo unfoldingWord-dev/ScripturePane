@@ -17,7 +17,7 @@ export default class AddPaneModal extends React.Component {
     for (let bibleId in bibles) {
       if (bibles.hasOwnProperty(bibleId)) {
         let { language_name, resource_title } = bibles[bibleId]["manifest"];
-        let resourceText = bibleId !== "targetLanguage" ? " (" + resource_title + ")" : "" ;
+        let resourceText = bibleId !== "targetLanguage" ? " (" + resource_title + ")" : " (Current project)" ;
         let displayText = language_name + resourceText;
         panes.push(
           <option key={bibleId} value={bibleId.toString()}>
@@ -43,7 +43,7 @@ export default class AddPaneModal extends React.Component {
         <Modal.Body style={{ backgroundColor: "var(--reverse-color)", color: "var(--accent-color-dark)", padding: "45px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <h4 style={{ marginBottom: "30px" }}>
             Select language
-            </h4>
+          </h4>
           <FormControl componentClass="select" style={{ width: "300px" }}
             onChange={e => { selectSourceLanguage(e) }}>
             <option value="">Select</option>
