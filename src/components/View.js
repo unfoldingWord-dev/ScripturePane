@@ -77,6 +77,7 @@ class View extends React.Component {
         selectSourceLanguage={selectSourceLanguage}
         addPane={addPane}
         selectedPane={selectedPane}
+        currentPaneSettings={currentPaneSettings}
       />
     <ChapterViewModal
         {...this.props}
