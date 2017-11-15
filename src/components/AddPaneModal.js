@@ -7,20 +7,25 @@ import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
 
 export default class AddPaneModal extends React.Component {
   render() {
-    let { selectSourceLanguage, addPane, show, onHide, selectedPane } = this.props;
+    let { selectSourceLanguage, addPane, show, onHide, selectedPane, currentPaneSettings } = this.props;
     let { bibles } = this.props.resourcesReducer;
     /**
      * @description The code below generates a list of resource names and saves
      * it in option elements for the user to select from a dropdown list.
      */
     let panes = [];
+
     for (let bibleId in bibles) {
       if (bibles.hasOwnProperty(bibleId)) {
         let { language_name, resource_title } = bibles[bibleId]["manifest"];
         let resourceText = bibleId !== "targetLanguage" ? " (" + resource_title + ")" : " (Current project)" ;
         let displayText = language_name + resourceText;
         panes.push(
-          <option key={bibleId} value={bibleId.toString()}>
+          <option 
+            key={bibleId}
+            value={bibleId.toString()}
+            disabled={currentPaneSettings.includes(bibleId)} 
+          >
             {displayText}
           </option>
         );
