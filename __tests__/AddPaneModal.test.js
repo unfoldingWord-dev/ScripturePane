@@ -28,7 +28,8 @@ describe('Test AddPaneModal component',()=>{
             }
           }
         }
-      }  
+      },
+      currentPaneSettings: ['ulb']
     };
     const expectedOptions = ['Select', 'English (Unlocked Literal Bible)', 'French (Current project)']; // expect options to have in the language select
     const enzymeWrapper = shallow(<AddPaneModal {...props} />);
