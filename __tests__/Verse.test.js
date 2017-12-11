@@ -3,12 +3,27 @@
 import React from 'react';
 import Verse, {PLACE_HOLDER_TEXT} from '../src/components/Verse';
 import {mount} from 'enzyme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 // Tests for Verse React Component
 describe('Test Verse component',()=>{
   test('Test when verse is null that the WARNING placeholder is displayed', () => {
     const props = {
       verseText: null,
+      chapter: '1',
+      verse: '1',
+      contextIdReducer: {
+        contextId: {}
+      }
+    };
+    const expectedText = '1:1 '+PLACE_HOLDER_TEXT;
+    const enzymeWrapper = mount(<Verse {...props} />);
+    validateVerse(enzymeWrapper, expectedText);
+  });
+
+  test('Test when verse is empty string that the WARNING placeholder is displayed', () => {
+    const props = {
+      verseText: '',
       chapter: '1',
       verse: '1',
       contextIdReducer: {
@@ -40,3 +55,46 @@ function validateVerse(enzymeWrapper, expectedText) {
   expect(verseDiv.length).toEqual(1);
   expect(verseDiv.text()).toEqual(expectedText);
 }
+
+describe('Test Verse.componentWillReceiveProps', ()=>{
+  test('Test with two populated verses', () => {
+    const props = {
+      verseText: [{strongs: "G38700"}],
+      chapter: '1',
+      verse: '1',
+      contextIdReducer: {
+        contextId: {}
+      },
+      actions: {
+        'loadLexiconEntry': jest.fn()
+      }
+    };
+    const props2 = {
+      verseText: [{strongs: "G25320"}],
+      chapter: '1',
+      verse: '2',
+      contextIdReducer: {
+        contextId: {}
+      },
+      actions: {
+        'loadLexiconEntry': jest.fn()
+      }
+    };
+
+    const wrapper = mount(
+      <Verse {...props} />,
+      {
+        context: {
+          muiTheme: getMuiTheme()
+        },
+        childContextTypes: {
+          muiTheme: React.PropTypes.object.isRequired
+        }
+      }
+    );
+  
+    expect(wrapper.node.props.verse).toEqual(props.verse);
+    wrapper.setProps(props2);
+    expect(wrapper.node.props.verse).toEqual(props2.verse);  
+  });
+});
