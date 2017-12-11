@@ -33,6 +33,7 @@
     "eslint": "^4.10.0",
     "eslint-plugin-react": "^7.4.0",
     "jest": "^21.1.0",
+    "material-ui": "^0.17.4",
     "react": "^15.6.2",
     "react-addons-test-utils": "^15.4.2",
     "react-bootstrap": "^0.30.10",
