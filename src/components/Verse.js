@@ -11,7 +11,7 @@ const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text fo
 class Verse extends React.Component {
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.verseText && nextProps.verseText && this.props.verseText !== nextProps.verseText) {
+    if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
       if (nextProps.verseText.constructor == Array) {
         nextProps.verseText.forEach((word) => {
           const { strongs } = word;
