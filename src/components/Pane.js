@@ -1,4 +1,5 @@
 import React from 'react';
+import ContainerDimensions from 'react-container-dimensions';
 import {Glyphicon} from 'react-bootstrap';
 import style from '../css/Style';
 import Verse from './Verse';
@@ -15,6 +16,7 @@ class Pane extends React.Component {
     let verseText = bibles[bibleId][reference.chapter] ? bibles[bibleId][reference.chapter][reference.verse] : null;
     let headingText = bibleId !== "targetLanguage" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name;
     let contentStyle;
+    const PANECHAR = 9;
 
     if (direction == 'ltr') {
       contentStyle = style.pane.contentLTR;
@@ -25,13 +27,22 @@ class Pane extends React.Component {
     return (
       <div style={index > 0 ? style.otherPane : style.firstPane}>
         <div style={style.verseTitle}>
-          <div style={{display: 'flex', flexDirection: 'column'}}>
-            <span style={style.pane.title} className={headingText.length > 15 ? "hint--bottom hint--medium" : null} aria-label={headingText}>
+          <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+            <span style={style.pane.title} className={headingText.length > 15 ? 
+                "hint--bottom hint--medium" : null} aria-label={headingText}>
               {headingText.length > 15 ? headingText.slice(0, 15) + '...' : headingText}
             </span>
-            <span style={style.pane.subtitle}>
-              {description || ''}
-            </span>
+            <ContainerDimensions> 
+              {
+                ({width}) => 
+                <span style={style.pane.subtitle} className={description.length > width/PANECHAR ? 
+                    "hint--bottom hint--medium" : null} aria-label={description}>
+                  {description.length > width/PANECHAR ? 
+                      description.slice(0, Math.round(width/PANECHAR)) + "..." :
+                      description}
+                </span>
+              }
+            </ContainerDimensions> 
           </div>
           <Glyphicon glyph={"remove"} style={{color: "var(--text-color-light)", cursor: 'pointer'}}
                      onClick={() => removePane(index)} title="Click to remove resource"/>
