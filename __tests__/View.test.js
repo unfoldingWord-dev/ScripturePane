@@ -18,32 +18,12 @@ describe('View component Tests', () => {
   });
   it('before Project Loaded', () => {
     let projectState = fs.readJSONSync(project);
-    const store = mockStore({
-      ...projectState,
-      actions: {
-        showPopover: () => jest.fn()
-      }
-    });
+    const store = mockStore(projectState);
     let state = store.getState();
     const component = renderer.create(
       <View {...state} />,
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();
-
-
-    // store.dispatch({
-    //   type: consts.UPDATE_SOURCE_PROJECT_PATH,
-    //   sourceProjectPath: project
-    // });
-    // store.dispatch({
-    //   type: consts.UPDATE_SELECTED_PROJECT_FILENAME,
-    //   selectedProjectFilename: "abu_tit_text_reg"
-    // });
-
-    // store.dispatch(LocalImportWorkflowActions.localImport());
-
-    // tree = component.toJSON();
-    // expect(tree).toMatchSnapshot();
   });
 });

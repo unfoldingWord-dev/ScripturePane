@@ -271,5 +271,36 @@
     "tags": [],
     "userName": [],
     "modifiedTimestamp": ""
-  }
+  },
+  "wordAlignmentReducer": {
+    "alignmentData": {}
+  },
+  "actions": {},
+  "currentToolViews": {},
+  "showHelps": true,
+  "mode": "default",
+  "comment": "",
+  "commentChanged": false,
+  "verseText": "Ni muhimu kwa mwangalizi, kama msimamizi wa nyumba ya Mungu, asiwe na lawama. Asiwe mtu wa kelele au asiye jizuia. Lazima asiwe mwepesi wa hasira, asiwe mlevi, asiwe mtu wa kusabisha ugomvi, na asiwe mwenye tamaa.",
+  "verseChanged": false,
+  "selections": [
+    {
+      "text": "asiwe",
+      "occurrence": 1,
+      "occurrences": 5
+    },
+    {
+      "text": "na",
+      "occurrence": 1,
+      "occurrences": 2
+    },
+    {
+      "text": "lawama",
+      "occurrence": 1,
+      "occurrences": 1
+    }
+  ],
+  "tags": [],
+  "dialogModalVisibility": false,
+  "goToNextOrPrevious": null
 }
