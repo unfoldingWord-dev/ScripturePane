@@ -1,6 +1,5 @@
 /* eslint-env jest */
 import React from 'react';
-import jest from 'jest';
 import fs from 'fs-extra';
 // import consts from '../src/js/actions/ActionTypes';
 import configureMockStore from 'redux-mock-store';
