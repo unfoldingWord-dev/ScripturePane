@@ -82,6 +82,7 @@ exports[`View component Tests before Project Loaded 1`] = `
               Object {
                 "display": "flex",
                 "flexDirection": "column",
+                "width": "100%",
               }
             }
           >
@@ -99,6 +100,8 @@ exports[`View component Tests before Project Loaded 1`] = `
               Kiswahili
             </span>
             <span
+              aria-label="Target Language"
+              className={null}
               style={
                 Object {
                   "color": "var(--text-color-light)",
@@ -176,6 +179,7 @@ exports[`View component Tests before Project Loaded 1`] = `
               Object {
                 "display": "flex",
                 "flexDirection": "column",
+                "width": "100%",
               }
             }
           >
@@ -193,6 +197,8 @@ exports[`View component Tests before Project Loaded 1`] = `
               undefined (BHP)
             </span>
             <span
+              aria-label=""
+              className={null}
               style={
                 Object {
                   "color": "var(--text-color-light)",
@@ -271,6 +277,7 @@ exports[`View component Tests before Project Loaded 1`] = `
               Object {
                 "display": "flex",
                 "flexDirection": "column",
+                "width": "100%",
               }
             }
           >
@@ -288,6 +295,8 @@ exports[`View component Tests before Project Loaded 1`] = `
               Greek (ULB)
             </span>
             <span
+              aria-label="Bunning Heuristic Prototype"
+              className={null}
               style={
                 Object {
                   "color": "var(--text-color-light)",

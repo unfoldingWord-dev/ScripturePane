@@ -13,6 +13,7 @@ class Pane extends React.Component {
     let { bibles } = this.props.resourcesReducer;
 
     let { direction, language_name, resource_id, description } = bibles && bibles[bibleId] ? bibles[bibleId]["manifest"] : {};
+    description = description || "";
     let verseText = bibles && bibles[bibleId] && bibles[bibleId][reference.chapter] ? bibles[bibleId][reference.chapter][reference.verse] : null;
     let headingText = bibleId !== "targetLanguage" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name ? language_name : '';
     let contentStyle;
