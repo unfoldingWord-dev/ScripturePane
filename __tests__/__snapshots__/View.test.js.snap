@@ -1,0 +1,355 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`View component Tests before Project Loaded 1`] = `
+<div
+  style={
+    Object {
+      "borderRadius": "2px",
+      "boxShadow": "0 3px 10px var(--background-color)",
+      "flex": "1 0 180px",
+      "margin": "10px",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "flexDirection": "column",
+        "height": "100%",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "var(--accent-color-dark)",
+          "color": "var(--reverse-color)",
+          "display": "flex",
+          "flex": "0 0 40px",
+          "fontSize": "16px",
+          "fontWeight": "bold",
+          "justifyContent": "space-between",
+          "padding": "10px",
+        }
+      }
+    >
+      <span>
+        Step 1. Read
+      </span>
+      <span
+        className="glyphicon glyphicon-fullscreen"
+        onClick={undefined}
+        style={
+          Object {
+            "cursor": "pointer",
+          }
+        }
+        title="Click to show expanded resource panes"
+      />
+    </div>
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flex": "1 1 140px",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "borderLeft": "1px solid var(--reverse-color)",
+            "display": "flex",
+            "flex": 1,
+            "flexDirection": "column",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "display": "flex",
+              "flex": "0 0 35px",
+              "justifyContent": "space-between",
+              "margin": "5px 10px 5px 15px",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "flexDirection": "column",
+                "width": "100%",
+              }
+            }
+          >
+            <span
+              aria-label="Kiswahili"
+              className={null}
+              style={
+                Object {
+                  "fontSize": "1em",
+                  "fontWeight": "700",
+                  "marginBottom": "-5px",
+                }
+              }
+            >
+              Kiswahili
+            </span>
+            <span
+              aria-label="Target Language"
+              className={null}
+              style={
+                Object {
+                  "color": "var(--text-color-light)",
+                  "fontFamily": "noto sans",
+                  "fontStyle": "bold",
+                }
+              }
+            >
+              Target Language
+            </span>
+          </div>
+          <span
+            className="glyphicon glyphicon-remove"
+            onClick={[Function]}
+            style={
+              Object {
+                "color": "var(--text-color-light)",
+                "cursor": "pointer",
+              }
+            }
+            title="Click to remove resource"
+          />
+        </div>
+        <div
+          style={
+            Object {
+              "direction": "ltr",
+              "flex": "auto",
+              "overflowY": "auto",
+              "padding": "0 15px 10px",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "direction": "ltr",
+              }
+            }
+          >
+            <strong>
+              1
+              :
+              7
+               
+            </strong>
+            <span>
+              Ni muhimu kwa mwangalizi, kama msimamizi wa nyumba ya Mungu, asiwe na lawama. Asiwe mtu wa kelele au asiye jizuia. Lazima asiwe mwepesi wa hasira, asiwe mlevi, asiwe mtu wa kusabisha ugomvi, na asiwe mwenye tamaa.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "borderLeft": "1px solid var(--border-color)",
+            "display": "flex",
+            "flex": 1,
+            "flexDirection": "column",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "display": "flex",
+              "flex": "0 0 35px",
+              "justifyContent": "space-between",
+              "margin": "5px 10px 5px 15px",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "flexDirection": "column",
+                "width": "100%",
+              }
+            }
+          >
+            <span
+              aria-label="undefined (BHP)"
+              className={null}
+              style={
+                Object {
+                  "fontSize": "1em",
+                  "fontWeight": "700",
+                  "marginBottom": "-5px",
+                }
+              }
+            >
+              undefined (BHP)
+            </span>
+            <span
+              aria-label=""
+              className={null}
+              style={
+                Object {
+                  "color": "var(--text-color-light)",
+                  "fontFamily": "noto sans",
+                  "fontStyle": "bold",
+                }
+              }
+            >
+              
+            </span>
+          </div>
+          <span
+            className="glyphicon glyphicon-remove"
+            onClick={[Function]}
+            style={
+              Object {
+                "color": "var(--text-color-light)",
+                "cursor": "pointer",
+              }
+            }
+            title="Click to remove resource"
+          />
+        </div>
+        <div
+          style={
+            Object {
+              "direction": "rtl",
+              "flex": "auto",
+              "overflowY": "auto",
+              "padding": "0 15px 10px",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "direction": undefined,
+                "fontStyle": "italic",
+              }
+            }
+          >
+            <strong>
+              1
+              :
+              7
+               
+            </strong>
+            <span>
+              [WARNING: This Bible version does not include text for this reference.]
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "borderLeft": "1px solid var(--border-color)",
+            "display": "flex",
+            "flex": 1,
+            "flexDirection": "column",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "display": "flex",
+              "flex": "0 0 35px",
+              "justifyContent": "space-between",
+              "margin": "5px 10px 5px 15px",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "flexDirection": "column",
+                "width": "100%",
+              }
+            }
+          >
+            <span
+              aria-label="Greek (ULB)"
+              className={null}
+              style={
+                Object {
+                  "fontSize": "1em",
+                  "fontWeight": "700",
+                  "marginBottom": "-5px",
+                }
+              }
+            >
+              Greek (ULB)
+            </span>
+            <span
+              aria-label="Bunning Heuristic Prototype"
+              className={null}
+              style={
+                Object {
+                  "color": "var(--text-color-light)",
+                  "fontFamily": "noto sans",
+                  "fontStyle": "bold",
+                }
+              }
+            >
+              Bunning Heuristic Prototype
+            </span>
+          </div>
+          <span
+            className="glyphicon glyphicon-remove"
+            onClick={[Function]}
+            style={
+              Object {
+                "color": "var(--text-color-light)",
+                "cursor": "pointer",
+              }
+            }
+            title="Click to remove resource"
+          />
+        </div>
+        <div
+          style={
+            Object {
+              "direction": "ltr",
+              "flex": "auto",
+              "overflowY": "auto",
+              "padding": "0 15px 10px",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "direction": "ltr",
+              }
+            }
+          >
+            <strong>
+              1
+              :
+              7
+               
+            </strong>
+            <span>
+              It is necessary for the overseer, as God's household manager, to be blameless. He must not be arrogant, not be easily angered, not addicted to wine, not a brawler, and not a greedy man.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

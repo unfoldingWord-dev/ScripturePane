@@ -1,0 +1,306 @@
+{
+  "toolsReducer": {
+    "currentToolViews": {},
+    "currentToolName": "translationWords",
+    "currentToolTitle": "translationWords (Part 1)",
+    "toolsMetadata": []
+  },
+  "loginReducer": {
+    "loggedInUser": true,
+    "userdata": {
+      "id": 4232,
+      "login": "royalsix",
+      "full_name": "Jay Scott",
+      "email": "royalsix@noreply.door43.org",
+      "avatar_url": "https://git.door43.org/img/avatar_default.png",
+      "username": "royalsix",
+      "token": "123456789"
+    },
+    "feedback": "",
+    "subject": "Bug Report"
+  },
+  "settingsReducer": {
+    "currentSettings": {
+      "showTutorial": false,
+      "developerMode": true,
+      "csvSaveLocation": null,
+      "online": true,
+      "onlineMode": false
+    },
+    "toolsSettings": {
+      "ScripturePane": {
+        "currentPaneSettings": [
+          "targetLanguage",
+          "bhp",
+          "ulb"
+        ]
+      }
+    },
+    "onlineMode": false,
+    "csvSaveLocation": "/Users/jay/Desktop/"
+  },
+  "loaderReducer": {
+    "show": false,
+    "toolsProgress": {
+      "translationWords": {
+        "progress": 98.38709677419355
+      }
+    },
+    "reloadContent": null
+  },
+  "resourcesReducer": {
+    "bibles": {
+      "udb": {
+        "1": {
+          "1": "I, Paul, write this letter. This is Paul, who is a servant of God and an apostle of Jesus Christ. I work to help God's people trust him more. God chose us to be his people and I work to help them truly know how to live in a way that pleases God.",
+          "2": "His people can learn how to live like this, because they are confident that God will cause them to live forever. God tells no lies. Even before the world began, he promised to cause us to live forever.",
+          "3": "Then, at the right time, he communicated his plan through this message that he trusted me to preach. I do this in order to obey the command of God, who saves us.",
+          "4": "I am writing to you, Titus, because you are like a son to me because we both believe in Jesus Christ. May God the Father and Christ Jesus our Savior continue to be kind to you and to give you peace.",
+          "5": "I left you on the Island of Crete for this reason: that you do the work that has been unfinished and also appoint elders for the group of believers in every city, just as I told you to do.",
+          "6": "Now every elder must be someone who no one can criticize. He must also have just one wife, his children must trust in God, and people must not consider his children to be wicked or disobedient.",
+          "7": "Everyone who leads God's people is like someone who manages God's house. So it is necessary for this person to have a good reputation. He should not be proud, he must not get angry quickly, and must not stay angry for any reason. He must not be an alcoholic, not someone who likes to fight and argue, and not a greedy man.",
+          "8": "Rather than that, he must welcome strangers and love the things that are good. He must always control himself and be honest, always tell the truth, and treat other people in a fair manner. He must always think about God when he thinks or does anything, and he must avoid sinning.",
+          "9": "He must always believe the true things we have taught him, and he must live according to them. He must do this in order to persuade people to live like this too, and in order to correct people if they do not want to live like this.",
+          "10": "I tell you these things, because there are many people who do not want anyone to control them, especially the people who tell all followers of Christ to become circumcised. What they say has no value. They fool people and persuade them to believe wrong things.",
+          "11": "You and the leaders whom you appoint should prevent such people from teaching the believers. They have no right to teach what they do. They teach these things so that people will give them money. This is very shameful! They also cause entire families to believe wrong things.",
+          "12": "One man of Crete, someone his people thought was a prophet, said, \"Cretans are always lying to one another! They are like dangerous wild animals! They are lazy and always eat too much food.\"",
+          "13": "What he said is true, so correct them forcefully so that they may believe and teach correct things about God.",
+          "14": "These people should not waste time on senseless Jewish stories and commandments that came from people, not from God. These people have stopped obeying what is true.",
+          "15": "If someone does not have sinful thoughts or desires, then he views all things as good. But if anyone is wicked and does not believe in Christ Jesus, everything makes him unclean. These people think in dirty ways, and they decide to act in evil ways.",
+          "16": "Even though they claim to know God, what they do shows that they do not know him. Other people find them disgusting. They disobey God and can do nothing good for him."
+        },
+        "manifest": {
+          "language_id": "en",
+          "language_name": "English",
+          "direction": "ltr",
+          "subject": "Bible",
+          "resource_id": "udb",
+          "resource_title": "Unlocked Dynamic Bible",
+          "description": "Gateway Language"
+        }
+      },
+      "ulb": {
+        "1": {
+          "1": "Paul, a servant of God and an apostle of Jesus Christ, for the faith of God's chosen people and the knowledge of the truth that agrees with godliness,",
+          "2": "with the certain hope of everlasting life that God, who does not lie, promised before all the ages of time.",
+          "3": "At the right time, he revealed his word by the message that he trusted me to deliver. I was to do this by the command of God our savior.",
+          "4": "To Titus, a true son in our common faith. Grace and peace from God the Father and Christ Jesus our savior.",
+          "5": "For this purpose I left you in Crete, that you might set in order things not yet complete and ordain elders in every city as I directed you.",
+          "6": "An elder must be without blame, the husband of one wife, with faithful children not accused of reckless behavior or undisciplined.",
+          "7": "It is necessary for the overseer, as God's household manager, to be blameless. He must not be arrogant, not be easily angered, not addicted to wine, not a brawler, and not a greedy man.",
+          "8": "Instead, he should be hospitable and a friend of what is good. He must be sensible, righteous, godly, and self-controlled.",
+          "9": "He should hold tightly to the trustworthy message that was taught, so that he may be able to encourage others with good teaching and correct those who oppose him.",
+          "10": "For there are many rebellious people, empty talkers and deceivers, especially those of the circumcision.",
+          "11": "It is necessary to stop them. They are breaking up whole families by teaching for shameful profit what they should not teach.",
+          "12": "One of their own prophets has said, \"Cretans are always liars, evil beasts, lazy gluttons.\"",
+          "13": "This statement is true. Therefore, correct them severely, so that they may be sound in the faith,",
+          "14": "not paying any attention to Jewish myths or to the commands of people who turn away from the truth.",
+          "15": "To those who are pure, all things are pure. But to those who are corrupt and unbelieving, nothing is pure, but both their minds and their consciences have been corrupted.",
+          "16": "They profess to know God, but they deny him by their actions. They are detestable, disobedient, and unfit for doing any good work."
+        },
+        "manifest": {
+          "language_id": "grc",
+          "language_name": "Greek",
+          "direction": "ltr",
+          "subject": "Bible",
+          "resource_id": "bhp",
+          "resource_title": "Greek New Testament",
+          "description": "Bunning Heuristic Prototype"
+        }
+      },
+      "targetLanguage": {
+        "1": {
+          "1": "Paulo, mtumishi wa Mungu na mtume wa Yesu Kristo, kwa uaminifu wa Mungu alichagua watu na kwa maarifa ya kweli yaliyokubalika pamoja na utauwa. ",
+          "2": "Walio na ujasiri katika uzima wa milele ambao Mungu kamwe hasemi uongo, uzima huu wa milele ulioahidiwa kabla ya nyakati zote. ",
+          "3": "Kwa wakati sahihi, Mungu alilifunua neno lake kwa ujumbe kwamba aliniamini mimi kuuhubiri. Nilifanya hivi kwa amri ya Mungu, mwokozi wetu.",
+          "4": "Kwa Tito, mwana wa kweli katika imani yetu. Neema, huruma na amani kutoka kwa Mungu Baba na Yesu Kristo mwokozi wetu. ",
+          "5": "Kwa sababu hii nalikuacha Krete, kwamba uyatengeneze mambo yote yaliyokuwa hayajakamilika na kuweka wazee wa kanisa kwa kila mji kama nilivyokuagiza.",
+          "6": "Mzee wa kanisa lazima asiwe na lawama, mme wa mke mmoja, aliye na watoto waaminifu wasioshuhudiwa mabaya au wasio na nidhamu. ",
+          "7": "Ni muhimu kwa mwangalizi, kama msimamizi wa nyumba ya Mungu, asiwe na lawama. Asiwe mtu wa kelele au asiye jizuia. Lazima asiwe mwepesi wa hasira, asiwe mlevi, asiwe mtu wa kusabisha ugomvi, na asiwe mwenye tamaa.",
+          "8": "Badala yake: awe mtu mkaribishaji, mwenye wema. Lazima awe mtu mwenye akili timamu, mwenye haki, mcha Mungu, anayejitawala mwenyewe. ",
+          "9": "Awezaye kusimamia mafundisho ya kweli, anayeweza kuwatia moyo kwa mafundisho mazuri na awezaye kuwarekebisha wote wampingao.",
+          "10": "Kwa kuwa kuna waasi wengi, hasa wale wa tohara. Maneno yao ni ya upuuzi, wanadanganya na kuongoza watu katika upotovu. ",
+          "11": "Ni lazima kuwazuia watu kama hao. Wanafundisha yale wasiyopaswa, aibu kwa faida na kuharibu nyumba nzima.",
+          "12": "Mmoja wao, mtu wa busara, alisema, \"Wakrete wana uongo usio na mwisho, wabaya na wanyama wa hatari, wavivu na walafi.\" ",
+          "13": "Haya maelezo ni kweli,kwa hivyo uwazuie kwa nguvu ili kwamba waweze  kusema kweli katika imani.",
+          "14": "Wewe usijihusishe na hadithi zisizo za kweli  za Kiyahudi au amri za watu, ambao hurudisha nyuma ukweli.",
+          "15": "Kwa wote walio safi, kila kitu ni safi. Lakini kwa wote walio wachafu na wasioamini, hakuna kilicho safi. Kwa kuwa mawazo yao na dhamira zao zimechafuliwa. ",
+          "16": "Wanakiri kumjua Mungu, lakini kwa matendo yao wanamkana. Wao ni waovu na wasiotii na hawakuthibitishwa kwa tendo lolote jema."
+        },
+        "manifest": {
+          "language_id": "sw",
+          "language_name": "Kiswahili",
+          "direction": "ltr",
+          "subject": "Bible",
+          "resource_id": "targetLanguage",
+          "resource_title": "",
+          "description": "Target Language"
+        }
+      }
+    },
+    "translationHelps": {},
+    "lexicons": {}
+  },
+  "commentsReducer": {
+    "text": "",
+    "userName": "",
+    "modifiedTimestamp": ""
+  },
+  "remindersReducer": {
+    "enabled": false,
+    "userName": "",
+    "modifiedTimestamp": ""
+  },
+  "contextIdReducer": {
+    "contextId": {
+      "reference": {
+        "bookId": "tit",
+        "chapter": 1,
+        "verse": 7
+      },
+      "tool": "translationWords",
+      "groupId": "blameless",
+      "quote": "blameless",
+      "occurrence": 1
+    }
+  },
+  "projectDetailsReducer": {
+    "projectSaveLocation": "/Users/jay/translationCore/projects/sw_tit_text_ulb",
+    "manifest": {
+      "generator": {
+        "name": "ts-desktop",
+        "build": ""
+      },
+      "target_language": {
+        "id": "sw",
+        "name": "Kiswahili",
+        "direction": "ltr"
+      },
+      "project": {
+        "id": "tit",
+        "name": "Titus"
+      },
+      "type": {
+        "id": "text",
+        "name": "Text"
+      },
+      "source_translations": [
+        {
+          "language_id": "en",
+          "resource_id": "ulb",
+          "checking_level": 3,
+          "date_modified": 20160614,
+          "version": "5"
+        }
+      ],
+      "translators": [
+        "Cloud Roman",
+        "Dina Roman",
+        "Musa Luzali"
+      ],
+      "checkers": [
+        "royalsix"
+      ],
+      "time_created": "2017-07-26T18:44:55.339Z",
+      "tools": [],
+      "repo": "https://git.door43.org/benjore/sw_tit_text_ulb.git",
+      "package_version": 6,
+      "format": "usfm",
+      "resource": {
+        "id": "ulb",
+        "name": "Unlocked Literal Bible"
+      },
+      "parent_draft": {},
+      "finished_chunks": [
+        "00-title",
+        "01-01",
+        "01-04",
+        "01-06",
+        "01-08",
+        "01-10",
+        "01-12",
+        "01-14",
+        "01-15",
+        "02-01",
+        "02-03",
+        "02-06",
+        "02-09",
+        "02-11",
+        "02-14",
+        "02-15",
+        "03-01",
+        "03-03",
+        "03-04",
+        "03-06",
+        "03-08",
+        "03-09",
+        "03-12",
+        "03-14",
+        "03-15"
+      ],
+      "tcInitialized": true,
+      "license": "CC0 1.0 Public Domain"
+    },
+    "currentProjectToolsProgress": {
+      "wordAlignment": 0,
+      "translationWords": 0.82
+    },
+    "projectType": null
+  },
+  "selectionsReducer": {
+    "selections": [
+      {
+        "text": "asiwe",
+        "occurrence": 1,
+        "occurrences": 5
+      },
+      {
+        "text": "na",
+        "occurrence": 1,
+        "occurrences": 2
+      },
+      {
+        "text": "lawama",
+        "occurrence": 1,
+        "occurrences": 1
+      }
+    ],
+    "modifiedTimestamp": "2017-04-26T01:30:34.198Z"
+  },
+  "verseEditReducer": {
+    "tags": [],
+    "userName": [],
+    "modifiedTimestamp": ""
+  },
+  "wordAlignmentReducer": {
+    "alignmentData": {}
+  },
+  "actions": {},
+  "currentToolViews": {},
+  "showHelps": true,
+  "mode": "default",
+  "comment": "",
+  "commentChanged": false,
+  "verseText": "Ni muhimu kwa mwangalizi, kama msimamizi wa nyumba ya Mungu, asiwe na lawama. Asiwe mtu wa kelele au asiye jizuia. Lazima asiwe mwepesi wa hasira, asiwe mlevi, asiwe mtu wa kusabisha ugomvi, na asiwe mwenye tamaa.",
+  "verseChanged": false,
+  "selections": [
+    {
+      "text": "asiwe",
+      "occurrence": 1,
+      "occurrences": 5
+    },
+    {
+      "text": "na",
+      "occurrence": 1,
+      "occurrences": 2
+    },
+    {
+      "text": "lawama",
+      "occurrence": 1,
+      "occurrences": 1
+    }
+  ],
+  "tags": [],
+  "dialogModalVisibility": false,
+  "goToNextOrPrevious": null
+}

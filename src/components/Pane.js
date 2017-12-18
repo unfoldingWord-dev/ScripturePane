@@ -12,9 +12,10 @@ class Pane extends React.Component {
     let { reference } = this.props.contextIdReducer.contextId;
     let { bibles } = this.props.resourcesReducer;
 
-    let { direction, language_name, resource_id, description } = bibles[bibleId]["manifest"];
-    let verseText = bibles[bibleId][reference.chapter] ? bibles[bibleId][reference.chapter][reference.verse] : null;
-    let headingText = bibleId !== "targetLanguage" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name;
+    let { direction, language_name, resource_id, description } = bibles && bibles[bibleId] ? bibles[bibleId]["manifest"] : {};
+    description = description || "";
+    let verseText = bibles && bibles[bibleId] && bibles[bibleId][reference.chapter] ? bibles[bibleId][reference.chapter][reference.verse] : null;
+    let headingText = bibleId !== "targetLanguage" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name ? language_name : '';
     let contentStyle;
     const PANECHAR = 9;
 
