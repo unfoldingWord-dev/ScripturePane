@@ -5,7 +5,6 @@ import AddPaneModal from './AddPaneModal';
 import ChapterViewModal from './ChapterViewModal';
 import style from '../css/Style';
 import AddBible from './AddBible';
-import fs from 'fs-extra';
 
 class View extends React.Component {
   render() {
