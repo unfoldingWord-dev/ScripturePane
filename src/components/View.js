@@ -24,6 +24,12 @@ class View extends React.Component {
     let currentPaneSettings = settingsReducer.toolsSettings.ScripturePane.currentPaneSettings;
 
     let scripturePane = currentPaneSettings.map((bibleId, index) => {
+      console.log( "Debug props: -actions: "  + JSON.stringify(this.props.actions) + " " + 
+                    "-contextidreducer "       + JSON.stringify(this.props.contextIdReducer ) + " " +
+                    "-resourcesreducer "       + JSON.stringify(this.props.resourcesReducer ) + " " +
+                    "-index "                  + index + " " +
+                    "-bibleid "                + bibleId + " " + 
+                    "-currentpanesettings "    + JSON.stringify(currentPaneSettings));
       return (
         <Pane
           {...this.props}
