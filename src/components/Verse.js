@@ -12,12 +12,16 @@ class Verse extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
-      if (nextProps.verseText.constructor == Array) {
+      if (nextProps.verseText.constructor === Array) {
         nextProps.verseText.forEach((word) => {
-          const { strongs } = word;
-          const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
-          const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
-          nextProps.actions.loadLexiconEntry(lexiconId, entryId);
+          if (typeof word !== 'string') { // skip punctuation
+            const {strongs} = word;
+            if (strongs) {
+              const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
+              const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
+              nextProps.actions.loadLexiconEntry(lexiconId, entryId);
+            }
+          }
         });
       }
     }
