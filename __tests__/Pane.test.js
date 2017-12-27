@@ -2,7 +2,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Pane from '../src/Pane';
+import Pane from '../src/components/Pane';
 //import {shallow} from 'enzyme';
 
 // Tests for AddPanelModal React Component
@@ -37,7 +37,9 @@ describe('Test Pane behavior',()=>{
       bibleId: "udb",
       currentPaneSettings: ["targetLanguage","bhp","udb"]
     };
-    var myPane = Pane(props);
+    let myPane = (
+            <Pane {...props} />
+    );
     expect(myPane).toMatchSnapshot();
   });
 });
