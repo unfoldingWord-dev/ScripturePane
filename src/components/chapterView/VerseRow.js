@@ -17,7 +17,7 @@ class VerseRow extends React.Component {
       alignItems: 'stretch', padding: '10px', paddingTop: '20px',
       borderRight: '1px solid var(--border-color)'
     };
-    let isCurrent = verseNumber == verse;
+    let isCurrent = verseNumber === verse;
     if (isCurrent) colStyle.borderLeft = '3px solid var(--accent-color)';
     if (currentPaneSettings.length > 0) {
       verseCells = currentPaneSettings.map((bibleId, index) => {

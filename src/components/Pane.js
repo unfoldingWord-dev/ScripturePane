@@ -19,7 +19,7 @@ class Pane extends React.Component {
     let contentStyle;
     const PANECHAR = 9;
 
-    if (direction == 'ltr') {
+    if (direction === 'ltr') {
       contentStyle = style.pane.contentLTR;
     } else {
       contentStyle = style.pane.contentRTL;
@@ -29,21 +29,21 @@ class Pane extends React.Component {
       <div style={index > 0 ? style.otherPane : style.firstPane}>
         <div style={style.verseTitle}>
           <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-            <span style={style.pane.title} className={headingText.length > 15 ? 
+            <span style={style.pane.title} className={headingText.length > 15 ?
                 "hint--bottom hint--medium" : null} aria-label={headingText}>
               {headingText.length > 15 ? headingText.slice(0, 15) + '...' : headingText}
             </span>
-            <ContainerDimensions> 
+            <ContainerDimensions>
               {
-                ({width}) => 
-                <span style={style.pane.subtitle} className={description.length > width/PANECHAR ? 
+                ({width}) =>
+                <span style={style.pane.subtitle} className={description.length > width/PANECHAR ?
                     "hint--bottom hint--medium" : null} aria-label={description}>
-                  {description.length > width/PANECHAR ? 
+                  {description.length > width/PANECHAR ?
                       description.slice(0, Math.round(width/PANECHAR)) + "..." :
                       description}
                 </span>
               }
-            </ContainerDimensions> 
+            </ContainerDimensions>
           </div>
           <Glyphicon glyph={"remove"} style={{color: "var(--text-color-light)", cursor: 'pointer'}}
                      onClick={() => removePane(index)} title="Click to remove resource"/>
