@@ -12,12 +12,16 @@ class Verse extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
-      if (nextProps.verseText.constructor == Array) {
+      if (nextProps.verseText.constructor === Array) {
         nextProps.verseText.forEach((word) => {
-          const { strongs } = word;
-          const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
-          const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
-          nextProps.actions.loadLexiconEntry(lexiconId, entryId);
+          if (isWord(word)) { 
+            const {strongs} = word;
+            if (strongs) {
+              const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
+              const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
+              nextProps.actions.loadLexiconEntry(lexiconId, entryId);
+            }
+          }
         });
       }
     }
@@ -33,11 +37,13 @@ class Verse extends React.Component {
 
   verseArray(verseText = []) {
     let verseSpan = verseText.map( (word, index) => {
-      return (
-        <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
-          {word.word + " "}
-        </span>
-      );
+      if (isWord(word)) {
+        return (
+          <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
+            {word.word + " "}
+          </span>
+        );
+      }
     });
 
     return verseSpan;
@@ -117,6 +123,10 @@ class Verse extends React.Component {
     );
   }
 }
+
+const isWord = (word => {
+  return typeof word !== 'string'; // TODO: will be changed for USFM3 with new verse objects
+});
 
 export default Verse;
 export {PLACE_HOLDER_TEXT};
