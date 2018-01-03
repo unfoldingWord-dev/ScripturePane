@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Pane behavior Test book name and language layout. 1`] = `
+<Pane
+  actions={Object {}}
+  bibleId="udb"
+  contextIdReducer={
+    Object {
+      "contextId": Object {
+        "groupId": "adultery",
+        "occurrence": 1,
+        "quote": "adultery, adulterous, adulterer, adulteress, adulterers, adulteresses",
+        "reference": Object {
+          "bookId": "mat",
+          "chapter": 5,
+          "verse": 27,
+        },
+        "tool": "translationWords",
+      },
+    }
+  }
+  currentPaneSettings={
+    Array [
+      "targetLanguage",
+      "bhp",
+      "udb",
+    ]
+  }
+  index={2}
+  resourcesReducer={
+    Object {
+      "bibles": Object {
+        "udb": Object {
+          "1": Object {
+            "1": "This is the record of the ancestors of Jesus the Messiah, the descendant of King David and of Abraham.",
+            "2": "Abraham was the father of Isaac. Isaac was the father of Jacob. Jacob was the father of Judah and of his brothers.",
+          },
+        },
+      },
+    }
+  }
+/>
+`;
