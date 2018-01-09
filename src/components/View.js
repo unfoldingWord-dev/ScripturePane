@@ -111,7 +111,7 @@ View.propTypes = {
   showModal: PropTypes.func.isRequired,
   addPane: PropTypes.func.isRequired,
   expandedPaneVisibility: PropTypes.bool.isRequired,
-  selectedPane: PropTypes.bool.isRequired,
+  selectedPane: PropTypes.string.isRequired,
   hideExpandModal: PropTypes.func.isRequired,
   hideModal: PropTypes.func.isRequired,
   removePane: PropTypes.func.isRequired

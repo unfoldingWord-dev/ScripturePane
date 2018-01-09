@@ -15,7 +15,7 @@ class AddBible extends React.Component {
 }
 
 AddBible.propTypes = {
-  showModal: PropTypes.bool.isRequired
+  showModal: PropTypes.func.isRequired
 };
 
 export default AddBible;
