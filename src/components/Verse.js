@@ -131,11 +131,11 @@ const isWord = (word => {
 
 Verse.propTypes = {
   actions: PropTypes.object.isRequired,
-  verseText: PropTypes.any.isRequired,
-  chapter: PropTypes.string.isRequired, 
-  verse: PropTypes.string.isRequired, 
-  direction: PropTypes.string.isRequired, 
-  bibleId: PropTypes.string.isRequired, 
+  verseText: PropTypes.any,
+  chapter: PropTypes.number.isRequired, 
+  verse: PropTypes.number.isRequired, 
+  direction: PropTypes.string, 
+  bibleId: PropTypes.string, 
   isCurrent: PropTypes.bool.isRequired,
   contextIdReducer: PropTypes.object.isRequired
 };
