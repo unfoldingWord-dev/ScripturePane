@@ -40,7 +40,7 @@ class Verse extends React.Component {
       if (isWord(word)) {
         return (
           <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
-            {word.word + " "}
+            {(word.word || word.text) + " "}
           </span>
         );
       }
@@ -125,7 +125,7 @@ class Verse extends React.Component {
 }
 
 const isWord = (word => {
-  return typeof word !== 'string'; // TODO: will be changed for USFM3 with new verse objects
+  return (typeof word !== 'string') && (word.word || (word.type === 'word'));
 });
 
 export default Verse;
