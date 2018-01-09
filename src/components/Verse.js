@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import XRegExp from 'xregexp';
 import usfmjs from 'usfm-js';
 // helpers
@@ -121,6 +122,17 @@ class Verse extends React.Component {
     );
   }
 }
+
+Verse.propTypes = {
+  actions: PropTypes.object.isRequired,
+  verseText: PropTypes.any.isRequired,
+  chapter: PropTypes.string.isRequired, 
+  verse: PropTypes.string.isRequired, 
+  direction: PropTypes.string.isRequired, 
+  bibleId: PropTypes.string.isRequired, 
+  isCurrent: PropTypes.bool.isRequired,
+  contextIdReducer: PropTypes.object.isRequired
+};
 
 export default Verse;
 export {PLACE_HOLDER_TEXT};

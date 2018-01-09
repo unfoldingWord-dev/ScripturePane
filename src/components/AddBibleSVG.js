@@ -1,9 +1,8 @@
-const React = require('react');
+import React from 'react';
 
 class AddBibleSVG extends React.Component {
 
   render() {
-    let { color, height } = this.props;
      return(
        <svg viewBox="-424 2130 45.573 45.724" width="100%" height="100%">
          <defs>
@@ -24,4 +23,4 @@ class AddBibleSVG extends React.Component {
    }
  }
 
-module.exports = AddBibleSVG;
+export default AddBibleSVG;

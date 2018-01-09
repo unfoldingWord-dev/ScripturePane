@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import BibleHeadingsRow from './BibleHeadingsRow';
 import VerseRow from './VerseRow';
@@ -8,8 +9,12 @@ class ChapterView extends React.Component {
   componentDidMount() {
     let {chapter, verse} = this.props.contextIdReducer.contextId.reference;
     let verseReference = chapter.toString() + verse.toString();
+/* eslint-disable react/no-string-refs */
     let currentVerse = this.refs[verseReference];
+/* eslint-enable react/no-string-refs */
+/* eslint-disable react/no-find-dom-node */
     let element = ReactDOM.findDOMNode(currentVerse);
+/* eslint-enable react/no-find-dom-node */
     if (element) element.scrollIntoView();
   }
 
@@ -38,5 +43,10 @@ class ChapterView extends React.Component {
     );
   }
 }
+
+ChapterView.propTypes = {
+  contextIdReducer: PropTypes.object.isRequired,
+  resourcesReducer: PropTypes.object.isRequired
+};
 
 export default ChapterView;

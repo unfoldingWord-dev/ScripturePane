@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ContainerDimensions from 'react-container-dimensions';
 import {Glyphicon} from 'react-bootstrap';
 import style from '../css/Style';
@@ -8,7 +9,6 @@ import Verse from './Verse';
 class Pane extends React.Component {
   render() {
     let { removePane, index, bibleId } = this.props;
-    let { showPopover } = this.props.actions;
     let { reference } = this.props.contextIdReducer.contextId;
     let { bibles } = this.props.resourcesReducer;
 
@@ -63,5 +63,15 @@ class Pane extends React.Component {
     );
   }
 }
+
+Pane.propTypes = {
+  removePane: PropTypes.func.isRequired, 
+  index: PropTypes.number.isRequired, 
+  bibleId: PropTypes.string.isRequired,
+  actions: PropTypes.object.isRequired,
+  contextIdReducer: PropTypes.object.isRequired,
+  resourcesReducer: PropTypes.object.isRequired
+  
+};
 
 export default Pane;

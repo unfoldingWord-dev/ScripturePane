@@ -3,6 +3,7 @@
   * resources button on the scripture pane module.
 ******************************************************************************/
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Glyphicon } from 'react-bootstrap';
 import style from '../css/Style';
 
@@ -12,7 +13,7 @@ import ChapterView from './chapterView/ChapterView';
 class ChapterViewModal extends React.Component {
 
   render() {
-    let { onHide, currentPaneSettings, contextIdReducer, showModal, show, bibles, projectDetailsReducer } = this.props;
+    let { onHide, show, projectDetailsReducer } = this.props;
     const title = projectDetailsReducer.manifest.project.name;
     return (
       <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
@@ -38,5 +39,11 @@ class ChapterViewModal extends React.Component {
     );
   }
 }
+
+ChapterViewModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
+  projectDetailsReducer: PropTypes.object.isRequired,
+};
 
 export default ChapterViewModal;

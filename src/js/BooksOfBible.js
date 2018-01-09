@@ -71,4 +71,4 @@ const Books = {
   rev: 'Revelation'
 };
 
-module.exports = Books;
+export default Books;

@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Col, Row} from 'react-bootstrap';
 import Verse from '../Verse';
-import {bibleIdFromSourceName} from '../../helpers/bibleHelpers';
 
 class VerseRow extends React.Component {
 
@@ -53,5 +53,13 @@ class VerseRow extends React.Component {
     );
   }
 }
+
+VerseRow.propTypes = {
+  verseNumber: PropTypes.string.isRequired,
+  settingsReducer: PropTypes.object.isRequired,
+  resourcesReducer: PropTypes.object.isRequired,
+  contextIdReducer: PropTypes.object.isRequired,
+  projectDetailsReducer: PropTypes.object.isRequired
+};
 
 export default VerseRow;

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Row, Glyphicon, Col } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { Glyphicon } from 'react-bootstrap';
 import Pane from './Pane';
 import AddPaneModal from './AddPaneModal';
 import ChapterViewModal from './ChapterViewModal';
@@ -90,5 +91,30 @@ class View extends React.Component {
     );
   }
 }
+
+View.propTypes = {
+  currentToolViews: PropTypes.object.isRequired,
+  resourcesReducer: PropTypes.object.isRequired,
+  contextIdReducer: PropTypes.object.isRequired,
+  settingsReducer: PropTypes.shape({
+    toolsSettings: PropTypes.shape({
+      ScripturePane: PropTypes.shape({
+        staticPaneSettings: PropTypes.array,
+        currentPaneSettings: PropTypes.array
+      })
+    })
+  }),
+  actions: PropTypes.object.isRequired,
+  selectSourceLanguage: PropTypes.func.isRequired,
+  showExpandModal: PropTypes.func.isRequired,
+  modalVisibility: PropTypes.bool.isRequired,
+  showModal: PropTypes.func.isRequired,
+  addPane: PropTypes.func.isRequired,
+  expandedPaneVisibility: PropTypes.bool.isRequired,
+  selectedPane: PropTypes.bool.isRequired,
+  hideExpandModal: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+  removePane: PropTypes.func.isRequired
+};
 
 export default View;

@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 // helpers
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 
 class WordDetails extends React.Component {
 
   render() {
-    let {word, lemma, morph, strongs} = this.props.word;
+    let {lemma, morph, strongs} = this.props.word;
 
     let lexicon;
     const {lexicons} = this.props.resourcesReducer;
@@ -24,5 +25,10 @@ class WordDetails extends React.Component {
     );
   }
 }
+
+WordDetails.propTypes = {
+  word: PropTypes.object.isRequired,
+  resourcesReducer: PropTypes.object.isRequired
+};
 
 export default WordDetails;

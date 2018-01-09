@@ -1,5 +1,6 @@
-const React = require('react');
-const AddBibleSVG = require('./AddBibleSVG');
+import React from 'react';
+import PropTypes from 'prop-types';
+import AddBibleSVG from './AddBibleSVG';
 
 class AddBible extends React.Component {
 
@@ -13,4 +14,8 @@ class AddBible extends React.Component {
   }
 }
 
-module.exports = AddBible;
+AddBible.propTypes = {
+  showModal: PropTypes.bool.isRequired
+};
+
+export default AddBible;
