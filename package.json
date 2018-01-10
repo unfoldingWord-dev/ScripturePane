@@ -49,6 +49,7 @@
     "xregexp": "^3.2.0"
   },
   "dependencies": {
+    "prop-types": "^15.6.0",
     "usfm-parser": "^0.1.6"
   }
 }

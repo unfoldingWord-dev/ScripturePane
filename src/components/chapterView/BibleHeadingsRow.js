@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Col, Row} from 'react-bootstrap';
 import AddBible from '../AddBible';
 
@@ -11,7 +12,7 @@ class BibleHeadingsRow extends React.Component {
     let bibleHeadings = [];
     if (currentPaneSettings.length > 0) {
       bibleHeadings = currentPaneSettings.map((bibleId, index) => {
-        let { language_name, resource_title, resource_id, direction } = bibles[bibleId]["manifest"];
+        let { language_name, direction } = bibles[bibleId]["manifest"];
         let resourceText = bibleId !== "targetLanguage" ? " (" + bibleId.toUpperCase() + ")" : "" ;
         let headingText = language_name + resourceText;
         let dir = direction;
@@ -60,5 +61,18 @@ class BibleHeadingsRow extends React.Component {
     );
   }
 }
+
+BibleHeadingsRow.propTypes = {
+  settingsReducer: PropTypes.object.isRequired,
+  projectDetailsReducer: PropTypes.shape({
+    manifest: PropTypes.shape({
+      target_language: PropTypes.shape({
+        direction: PropTypes.string
+      })
+    })
+  }),
+  resourcesReducer: PropTypes.object.isRequired,
+  showModal: PropTypes.bool.isRequired
+};
 
 export default BibleHeadingsRow;

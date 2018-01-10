@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Col, Row} from 'react-bootstrap';
 import Verse from '../Verse';
-import {bibleIdFromSourceName} from '../../helpers/bibleHelpers';
 
 class VerseRow extends React.Component {
 
@@ -17,7 +17,7 @@ class VerseRow extends React.Component {
       alignItems: 'stretch', padding: '10px', paddingTop: '20px',
       borderRight: '1px solid var(--border-color)'
     };
-    let isCurrent = verseNumber == verse;
+    let isCurrent = verseNumber === verse;
     if (isCurrent) colStyle.borderLeft = '3px solid var(--accent-color)';
     if (currentPaneSettings.length > 0) {
       verseCells = currentPaneSettings.map((bibleId, index) => {
@@ -53,5 +53,13 @@ class VerseRow extends React.Component {
     );
   }
 }
+
+VerseRow.propTypes = {
+  verseNumber: PropTypes.string.isRequired,
+  settingsReducer: PropTypes.object.isRequired,
+  resourcesReducer: PropTypes.object.isRequired,
+  contextIdReducer: PropTypes.object.isRequired,
+  projectDetailsReducer: PropTypes.object.isRequired
+};
 
 export default VerseRow;

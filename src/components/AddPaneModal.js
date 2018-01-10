@@ -3,9 +3,10 @@
  * resources button on the scripture pane module.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
 
-export default class AddPaneModal extends React.Component {
+class AddPaneModal extends React.Component {
   render() {
     let { selectSourceLanguage, addPane, show, onHide, selectedPane, currentPaneSettings } = this.props;
     let { bibles } = this.props.resourcesReducer;
@@ -63,3 +64,15 @@ export default class AddPaneModal extends React.Component {
     );
   }
 }
+
+AddPaneModal.propTypes = {
+  selectSourceLanguage: PropTypes.func.isRequired,
+  addPane: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired, 
+  onHide: PropTypes.func.isRequired, 
+  selectedPane: PropTypes.string.isRequired,
+  currentPaneSettings: PropTypes.array.isRequired,
+  resourcesReducer: PropTypes.object.isRequired
+};
+
+export default AddPaneModal;

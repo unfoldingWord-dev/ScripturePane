@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import XRegExp from 'xregexp';
 import usfmjs from 'usfm-js';
 // helpers
@@ -127,6 +128,17 @@ class Verse extends React.Component {
 const isWord = (word => {
   return typeof word !== 'string'; // TODO: will be changed for USFM3 with new verse objects
 });
+
+Verse.propTypes = {
+  actions: PropTypes.object.isRequired,
+  verseText: PropTypes.any.isRequired,
+  chapter: PropTypes.number.isRequired, 
+  verse: PropTypes.number.isRequired, 
+  direction: PropTypes.string.isRequired, 
+  bibleId: PropTypes.string.isRequired, 
+  isCurrent: PropTypes.bool.isRequired,
+  contextIdReducer: PropTypes.object.isRequired
+};
 
 export default Verse;
 export {PLACE_HOLDER_TEXT};
