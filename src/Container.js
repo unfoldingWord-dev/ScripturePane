@@ -4,6 +4,7 @@
  * from uploads and from the scripture content manager.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import View from './components/View';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // constant
@@ -94,5 +95,15 @@ class ScripturePane extends React.Component {
     );
   }
 }
+
+ScripturePane.propTypes = {
+  currentToolViews: PropTypes.object.isRequired,
+  resourcesReducer: PropTypes.object.isRequired,
+  contextIdReducer: PropTypes.object.isRequired,
+  settingsReducer: PropTypes.object.isRequired,
+  actions: PropTypes.shape({
+    setToolSettings: PropTypes.func.isRequired,
+  })
+};
 
 export default ScripturePane;

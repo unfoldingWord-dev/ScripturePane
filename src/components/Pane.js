@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ContainerDimensions from 'react-container-dimensions';
 import {Glyphicon} from 'react-bootstrap';
 import style from '../css/Style';
@@ -8,7 +9,6 @@ import Verse from './Verse';
 class Pane extends React.Component {
   render() {
     let { removePane, index, bibleId } = this.props;
-    let { showPopover } = this.props.actions;
     let { reference } = this.props.contextIdReducer.contextId;
     let { bibles } = this.props.resourcesReducer;
 
@@ -19,7 +19,7 @@ class Pane extends React.Component {
     let contentStyle;
     const PANECHAR = 9;
 
-    if (direction == 'ltr') {
+    if (direction === 'ltr') {
       contentStyle = style.pane.contentLTR;
     } else {
       contentStyle = style.pane.contentRTL;
@@ -29,21 +29,21 @@ class Pane extends React.Component {
       <div style={index > 0 ? style.otherPane : style.firstPane}>
         <div style={style.verseTitle}>
           <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-            <span style={style.pane.title} className={headingText.length > 15 ? 
+            <span style={style.pane.title} className={headingText.length > 15 ?
                 "hint--bottom hint--medium" : null} aria-label={headingText}>
               {headingText.length > 15 ? headingText.slice(0, 15) + '...' : headingText}
             </span>
-            <ContainerDimensions> 
+            <ContainerDimensions>
               {
-                ({width}) => 
-                <span style={style.pane.subtitle} className={description.length > width/PANECHAR ? 
+                ({width}) =>
+                <span style={style.pane.subtitle} className={description.length > width/PANECHAR ?
                     "hint--bottom hint--medium" : null} aria-label={description}>
-                  {description.length > width/PANECHAR ? 
+                  {description.length > width/PANECHAR ?
                       description.slice(0, Math.round(width/PANECHAR)) + "..." :
                       description}
                 </span>
               }
-            </ContainerDimensions> 
+            </ContainerDimensions>
           </div>
           <Glyphicon glyph={"remove"} style={{color: "var(--text-color-light)", cursor: 'pointer'}}
                      onClick={() => removePane(index)} title="Click to remove resource"/>
@@ -63,5 +63,15 @@ class Pane extends React.Component {
     );
   }
 }
+
+Pane.propTypes = {
+  removePane: PropTypes.func.isRequired, 
+  index: PropTypes.number.isRequired, 
+  bibleId: PropTypes.string.isRequired,
+  actions: PropTypes.object.isRequired,
+  contextIdReducer: PropTypes.object.isRequired,
+  resourcesReducer: PropTypes.object.isRequired
+  
+};
 
 export default Pane;
