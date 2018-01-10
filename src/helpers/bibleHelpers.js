@@ -6,7 +6,7 @@ export const bibleIdFromSourceName = (sourceName) => {
       bibleId = 'ulb';
       break;
     case 'originalLanguage':
-      bibleId = 'bhp';
+      bibleId = 'ugnt';
       break;
     case 'UDB':
       bibleId = 'udb';
