@@ -1,9 +1,7 @@
 /* eslint-env jest */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
 import Pane from '../src/components/Pane';
-//import {shallow} from 'enzyme';
 
 // Tests for AddPanelModal React Component
 describe('Test Pane behavior',()=>{
