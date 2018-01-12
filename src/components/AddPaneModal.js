@@ -70,7 +70,10 @@ AddPaneModal.propTypes = {
   addPane: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired, 
   onHide: PropTypes.func.isRequired, 
-  selectedPane: PropTypes.string.isRequired,
+  selectedPane: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.bool.isRequired,
+  ]),
   currentPaneSettings: PropTypes.array.isRequired,
   resourcesReducer: PropTypes.object.isRequired
 };
