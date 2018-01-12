@@ -72,7 +72,7 @@ BibleHeadingsRow.propTypes = {
     })
   }),
   resourcesReducer: PropTypes.object.isRequired,
-  showModal: PropTypes.bool.isRequired
+  showModal: PropTypes.func.isRequired
 };
 
 export default BibleHeadingsRow;
