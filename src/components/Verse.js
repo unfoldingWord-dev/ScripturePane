@@ -133,9 +133,12 @@ Verse.propTypes = {
   actions: PropTypes.object.isRequired,
   verseText: PropTypes.any.isRequired,
   chapter: PropTypes.number.isRequired, 
-  verse: PropTypes.number.isRequired, 
+  verse: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.number.isRequired,
+  ]),
   direction: PropTypes.string.isRequired, 
-  bibleId: PropTypes.string.isRequired, 
+  bibleId: PropTypes.string, 
   isCurrent: PropTypes.bool.isRequired,
   contextIdReducer: PropTypes.object.isRequired
 };
