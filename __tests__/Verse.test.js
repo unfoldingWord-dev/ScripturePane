@@ -3,6 +3,7 @@
 import React from 'react';
 import Verse, {PLACE_HOLDER_TEXT} from '../src/components/Verse';
 import {mount} from 'enzyme';
+import PropTypes from 'prop-types';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 // Tests for Verse React Component
@@ -88,13 +89,12 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
           muiTheme: getMuiTheme()
         },
         childContextTypes: {
-          muiTheme: React.PropTypes.object.isRequired
+          muiTheme: PropTypes.object.isRequired
         }
       }
     );
-  
-    expect(wrapper.node.props.verse).toEqual(props.verse);
+    expect(wrapper.find(Verse).props().verse).toEqual(props.verse);
     wrapper.setProps(props2);
-    expect(wrapper.node.props.verse).toEqual(props2.verse);  
+    expect(wrapper.find(Verse).props().verse).toEqual(props2.verse);  
   });
 });
