@@ -15,10 +15,9 @@ jest.mock('react-dom', () => ({
 
 describe('View component Tests', () => {
   it('before Project Loaded', () => {
-    let projectState = fs.readJSONSync(project);
-    let View = (
-      <View {...projectState} />
-    );
-    expect(View).toMatchSnapshot();
+    const projectState = fs.readJSONSync(project);
+    const component = <View {...projectState} />;
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });
