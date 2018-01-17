@@ -46,7 +46,8 @@
   },
   "dependencies": {
     "prop-types": "15.6.0",
-    "xregexp": "3.2.0",
-    "usfm-js": "1.0.0-beta.17.2"
+    "react": "^16.2.0",
+    "usfm-js": "1.0.0-beta.17.2",
+    "xregexp": "3.2.0"
   }
 }
