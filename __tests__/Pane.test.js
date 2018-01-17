@@ -37,7 +37,7 @@ describe('Test Pane behavior',()=>{
       bibleId: "udb",
       currentPaneSettings: ["targetLanguage","bhp","udb"]
     };
-    let myPane = (
+    const myPane = (
             <Pane {...props} />
     );
     expect(myPane).toMatchSnapshot();

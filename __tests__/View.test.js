@@ -16,11 +16,11 @@ jest.mock('react-dom', () => ({
 
 describe('View component Tests', () => {
   it('before Project Loaded', () => {
-    let projectState = fs.readJSONSync(project);
+    const projectState = fs.readJSONSync(project);
     const component = renderer.create(
       <View {...projectState} />,
     );
-    let tree = component.toJSON();
+    const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
