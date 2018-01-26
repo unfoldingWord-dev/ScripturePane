@@ -131,7 +131,10 @@ const isWord = (word => {
 
 Verse.propTypes = {
   actions: PropTypes.object.isRequired,
-  verseText: PropTypes.string.isRequired,
+  verseText: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.array.isRequired
+  ]),
   chapter: PropTypes.number.isRequired,
   verse: PropTypes.oneOfType([
     PropTypes.string.isRequired,
