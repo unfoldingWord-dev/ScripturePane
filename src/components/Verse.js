@@ -15,7 +15,7 @@ class Verse extends React.Component {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
       if (nextProps.verseText.constructor === Array) {
         nextProps.verseText.forEach((word) => {
-          if (isWord(word)) { 
+          if (isWord(word)) {
             const {strongs} = word;
             if (strongs) {
               const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
@@ -99,7 +99,7 @@ class Verse extends React.Component {
       verseText = PLACE_HOLDER_TEXT;
       verseIsPlaceHolder = true;
     }
-    if (typeof verseText === 'string') {
+    if (verseText && typeof verseText === 'string') {
       let {quote, occurrence} = this.props.contextIdReducer.contextId;
       const isQuoteInVerse = highlightHelpers.isQuoteInVerse(verseText, quote);
       if (quote && verseText && isCurrent && bibleId === 'ulb' && !quote.includes("...") && isQuoteInVerse) {
@@ -131,14 +131,17 @@ const isWord = (word => {
 
 Verse.propTypes = {
   actions: PropTypes.object.isRequired,
-  verseText: PropTypes.any.isRequired,
-  chapter: PropTypes.number.isRequired, 
+  verseText: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.array.isRequired
+  ]),
+  chapter: PropTypes.number.isRequired,
   verse: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.number.isRequired,
   ]),
-  direction: PropTypes.string.isRequired, 
-  bibleId: PropTypes.string, 
+  direction: PropTypes.string.isRequired,
+  bibleId: PropTypes.string,
   isCurrent: PropTypes.bool.isRequired,
   contextIdReducer: PropTypes.object.isRequired
 };
