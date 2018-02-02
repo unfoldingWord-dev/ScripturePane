@@ -51,7 +51,7 @@ class Verse extends React.Component {
           <span key={index}>
             {word.text}
           </span>
-        )
+        );
       }
     });
 

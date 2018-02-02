@@ -49,6 +49,25 @@ describe('Test Verse component',()=>{
     const enzymeWrapper = mount(<Verse {...props} />);
     validateVerse(enzymeWrapper, expectedText);
   });
+
+  test('Test when verse is verseObject that the verse is displayed', () => {
+    const props = {
+      verseText: [
+        {
+          type: 'text',
+          text: 'Jesus wept.'
+        }
+      ],
+      chapter: '11',
+      verse: '35',
+      contextIdReducer: {
+        contextId: {}
+      }
+    };
+    const expectedText = '11:35 Jesus wept.';
+    const enzymeWrapper = mount(<Verse {...props} />);
+    validateVerse(enzymeWrapper, expectedText);
+  });
 });
 
 function validateVerse(enzymeWrapper, expectedText) {
