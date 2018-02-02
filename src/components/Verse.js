@@ -16,10 +16,10 @@ class Verse extends React.Component {
       if (nextProps.verseText.constructor === Array) {
         nextProps.verseText.forEach((word) => {
           if (isWord(word)) {
-            const {strongs} = word;
-            if (strongs) {
-              const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
-              const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
+            const {strong} = word;
+            if (strong) {
+              const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strong);
+              const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strong);
               nextProps.actions.loadLexiconEntry(lexiconId, entryId);
             }
           }

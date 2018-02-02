@@ -79,7 +79,7 @@ function validateVerse(enzymeWrapper, expectedText) {
 describe('Test Verse.componentWillReceiveProps', ()=>{
   test('Test with two populated verses', () => {
     const props = {
-      verseText: [{strongs: "G38700"}],
+      verseText: [{strong: "G38700"}],
       chapter: '1',
       verse: '1',
       contextIdReducer: {
@@ -90,7 +90,7 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
       }
     };
     const props2 = {
-      verseText: [{strongs: "G25320"}],
+      verseText: [{strong: "G25320"}],
       chapter: '1',
       verse: '2',
       contextIdReducer: {
