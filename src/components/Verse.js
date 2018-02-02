@@ -39,11 +39,19 @@ class Verse extends React.Component {
   verseArray(verseText = []) {
     let verseSpan = verseText.map( (word, index) => {
       if (isWord(word)) {
+        const isNextAword = (index < verseText.length - 1) && (isWord(verseText[index+1]));
+        const padding = isNextAword ? ' ' : '';
         return (
           <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
-            {(word.word || word.text) + " "}
+            {(word.word || word.text) + padding}
           </span>
         );
+      } else if (word.text) { // if not word, show punctuation, etc. but not clickable
+        return (
+          <span key={index}>
+            {word.text}
+          </span>
+        )
       }
     });
 
