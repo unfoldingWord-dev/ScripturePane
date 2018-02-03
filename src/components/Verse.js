@@ -14,7 +14,8 @@ class Verse extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
       if (nextProps.verseText.constructor === Array) {
-        nextProps.verseText.forEach((word) => {
+        const words = nextProps.actions.getWordListForVerse(nextProps.verseText);
+        words.forEach((word) => {
           if (isWord(word)) {
             const {strong} = word;
             if (strong) {
@@ -37,9 +38,10 @@ class Verse extends React.Component {
   }
 
   verseArray(verseText = []) {
-    let verseSpan = verseText.map( (word, index) => {
+    const words = this.props.actions.getWordListForVerse(verseText);
+    const verseSpan = words.map( (word, index) => {
       if (isWord(word)) {
-        const isNextAword = (index < verseText.length - 1) && (isWord(verseText[index+1]));
+        const isNextAword = (index < words.length - 1) && (isWord(words[index+1]));
         const padding = isNextAword ? ' ' : '';
         return (
           <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
@@ -138,7 +140,12 @@ const isWord = (word => {
 });
 
 Verse.propTypes = {
-  actions: PropTypes.object.isRequired,
+  actions: PropTypes.shape({
+    setToolSettings: PropTypes.func.isRequired,
+    getWordListForVerse: PropTypes.func.isRequired,
+    loadLexiconEntry: PropTypes.func.isRequired,
+    showPopover: PropTypes.func.isRequired,
+  }),
   verseText: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.array.isRequired

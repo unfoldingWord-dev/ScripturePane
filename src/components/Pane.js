@@ -69,7 +69,12 @@ Pane.propTypes = {
   removePane: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   bibleId: PropTypes.string.isRequired,
-  actions: PropTypes.object.isRequired,
+  actions: PropTypes.shape({
+    setToolSettings: PropTypes.func.isRequired,
+    getWordListForVerse: PropTypes.func.isRequired,
+    loadLexiconEntry: PropTypes.func.isRequired,
+    showPopover: PropTypes.func.isRequired,
+  }),
   contextIdReducer: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired
 
