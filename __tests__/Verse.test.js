@@ -62,6 +62,9 @@ describe('Test Verse component',()=>{
       verse: '35',
       contextIdReducer: {
         contextId: {}
+      },
+      actions: {
+        'getWordListForVerse': getWordListForVerse
       }
     };
     const expectedText = '11:35 Jesus wept.';
@@ -86,7 +89,8 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
         contextId: {}
       },
       actions: {
-        'loadLexiconEntry': jest.fn()
+        'loadLexiconEntry': jest.fn(),
+        'getWordListForVerse': getWordListForVerse
       }
     };
     const props2 = {
@@ -97,7 +101,8 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
         contextId: {}
       },
       actions: {
-        'loadLexiconEntry': jest.fn()
+        'loadLexiconEntry': jest.fn(),
+        'getWordListForVerse': getWordListForVerse
       }
     };
 
@@ -117,3 +122,42 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
     expect(wrapper.find(Verse).props().verse).toEqual(props2.verse);  
   });
 });
+
+//
+// helpers
+//
+
+/**
+ * @description returns a flat array of words (currently needed for UGNT since words may be nested in milestones)
+ * @param {Object|Array} verse - verse data that may need to be flattened.
+ * @return {array} wordlist - flat array of VerseObjects
+ */
+export const getWordListForVerse = (verse) => {
+  let words = [];
+  if (verse.verseObjects) {
+    flattenVerseObjects(verse.verseObjects, words);
+  } else { // already a flat word list
+    words = verse;
+  }
+  return words;
+};
+
+/**
+ * @description flatten verse objects from nested format to flat array
+ * @param {array} verse - source array of nested verseObjects
+ * @param {array} words - output array that will be filled with flattened verseObjects
+ */
+const flattenVerseObjects = (verse, words) => {
+  for (let object of verse) {
+    if (object) {
+      if (object.type === 'word') {
+        object.strong = object.strong || object.strongs;
+        words.push(object);
+      } else if (object.type === 'milestone') { // get children of milestone
+        flattenVerseObjects(object.children, words);
+      } else {
+        words.push(object);
+      }
+    }
+  }
+};
