@@ -14,12 +14,13 @@ class Verse extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
       if (nextProps.verseText.constructor === Array) {
-        nextProps.verseText.forEach((word) => {
+        const words = nextProps.actions.getWordListForVerse(nextProps.verseText);
+        words.forEach((word) => {
           if (isWord(word)) {
-            const {strongs} = word;
-            if (strongs) {
-              const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
-              const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
+            const {strong} = word;
+            if (strong) {
+              const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strong);
+              const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strong);
               nextProps.actions.loadLexiconEntry(lexiconId, entryId);
             }
           }
@@ -37,11 +38,20 @@ class Verse extends React.Component {
   }
 
   verseArray(verseText = []) {
-    let verseSpan = verseText.map( (word, index) => {
+    const words = this.props.actions.getWordListForVerse(verseText);
+    const verseSpan = words.map( (word, index) => {
       if (isWord(word)) {
+        const isNextAword = (index < words.length - 1) && (isWord(words[index+1]));
+        const padding = isNextAword ? ' ' : '';
         return (
           <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
-            {(word.word || word.text) + " "}
+            {(word.word || word.text) + padding}
+          </span>
+        );
+      } else if (word.text) { // if not word, show punctuation, etc. but not clickable
+        return (
+          <span key={index}>
+            {word.text}
           </span>
         );
       }
@@ -130,7 +140,12 @@ const isWord = (word => {
 });
 
 Verse.propTypes = {
-  actions: PropTypes.object.isRequired,
+  actions: PropTypes.shape({
+    setToolSettings: PropTypes.func.isRequired,
+    getWordListForVerse: PropTypes.func.isRequired,
+    loadLexiconEntry: PropTypes.func.isRequired,
+    showPopover: PropTypes.func.isRequired,
+  }),
   verseText: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.array.isRequired

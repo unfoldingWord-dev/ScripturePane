@@ -49,6 +49,28 @@ describe('Test Verse component',()=>{
     const enzymeWrapper = mount(<Verse {...props} />);
     validateVerse(enzymeWrapper, expectedText);
   });
+
+  test('Test when verse is verseObject that the verse is displayed', () => {
+    const props = {
+      verseText: [
+        {
+          type: 'text',
+          text: 'Jesus wept.'
+        }
+      ],
+      chapter: '11',
+      verse: '35',
+      contextIdReducer: {
+        contextId: {}
+      },
+      actions: {
+        'getWordListForVerse': mock_getWordListForVerse
+      }
+    };
+    const expectedText = '11:35 Jesus wept.';
+    const enzymeWrapper = mount(<Verse {...props} />);
+    validateVerse(enzymeWrapper, expectedText);
+  });
 });
 
 function validateVerse(enzymeWrapper, expectedText) {
@@ -60,25 +82,27 @@ function validateVerse(enzymeWrapper, expectedText) {
 describe('Test Verse.componentWillReceiveProps', ()=>{
   test('Test with two populated verses', () => {
     const props = {
-      verseText: [{strongs: "G38700"}],
+      verseText: [{strong: "G38700"}],
       chapter: '1',
       verse: '1',
       contextIdReducer: {
         contextId: {}
       },
       actions: {
-        'loadLexiconEntry': jest.fn()
+        'loadLexiconEntry': jest.fn(),
+        'getWordListForVerse': mock_getWordListForVerse
       }
     };
     const props2 = {
-      verseText: [{strongs: "G25320"}],
+      verseText: [{strong: "G25320"}],
       chapter: '1',
       verse: '2',
       contextIdReducer: {
         contextId: {}
       },
       actions: {
-        'loadLexiconEntry': jest.fn()
+        'loadLexiconEntry': jest.fn(),
+        'getWordListForVerse': mock_getWordListForVerse
       }
     };
 
@@ -98,3 +122,11 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
     expect(wrapper.find(Verse).props().verse).toEqual(props2.verse);  
   });
 });
+
+//
+// helpers
+//
+
+export const mock_getWordListForVerse = (verse) => {
+  return verse;
+};
