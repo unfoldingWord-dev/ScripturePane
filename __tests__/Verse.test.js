@@ -50,6 +50,20 @@ describe('Test Verse component',()=>{
     validateVerse(enzymeWrapper, expectedText);
   });
 
+  test('Test that USFM is stripped out', () => {
+    const props = {
+      verseText: 'Also, we are writing these things to you so that our joy will be complete. \\f + \\ft Some older versions read, \\fqa And we are writing these things to you so that your joy will be complete \\fqa* . \\f*\n\n\\s5\n\\p\n\\q1\n',
+      chapter: '1',
+      verse: '1',
+      contextIdReducer: {
+        contextId: {}
+      }
+    };
+    const expectedText = '1:1 Also, we are writing these things to you so that our joy will be complete. \n\n\n\n\n';
+    const enzymeWrapper = mount(<Verse {...props} />);
+    validateVerse(enzymeWrapper, expectedText);
+  });
+
   test('Test when verse is verseObject that the verse is displayed', () => {
     const props = {
       verseText: [

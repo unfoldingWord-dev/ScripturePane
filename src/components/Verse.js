@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import XRegExp from 'xregexp';
-import usfmjs from 'usfm-js';
+import {removeMarker} from '../helpers/UsfmHelpers';
+
 // helpers
 import * as highlightHelpers from '../helpers/highlightHelpers';
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
@@ -91,11 +92,11 @@ class Verse extends React.Component {
     afterText = aroundQuote[aroundQuoteIndex][1] + afterText;  // prepend the current quote's preceding char
     verseSpan.push(
       <span key={1}>
-        <span>{usfmjs.removeMarker(beforeText)}</span>
+        <span>{removeMarker(beforeText)}</span>
         <span style={{backgroundColor: "var(--highlight-color)"}}>
           {quote}
         </span>
-        <span>{usfmjs.removeMarker(afterText)}</span>
+        <span>{removeMarker(afterText)}</span>
       </span>
     );
     return verseSpan;
@@ -115,7 +116,7 @@ class Verse extends React.Component {
       if (quote && verseText && isCurrent && bibleId === 'ulb' && !quote.includes("...") && isQuoteInVerse) {
         verseSpan = this.highlightQuoteInVerse(verseText, quote, occurrence);
       } else {
-        verseSpan = <span>{usfmjs.removeMarker(verseText)}</span>;
+        verseSpan = <span>{removeMarker(verseText)}</span>;
       }
     } else {
       verseSpan = this.verseArray(verseText);

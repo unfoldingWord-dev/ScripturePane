@@ -48,7 +48,7 @@
     "prop-types": "15.6.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
-    "usfm-js": "1.0.0-beta.17.2",
+    "usfm-js": "1.0.0-beta.23",
     "xregexp": "3.2.0"
   }
 }
