@@ -149,7 +149,8 @@ Verse.propTypes = {
   }),
   verseText: PropTypes.oneOfType([
     PropTypes.string.isRequired,
-    PropTypes.array.isRequired
+    PropTypes.array.isRequired,
+    PropTypes.object.isRequired
   ]),
   chapter: PropTypes.number.isRequired,
   verse: PropTypes.oneOfType([
