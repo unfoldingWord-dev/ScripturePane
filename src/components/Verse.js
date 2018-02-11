@@ -14,7 +14,7 @@ class Verse extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
-      if (nextProps.verseText.constructor === Array) {
+      if ((nextProps.verseText.constructor === Array) || (nextProps.verseText.verseObjects)) {
         const words = nextProps.actions.getWordListForVerse(nextProps.verseText);
         words.forEach((word) => {
           if (isWord(word)) {
