@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import XRegExp from 'xregexp';
-import usfmjs from 'usfm-js';
+import {removeMarker} from '../helpers/UsfmHelpers';
+
 // helpers
 import * as highlightHelpers from '../helpers/highlightHelpers';
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
@@ -13,13 +14,14 @@ class Verse extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
-      if (nextProps.verseText.constructor === Array) {
-        nextProps.verseText.forEach((word) => {
+      if ((nextProps.verseText.constructor === Array) || (nextProps.verseText.verseObjects)) {
+        const words = nextProps.actions.getWordListForVerse(nextProps.verseText);
+        words.forEach((word) => {
           if (isWord(word)) {
-            const {strongs} = word;
-            if (strongs) {
-              const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
-              const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
+            const {strong} = word;
+            if (strong) {
+              const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strong);
+              const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strong);
               nextProps.actions.loadLexiconEntry(lexiconId, entryId);
             }
           }
@@ -37,11 +39,20 @@ class Verse extends React.Component {
   }
 
   verseArray(verseText = []) {
-    let verseSpan = verseText.map( (word, index) => {
+    const words = this.props.actions.getWordListForVerse(verseText);
+    const verseSpan = words.map( (word, index) => {
       if (isWord(word)) {
+        const isNextAword = (index < words.length - 1) && (isWord(words[index+1]));
+        const padding = isNextAword ? ' ' : '';
         return (
           <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
-            {(word.word || word.text) + " "}
+            {(word.word || word.text) + padding}
+          </span>
+        );
+      } else if (word.text) { // if not word, show punctuation, etc. but not clickable
+        return (
+          <span key={index}>
+            {word.text}
           </span>
         );
       }
@@ -81,11 +92,11 @@ class Verse extends React.Component {
     afterText = aroundQuote[aroundQuoteIndex][1] + afterText;  // prepend the current quote's preceding char
     verseSpan.push(
       <span key={1}>
-        <span>{usfmjs.removeMarker(beforeText)}</span>
+        <span>{removeMarker(beforeText)}</span>
         <span style={{backgroundColor: "var(--highlight-color)"}}>
           {quote}
         </span>
-        <span>{usfmjs.removeMarker(afterText)}</span>
+        <span>{removeMarker(afterText)}</span>
       </span>
     );
     return verseSpan;
@@ -105,7 +116,7 @@ class Verse extends React.Component {
       if (quote && verseText && isCurrent && bibleId === 'ulb' && !quote.includes("...") && isQuoteInVerse) {
         verseSpan = this.highlightQuoteInVerse(verseText, quote, occurrence);
       } else {
-        verseSpan = <span>{usfmjs.removeMarker(verseText)}</span>;
+        verseSpan = <span>{removeMarker(verseText)}</span>;
       }
     } else {
       verseSpan = this.verseArray(verseText);
@@ -130,10 +141,16 @@ const isWord = (word => {
 });
 
 Verse.propTypes = {
-  actions: PropTypes.object.isRequired,
+  actions: PropTypes.shape({
+    setToolSettings: PropTypes.func.isRequired,
+    getWordListForVerse: PropTypes.func.isRequired,
+    loadLexiconEntry: PropTypes.func.isRequired,
+    showPopover: PropTypes.func.isRequired,
+  }),
   verseText: PropTypes.oneOfType([
     PropTypes.string.isRequired,
-    PropTypes.array.isRequired
+    PropTypes.array.isRequired,
+    PropTypes.object.isRequired
   ]),
   chapter: PropTypes.number.isRequired,
   verse: PropTypes.oneOfType([
