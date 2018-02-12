@@ -11,7 +11,6 @@ import WordDetails from './WordDetails';
 const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text for this reference.]';
 
 class Verse extends React.Component {
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
       if ((nextProps.verseText.constructor === Array) || (nextProps.verseText.verseObjects)) {
