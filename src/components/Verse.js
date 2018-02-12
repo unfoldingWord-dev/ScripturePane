@@ -11,7 +11,6 @@ import WordDetails from './WordDetails';
 const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text for this reference.]';
 
 class Verse extends React.Component {
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
       if ((nextProps.verseText.constructor === Array) || (nextProps.verseText.verseObjects)) {
@@ -145,7 +144,7 @@ Verse.propTypes = {
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,
     loadLexiconEntry: PropTypes.func.isRequired,
-    showPopover: PropTypes.func.isRequired,
+    showPopover: PropTypes.func.isRequired
   }),
   verseText: PropTypes.oneOfType([
     PropTypes.string.isRequired,
@@ -155,7 +154,7 @@ Verse.propTypes = {
   chapter: PropTypes.number.isRequired,
   verse: PropTypes.oneOfType([
     PropTypes.string.isRequired,
-    PropTypes.number.isRequired,
+    PropTypes.number.isRequired
   ]),
   direction: PropTypes.string.isRequired,
   bibleId: PropTypes.string,
