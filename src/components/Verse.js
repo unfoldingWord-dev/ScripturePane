@@ -31,34 +31,48 @@ class Verse extends React.Component {
   }
 
   onClick(e, word) {
-    let positionCoord = e.target;
-    const PopoverTitle = <strong style={{fontSize: '1.2em'}}>{word.word}</strong>;
-    let { showPopover } = this.props.actions;
-    const wordDetails = <WordDetails {...this.props} word={word} />;
-    showPopover(PopoverTitle, wordDetails, positionCoord);
+    if (word && word.strong) {
+      let positionCoord = e.target;
+      const PopoverTitle = <strong style={{fontSize: '1.2em'}}>{word.word}</strong>;
+      let {showPopover} = this.props.actions;
+      const wordDetails = <WordDetails {...this.props} word={word}/>;
+      showPopover(PopoverTitle, wordDetails, positionCoord);
+    }
   }
 
   verseArray(verseText = []) {
     const words = this.props.actions.getWordListForVerse(verseText);
+    let wordSpacing = '';
     const verseSpan = words.map( (word, index) => {
       if (isWord(word)) {
-        const isNextAword = (index < words.length - 1) && (isWord(words[index+1]));
-        const padding = isNextAword ? ' ' : '';
-        return (
-          <span style={{cursor: 'pointer'}} onClick={(e)=>this.onClick(e, word)} key={index}>
-            {(word.word || word.text) + padding}
+        const padding = wordSpacing;
+        wordSpacing = ' '; // spacing between words
+        const text = (word.word || word.text);
+        if (word.strong) { // if clickable
+          return (
+            <span style={{cursor: 'pointer'}} onClick={(e) => this.onClick(e, word)} key={index}>
+            {padding + text}
           </span>
-        );
+          );
+        }
+        return this.createTextSpan(index, padding + text);
+        
       } else if (word.text) { // if not word, show punctuation, etc. but not clickable
-        return (
-          <span key={index}>
-            {word.text}
-          </span>
-        );
+        const lastChar = word.text.substr(word.text.length - 1);
+        wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
+        return this.createTextSpan(index, word.text);
       }
     });
 
     return verseSpan;
+  }
+
+  createTextSpan(index, text) {
+    return (
+      <span key={index}>
+            {text}
+          </span>
+    );
   }
 
   highlightQuoteInVerse(content, quote, occurrence) {
