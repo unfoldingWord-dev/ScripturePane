@@ -6,12 +6,12 @@ import * as lexiconHelpers from '../helpers/lexiconHelpers';
 class WordDetails extends React.Component {
 
   render() {
-    let {lemma, morph, strongs} = this.props.word;
+    let {lemma, morph, strong} = this.props.word;
 
     let lexicon;
     const {lexicons} = this.props.resourcesReducer;
-    const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strongs);
-    const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strongs);
+    const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strong);
+    const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strong);
     if (lexicons[lexiconId] && lexicons[lexiconId][entryId]) {
       lexicon = lexicons[lexiconId][entryId].long;
     }
@@ -19,7 +19,7 @@ class WordDetails extends React.Component {
       <div style={{margin: '-10px 10px -20px', maxWidth: '400px'}}>
         <span><strong>Lemma:</strong> {lemma}</span><br/>
         <span><strong>Morphology:</strong> {morph}</span><br/>
-        <span><strong>Strongs:</strong> {strongs}</span><br/>
+        <span><strong>Strongs:</strong> {strong}</span><br/>
         <span><strong>Lexicon:</strong> {lexicon}</span><br/>
       </div>
     );

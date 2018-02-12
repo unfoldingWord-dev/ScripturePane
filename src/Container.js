@@ -103,7 +103,10 @@ ScripturePane.propTypes = {
   settingsReducer: PropTypes.object.isRequired,
   actions: PropTypes.shape({
     setToolSettings: PropTypes.func.isRequired,
-  })
+    getWordListForVerse: PropTypes.func.isRequired,
+    loadLexiconEntry: PropTypes.func.isRequired,
+    showPopover: PropTypes.func.isRequired,
+  }),
 };
 
 export default ScripturePane;

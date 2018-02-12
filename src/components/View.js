@@ -104,7 +104,12 @@ View.propTypes = {
       })
     })
   }),
-  actions: PropTypes.object.isRequired,
+  actions: PropTypes.shape({
+    setToolSettings: PropTypes.func.isRequired,
+    getWordListForVerse: PropTypes.func.isRequired,
+    loadLexiconEntry: PropTypes.func.isRequired,
+    showPopover: PropTypes.func.isRequired,
+  }),
   selectSourceLanguage: PropTypes.func.isRequired,
   showExpandModal: PropTypes.func.isRequired,
   modalVisibility: PropTypes.bool.isRequired,
