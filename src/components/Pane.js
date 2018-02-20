@@ -73,7 +73,7 @@ Pane.propTypes = {
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,
     loadLexiconEntry: PropTypes.func.isRequired,
-    showPopover: PropTypes.func.isRequired,
+    showPopover: PropTypes.func.isRequired
   }),
   contextIdReducer: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired
