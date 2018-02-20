@@ -9,6 +9,7 @@ import { Modal } from 'react-bootstrap';
 describe('Test ChapterViewModal component', () => {
   test('Tests that the modal\'s title is displayed', () => {
     const props = {
+      show: true,
       onHide: jest.fn(),
       projectDetailsReducer: {
         manifest: {
@@ -16,7 +17,9 @@ describe('Test ChapterViewModal component', () => {
             name: 'My Book'
           }
         }
-      }
+      },
+      contextIdReducer: {},
+      resourcesReducer: {},
     };
     const expectedTitle = props['projectDetailsReducer']['manifest']['project']['name'];
     const enzymeWrapper = shallow(<ChapterViewModal {...props} />);

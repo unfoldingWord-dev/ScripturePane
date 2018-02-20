@@ -2,7 +2,9 @@
 import React from 'react';
 import fs from 'fs-extra';
 import View from '../src/components/View';
+
 const project = '__tests__/fixtures/project/loadedProjectShortened.json';
+
 jest.mock('react-dom', () => ({
   findDOMNode: () => {
     return {

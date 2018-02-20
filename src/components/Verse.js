@@ -70,7 +70,7 @@ class Verse extends React.Component {
           return (
             <span
               key={index}
-              style={{ cursor: 'pointer', backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
+              style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
             >
               {padding + text}
             </span>
@@ -110,7 +110,7 @@ class Verse extends React.Component {
       verseSpan = this.verseArray(verseText);
     }
 
-    const chapterVerseContent = direction === 'rtl' ? `${verse}:${chapter}` : `${chapter}:${verse}`;
+    const chapterVerseContent = direction === 'rtl' ? `${verse}:${chapter} ` : `${chapter}:${verse} `;
     const chapterVerse = <strong>{chapterVerseContent}</strong>;
     let divStyle = { direction: direction };
     if (verseIsPlaceHolder) divStyle['fontStyle'] = 'italic';

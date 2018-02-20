@@ -2,7 +2,14 @@
 
 exports[`Test Pane behavior Test book name and language layout. 1`] = `
 <Pane
-  actions={Object {}}
+  actions={
+    Object {
+      "getWordListForVerse": [Function],
+      "loadLexiconEntry": [Function],
+      "setToolSettings": [Function],
+      "showPopover": [Function],
+    }
+  }
   bibleId="udb"
   contextIdReducer={
     Object {
@@ -27,6 +34,7 @@ exports[`Test Pane behavior Test book name and language layout. 1`] = `
     ]
   }
   index={2}
+  removePane={[Function]}
   resourcesReducer={
     Object {
       "bibles": Object {
