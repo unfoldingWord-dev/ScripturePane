@@ -53,11 +53,11 @@ class Verse extends React.Component {
         let isHighlightedWord = false;
         let isBetweenHighlightedWord = false;
 
-        if (bibleId === 'ugnt') {
+        if (bibleId === 'ugnt' && contextId.quote) {
           isHighlightedWord = contextId.quote.split(' ').includes(word.text);
           isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
             contextId.quote.split(' ').includes(previousWord.text) && isHighlightedWord : false;
-        } else if (bibleId === 'ulb') {
+        } else if (bibleId === 'ulb' && contextId.quote) {
           isHighlightedWord = contextId.quote.split(' ').includes(word.content);
           isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
             contextId.quote.split(' ').includes(previousWord.content) && isHighlightedWord : false;
