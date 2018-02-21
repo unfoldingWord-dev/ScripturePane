@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 // helpers
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 import {removeMarker} from '../helpers/UsfmHelpers';
@@ -43,18 +44,26 @@ class Verse extends React.Component {
     const { bibleId, contextIdReducer: { contextId } } = this.props;
     const words = this.props.actions.getWordListForVerse(verseText);
     let wordSpacing = '';
+    let previousWord = null;
     const verseSpan = words.map((word, index) => {
       if (isWord(word)) {
         const padding = wordSpacing;
         wordSpacing = ' '; // spacing between words
         const text = (word.word || word.text);
         let isHighlightedWord = false;
+        let isBetweenHighlightedWord = false;
 
         if (bibleId === 'ugnt') {
           isHighlightedWord = contextId.quote.split(' ').includes(word.text);
+          isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
+            contextId.quote.split(' ').includes(previousWord.text) && isHighlightedWord : false;
         } else if (bibleId === 'ulb') {
           isHighlightedWord = contextId.quote.split(' ').includes(word.content);
+          isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
+            contextId.quote.split(' ').includes(previousWord.content) && isHighlightedWord : false;
         }
+        // Save word to be used as previousWord in next word.
+        previousWord = word;
 
         if (word.strong) { // if clickable
           return (
@@ -63,7 +72,10 @@ class Verse extends React.Component {
               onClick={(e) => this.onWordClick(e, word)}
               style={{ cursor: 'pointer', backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
             >
-              {padding + text}
+              <span style={{ backgroundColor: isBetweenHighlightedWord ? "var(--highlight-color)" : "#FFFFFF" }}>
+                {padding}
+              </span>
+              {text}
             </span>
           );
         } else {
@@ -72,7 +84,10 @@ class Verse extends React.Component {
               key={index}
               style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
             >
-              {padding + text}
+              <span style={{ backgroundColor: isBetweenHighlightedWord ? "var(--highlight-color)" : "#FFFFFF" }}>
+                {padding}
+              </span>
+              {text}
             </span>
           );
         }
@@ -81,6 +96,7 @@ class Verse extends React.Component {
         wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
         return this.createTextSpan(index, word.text);
       }
+      // if (!isWord(word)) previousWord = null;
     });
 
     return verseSpan;
