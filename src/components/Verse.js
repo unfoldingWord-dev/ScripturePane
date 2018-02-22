@@ -58,9 +58,9 @@ class Verse extends React.Component {
           isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
             contextId.quote.split(' ').includes(previousWord.text) && isHighlightedWord : false;
         } else if (bibleId === 'ulb' && contextId.quote) {
-          isHighlightedWord = contextId.quote.split(' ').includes(word.content);
+          isHighlightedWord = word.content.some(wordContent => contextId.quote.split(' ').includes(wordContent));
           isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
-            contextId.quote.split(' ').includes(previousWord.content) && isHighlightedWord : false;
+            previousWord.content.some(wordContent => contextId.quote.split(' ').includes(wordContent)) && isHighlightedWord : false;
         }
         // Save word to be used as previousWord in next word.
         previousWord = word;
