@@ -5,9 +5,14 @@ import Pane from '../src/components/Pane';
 
 // Tests for AddPanelModal React Component
 describe('Test Pane behavior',()=>{
-  test('Test book name and language layout.', () => { 
+  test('Test book name and language layout.', () => {
     const props = {
-      actions: {},
+      actions: {
+        setToolSettings: () => {},
+        getWordListForVerse: () => {},
+        loadLexiconEntry: () => {},
+        showPopover: () => {}
+      },
       contextIdReducer: {
         "contextId":{
                 "reference":{
@@ -16,16 +21,16 @@ describe('Test Pane behavior',()=>{
                 "groupId":"adultery",
                 "quote":"adultery, adulterous, adulterer, adulteress, adulterers, adulteresses",
                 "occurrence":1
-                
+
         }
       },
       resourcesReducer: {
         "bibles":{
           "udb":{
             "1":{
-              "1":"This is the record of the ancestors of Jesus the Messiah, " + 
+              "1":"This is the record of the ancestors of Jesus the Messiah, " +
                   "the descendant of King David and of Abraham.",
-              "2":"Abraham was the father of Isaac. " + 
+              "2":"Abraham was the father of Isaac. " +
                   "Isaac was the father of Jacob. Jacob was the father of Judah and of his brothers."
             }
           }
@@ -33,7 +38,8 @@ describe('Test Pane behavior',()=>{
       },
       index: 2,
       bibleId: "udb",
-      currentPaneSettings: ["targetLanguage","bhp","udb"]
+      currentPaneSettings: ["targetLanguage","bhp","udb"],
+      removePane: () => {}
     };
     let myPane = (
             <Pane {...props} />

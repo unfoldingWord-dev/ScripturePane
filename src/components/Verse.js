@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import XRegExp from 'xregexp';
-import {removeMarker} from '../helpers/UsfmHelpers';
-
+import isEqual from 'lodash/isEqual';
 // helpers
-import * as highlightHelpers from '../helpers/highlightHelpers';
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
+import {removeMarker} from '../helpers/UsfmHelpers';
+import {isWord} from '../helpers/stringHelpers';
 // components
 import WordDetails from './WordDetails';
+// constants
 const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text for this reference.]';
 
 class Verse extends React.Component {
@@ -30,7 +30,7 @@ class Verse extends React.Component {
     }
   }
 
-  onClick(e, word) {
+  onWordClick(e, word) {
     if (word && word.strong) {
       let positionCoord = e.target;
       const PopoverTitle = <strong style={{fontSize: '1.2em'}}>{word.word}</strong>;
@@ -41,27 +41,62 @@ class Verse extends React.Component {
   }
 
   verseArray(verseText = []) {
+    const { bibleId, contextIdReducer: { contextId } } = this.props;
     const words = this.props.actions.getWordListForVerse(verseText);
     let wordSpacing = '';
-    const verseSpan = words.map( (word, index) => {
+    let previousWord = null;
+    const verseSpan = words.map((word, index) => {
       if (isWord(word)) {
         const padding = wordSpacing;
         wordSpacing = ' '; // spacing between words
         const text = (word.word || word.text);
+        let isHighlightedWord = false;
+        let isBetweenHighlightedWord = false;
+
+        if (bibleId === 'ugnt' && contextId.quote) {
+          isHighlightedWord = contextId.quote.split(' ').includes(word.text);
+          isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
+            contextId.quote.split(' ').includes(previousWord.text) && isHighlightedWord : false;
+        } else if (bibleId === 'ulb' && contextId.quote && word.content) {
+          isHighlightedWord = word.content.some(wordContent => contextId.quote.split(' ').includes(wordContent));
+          isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
+            previousWord.content.some(wordContent => contextId.quote.split(' ').includes(wordContent)) && isHighlightedWord : false;
+        }
+        // Save word to be used as previousWord in next word.
+        previousWord = word;
+
         if (word.strong) { // if clickable
           return (
-            <span style={{cursor: 'pointer'}} onClick={(e) => this.onClick(e, word)} key={index}>
-            {padding + text}
-          </span>
+            <span
+              key={index}
+              onClick={(e) => this.onWordClick(e, word)}
+              style={{ cursor: 'pointer', backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
+            >
+              <span style={{ backgroundColor: isBetweenHighlightedWord ? "var(--highlight-color)" : "#FFFFFF" }}>
+                {padding}
+              </span>
+              {text}
+            </span>
+          );
+        } else {
+          return (
+            <span
+              key={index}
+              style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
+            >
+              <span style={{ backgroundColor: isBetweenHighlightedWord ? "var(--highlight-color)" : "#FFFFFF" }}>
+                {padding}
+              </span>
+              {text}
+            </span>
           );
         }
-        return this.createTextSpan(index, padding + text);
-        
       } else if (word.text) { // if not word, show punctuation, etc. but not clickable
         const lastChar = word.text.substr(word.text.length - 1);
         wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
         return this.createTextSpan(index, word.text);
       }
+      // if (!isWord(word)) previousWord = null;
     });
 
     return verseSpan;
@@ -70,75 +105,30 @@ class Verse extends React.Component {
   createTextSpan(index, text) {
     return (
       <span key={index}>
-            {text}
-          </span>
-    );
-  }
-
-  highlightQuoteInVerse(content, quote, occurrence) {
-    let verseSpan = [];
-    let regex = XRegExp('(?:^|\\PL)' + quote + '(?:$|\\PL)', 'g'); // use a regexp to capture the surrounding characters to use in rebuilding the verse
-    let contentArray = XRegExp.split(content, regex); // split the verse into all of the pieces
-    let aroundQuote = []; // store all of the characters surrounding the quote here
-    XRegExp.forEach(content, regex, function (match, i) {
-      aroundQuote[i] = match[0].split(quote); // store all of the characters surrounding the matches
-    });
-    let aroundQuoteIndex = occurrence - 1; // this ensures we can find the characters around the highlighted quote
-    // for all of the content before the current quote
-    // append the split quotes with their associated characters
-    let beforeTextArray = contentArray.slice(0,occurrence).map( (text, i) => {
-      if (i < occurrence-1) {   // if not the last one
-        text = text + aroundQuote[i][0] + quote + aroundQuote[i][1]; // append the quote with the surrounding character
-      }
-      return text;
-    });
-    let beforeText = beforeTextArray.join(''); // join the pieces
-    beforeText = beforeText + aroundQuote[aroundQuoteIndex][0]; // append the current quote's preceding char
-    // for all of the content after the current quote
-    // append the split quotes with their associated characters
-    let afterTextArray = contentArray.slice(occurrence).map( (text, i) => {
-      if (i < contentArray.length - occurrence - 1) { // if not the last one
-        text = text + aroundQuote[i + occurrence][0] + quote + aroundQuote[i + occurrence][1]; // append the quote with the surrounding character
-      }
-      return text;
-    });
-    let afterText = afterTextArray.join('');  // join the pieces
-    afterText = aroundQuote[aroundQuoteIndex][1] + afterText;  // prepend the current quote's preceding char
-    verseSpan.push(
-      <span key={1}>
-        <span>{removeMarker(beforeText)}</span>
-        <span style={{backgroundColor: "var(--highlight-color)"}}>
-          {quote}
-        </span>
-        <span>{removeMarker(afterText)}</span>
+        {text}
       </span>
     );
-    return verseSpan;
   }
 
   render() {
     let verseSpan = <span/>;
-    let {verseText, chapter, verse, direction, bibleId, isCurrent} = this.props;
+    let { verseText, chapter, verse, direction } = this.props;
     let verseIsPlaceHolder = false;
-    if(!verseText) {
+
+    if (!verseText) {
       verseText = PLACE_HOLDER_TEXT;
       verseIsPlaceHolder = true;
     }
-    if (verseText && typeof verseText === 'string') {
-      let {quote, occurrence} = this.props.contextIdReducer.contextId;
-      const isQuoteInVerse = highlightHelpers.isQuoteInVerse(verseText, quote);
-      if (quote && verseText && isCurrent && bibleId === 'ulb' && !quote.includes("...") && isQuoteInVerse) {
-        verseSpan = this.highlightQuoteInVerse(verseText, quote, occurrence);
-      } else {
-        verseSpan = <span>{removeMarker(verseText)}</span>;
-      }
-    } else {
+
+    if (verseText && typeof verseText === 'string') { // if the verse content is string / text.
+      verseSpan = <span>{removeMarker(verseText)}</span>;
+    } else { // then the verse content is an array / verse objects.
       verseSpan = this.verseArray(verseText);
     }
 
-    let chapterVerse = <strong>{chapter}:{verse} </strong>;
-    if (direction === 'rtl') chapterVerse = <strong>{verse}:{chapter} </strong>;
-    let divStyle = {direction: direction};
+    const chapterVerseContent = direction === 'rtl' ? `${verse}:${chapter} ` : `${chapter}:${verse} `;
+    const chapterVerse = <strong>{chapterVerseContent}</strong>;
+    let divStyle = { direction: direction };
     if (verseIsPlaceHolder) divStyle['fontStyle'] = 'italic';
 
     return (
@@ -149,10 +139,6 @@ class Verse extends React.Component {
     );
   }
 }
-
-const isWord = (word => {
-  return (typeof word !== 'string') && (word.word || (word.type === 'word'));
-});
 
 Verse.propTypes = {
   actions: PropTypes.shape({

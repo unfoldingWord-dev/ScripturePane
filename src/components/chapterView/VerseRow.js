@@ -10,14 +10,13 @@ class VerseRow extends React.Component {
     let {bibles} = this.props.resourcesReducer;
     let {currentPaneSettings} = this.props.settingsReducer.toolsSettings.ScripturePane;
     let {chapter, verse} = this.props.contextIdReducer.contextId.reference;
-
-    // if required data, then populate verse
     let verseCells = <div />;
     let colStyle = {
       alignItems: 'stretch', padding: '10px', paddingTop: '20px',
       borderRight: '1px solid var(--border-color)'
     };
-    let isCurrent = verseNumber === verse;
+    let isCurrent = verseNumber === verse.toString();
+
     if (isCurrent) colStyle.borderLeft = '3px solid var(--accent-color)';
     if (currentPaneSettings.length > 0) {
       verseCells = currentPaneSettings.map((bibleId, index) => {
@@ -30,8 +29,10 @@ class VerseRow extends React.Component {
 
         return (
           <Col key={index} md={4} sm={4} xs={4} lg={4} style={colStyle}>
-            <Verse {...this.props}
+            <Verse
+              {...this.props}
               sourceName={bibleId}
+              bibleId={bibleId}
               isCurrent={isCurrent}
               verseText={verseText}
               chapter={chapter}
