@@ -40,6 +40,42 @@ class Verse extends React.Component {
     }
   }
 
+  verseString(verseText) {
+    verseText = removeMarker(verseText);
+    const { bibleId, selectionsReducer, contextIdReducer: { contextId } } = this.props;
+    const words = verseText.split(' ');
+    let wordSpacing = '';
+    let previousWord = null;
+
+    const verseSpan = words.map((wordText, index) => {
+      const padding = wordSpacing;
+      wordSpacing = ' '; // spacing between words
+      let isHighlightedWord = false;
+      let isBetweenHighlightedWord = false;
+
+      if (bibleId === 'targetLanguage' && contextId.quote && selectionsReducer.selections.length > 0) {
+        isHighlightedWord = selectionsReducer.selections.includes(wordText);
+        isBetweenHighlightedWord = previousWord && !isEqual(previousWord, wordText) ?
+          selectionsReducer.selections.includes(previousWord) && isHighlightedWord : false;
+      }
+      // Save word to be used as previousWord in next word.
+      previousWord = wordText;
+
+      return (
+        <span
+          key={index}
+          style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
+        >
+          <span style={{ backgroundColor: isBetweenHighlightedWord ? "var(--highlight-color)" : "#FFFFFF" }}>
+            {padding}
+          </span>
+          {wordText}
+        </span>
+      );
+    });
+    return verseSpan;
+  }
+
   verseArray(verseText = []) {
     const { bibleId, contextIdReducer: { contextId } } = this.props;
     const words = this.props.actions.getWordListForVerse(verseText);
@@ -96,7 +132,6 @@ class Verse extends React.Component {
         wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
         return this.createTextSpan(index, word.text);
       }
-      // if (!isWord(word)) previousWord = null;
     });
 
     return verseSpan;
@@ -121,7 +156,7 @@ class Verse extends React.Component {
     }
 
     if (verseText && typeof verseText === 'string') { // if the verse content is string / text.
-      verseSpan = <span>{removeMarker(verseText)}</span>;
+      verseSpan = this.verseString(verseText);
     } else { // then the verse content is an array / verse objects.
       verseSpan = this.verseArray(verseText);
     }
@@ -160,7 +195,8 @@ Verse.propTypes = {
   direction: PropTypes.string.isRequired,
   bibleId: PropTypes.string,
   isCurrent: PropTypes.bool.isRequired,
-  contextIdReducer: PropTypes.object.isRequired
+  contextIdReducer: PropTypes.object.isRequired,
+  selectionsReducer: PropTypes.object.isRequired
 };
 
 export default Verse;

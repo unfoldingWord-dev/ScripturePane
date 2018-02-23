@@ -22,10 +22,10 @@ class AddPaneModal extends React.Component {
         let resourceText = bibleId !== "targetLanguage" ? " (" + resource_title + ")" : " (Current project)" ;
         let displayText = language_name + resourceText;
         panes.push(
-          <option 
+          <option
             key={bibleId}
             value={bibleId.toString()}
-            disabled={currentPaneSettings.includes(bibleId)} 
+            disabled={currentPaneSettings.includes(bibleId)}
           >
             {displayText}
           </option>
@@ -68,11 +68,11 @@ class AddPaneModal extends React.Component {
 AddPaneModal.propTypes = {
   selectSourceLanguage: PropTypes.func.isRequired,
   addPane: PropTypes.func.isRequired,
-  show: PropTypes.bool.isRequired, 
-  onHide: PropTypes.func.isRequired, 
+  show: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
   selectedPane: PropTypes.oneOfType([
     PropTypes.string.isRequired,
-    PropTypes.bool.isRequired,
+    PropTypes.bool.isRequired
   ]),
   currentPaneSettings: PropTypes.array.isRequired,
   resourcesReducer: PropTypes.object.isRequired
