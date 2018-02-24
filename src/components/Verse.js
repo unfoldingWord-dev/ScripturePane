@@ -118,6 +118,7 @@ class Verse extends React.Component {
         wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
         return this.createTextSpan(index, word.text);
       }
+      // if (!isWord(word)) previousWord = null;
     });
 
     return verseSpan;
