@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import stringTokenizer from 'string-punctuation-tokenizer';
 // helpers
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 import {removeMarker} from '../helpers/UsfmHelpers';
@@ -42,38 +43,23 @@ class Verse extends React.Component {
 
   verseString(verseText) {
     verseText = removeMarker(verseText);
-    const { bibleId, selectionsReducer, contextIdReducer: { contextId } } = this.props;
-    const words = verseText.split(' ');
-    let wordSpacing = '';
-    let previousWord = null;
+    verseText = verseText.replace(/\s+/g, ' ');
+    const selections= this.props.selectionsReducer.selections;
+    let verseTextSpans = <span>{verseText}</span>;
 
-    const verseSpan = words.map((wordText, index) => {
-      const padding = wordSpacing;
-      wordSpacing = ' '; // spacing between words
-      let isHighlightedWord = false;
-      let isBetweenHighlightedWord = false;
+    if (selections && selections.length > 0) {
+      let _selectionArray = stringTokenizer.selectionArray(verseText, selections);
 
-      if (bibleId === 'targetLanguage' && contextId.quote && selectionsReducer.selections.length > 0) {
-        isHighlightedWord = selectionsReducer.selections.includes(wordText);
-        isBetweenHighlightedWord = previousWord && !isEqual(previousWord, wordText) ?
-          selectionsReducer.selections.includes(previousWord) && isHighlightedWord : false;
-      }
-      // Save word to be used as previousWord in next word.
-      previousWord = wordText;
-
-      return (
-        <span
-          key={index}
-          style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
-        >
-          <span style={{ backgroundColor: isBetweenHighlightedWord ? "var(--highlight-color)" : "#FFFFFF" }}>
-            {padding}
+      verseTextSpans = _selectionArray.map((selection, index) => {
+        return (
+          <span key={index} style={{ backgroundColor: selection.selected ? 'var(--highlight-color)' : '' }}>
+            {selection.text}
           </span>
-          {wordText}
-        </span>
-      );
-    });
-    return verseSpan;
+        );
+      });
+    }
+
+    return verseTextSpans;
   }
 
   verseArray(verseText = []) {
