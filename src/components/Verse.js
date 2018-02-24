@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import stringTokenizer from 'string-punctuation-tokenizer';
 // helpers
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 import {removeMarker} from '../helpers/UsfmHelpers';
@@ -38,6 +39,27 @@ class Verse extends React.Component {
       const wordDetails = <WordDetails {...this.props} word={word}/>;
       showPopover(PopoverTitle, wordDetails, positionCoord);
     }
+  }
+
+  verseString(verseText) {
+    verseText = removeMarker(verseText);
+    verseText = verseText.replace(/\s+/g, ' ');
+    const selections= this.props.selectionsReducer.selections;
+    let verseTextSpans = <span>{verseText}</span>;
+
+    if (selections && selections.length > 0) {
+      let _selectionArray = stringTokenizer.selectionArray(verseText, selections);
+
+      verseTextSpans = _selectionArray.map((selection, index) => {
+        return (
+          <span key={index} style={{ backgroundColor: selection.selected ? 'var(--highlight-color)' : '' }}>
+            {selection.text}
+          </span>
+        );
+      });
+    }
+
+    return verseTextSpans;
   }
 
   verseArray(verseText = []) {
@@ -121,7 +143,7 @@ class Verse extends React.Component {
     }
 
     if (verseText && typeof verseText === 'string') { // if the verse content is string / text.
-      verseSpan = <span>{removeMarker(verseText)}</span>;
+      verseSpan = this.verseString(verseText);
     } else { // then the verse content is an array / verse objects.
       verseSpan = this.verseArray(verseText);
     }
@@ -160,7 +182,8 @@ Verse.propTypes = {
   direction: PropTypes.string.isRequired,
   bibleId: PropTypes.string,
   isCurrent: PropTypes.bool.isRequired,
-  contextIdReducer: PropTypes.object.isRequired
+  contextIdReducer: PropTypes.object.isRequired,
+  selectionsReducer: PropTypes.object.isRequired
 };
 
 export default Verse;
