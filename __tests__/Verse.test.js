@@ -14,10 +14,13 @@ describe('Test Verse component',()=>{
       chapter: 1,
       verse: 1,
       direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
-      isCurrent: true,
       actions: {
         setToolSettings: () => {},
         getWordListForVerse: () => {},
@@ -36,10 +39,13 @@ describe('Test Verse component',()=>{
       chapter: 1,
       verse: 1,
       direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
-      isCurrent: true,
       actions: {
         setToolSettings: () => {},
         getWordListForVerse: () => {},
@@ -58,10 +64,13 @@ describe('Test Verse component',()=>{
       chapter: 11,
       verse: 35,
       direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
-      isCurrent: true,
       actions: {
         setToolSettings: () => {},
         getWordListForVerse: () => {},
@@ -80,10 +89,13 @@ describe('Test Verse component',()=>{
       chapter: 1,
       verse: 1,
       direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
-      isCurrent: true,
       actions: {
         setToolSettings: () => {},
         getWordListForVerse: () => {},
@@ -91,7 +103,7 @@ describe('Test Verse component',()=>{
         showPopover: () => {}
       }
     };
-    const expectedText = '1:1 Also, we are writing these things to you so that our joy will be complete. \n\n\n\n\n';
+    const expectedText = '1:1 Also, we are writing these things to you so that our joy will be complete. ';
     const enzymeWrapper = mount(<Verse {...props} />);
     validateVerse(enzymeWrapper, expectedText);
   });
@@ -107,6 +119,10 @@ describe('Test Verse component',()=>{
       chapter: 11,
       verse: 35,
       direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
@@ -116,7 +132,6 @@ describe('Test Verse component',()=>{
         loadLexiconEntry: () => {},
         showPopover: () => {}
       },
-      isCurrent: true
     };
     const expectedText = '11:35 Jesus wept.';
     const enzymeWrapper = mount(<Verse {...props} />);
@@ -136,6 +151,10 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
       verseText: [{strong: "G38700"}],
       chapter: 1,
       verse: 1,
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
@@ -151,6 +170,10 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
       verseText: [{strong: "G25320"}],
       chapter: 1,
       verse: 2,
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
