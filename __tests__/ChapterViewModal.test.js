@@ -10,6 +10,7 @@ describe('Test ChapterViewModal component', () => {
   test('Tests that the modal\'s title is displayed', () => {
     const props = {
       onHide: jest.fn(),
+      show: true,
       projectDetailsReducer: {
         manifest: {
           project: {

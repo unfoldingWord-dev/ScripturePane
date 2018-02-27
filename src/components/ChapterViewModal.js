@@ -1,7 +1,7 @@
 /**
-  * @description This component displays a modal when the user clicks the add
+  * This component displays a modal when the user clicks the add
   * resources button on the scripture pane module.
-******************************************************************************/
+  */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Glyphicon } from 'react-bootstrap';
