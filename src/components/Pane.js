@@ -4,18 +4,20 @@ import ContainerDimensions from 'react-container-dimensions';
 import {Glyphicon} from 'react-bootstrap';
 import style from '../css/Style';
 import Verse from './Verse';
-// import {bibleIdFromSourceName} from '../helpers/bibleHelpers';
 
 class Pane extends React.Component {
   render() {
-    let { removePane, index, bibleId } = this.props;
+    let { removePane, index, bibleId, languageId, resourcesReducer: { bibles } } = this.props;
     let { reference } = this.props.contextIdReducer.contextId;
-    let { bibles } = this.props.resourcesReducer;
-
-    let { direction, language_name, resource_id, description } = bibles && bibles[bibleId] ? bibles[bibleId]["manifest"] : {};
+    let {
+      direction,
+      language_name,
+      resource_id,
+      description
+    } = bibles && bibles[languageId][bibleId] ? bibles[languageId][bibleId]["manifest"] : {};
     direction = direction || 'ltr';
     description = description || "";
-    let verseText = bibles && bibles[bibleId] && bibles[bibleId][reference.chapter] ? bibles[bibleId][reference.chapter][reference.verse] : '';
+    let verseText = bibles && bibles[languageId][bibleId] && bibles[languageId][bibleId][reference.chapter] ? bibles[languageId][bibleId][reference.chapter][reference.verse] : '';
     let headingText = bibleId !== "targetLanguage" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name ? language_name : '';
     let contentStyle;
     const PANECHAR = 9;
@@ -69,6 +71,7 @@ Pane.propTypes = {
   removePane: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   bibleId: PropTypes.string.isRequired,
+  languageId: PropTypes.string.isRequired,
   actions: PropTypes.shape({
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,

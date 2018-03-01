@@ -39,17 +39,20 @@ class ScripturePane extends React.Component {
     }
   }
   /**
-  * @description this methos is called when an user selects a resource name to
+  * This method is called when an user selects a resource name to
   * be added to the scripture pane and it sets the state with this name in the
   * selectedPane property. it matches that name that was sleected with the
   * staticPaneSettings.
-  * @param {object} event - An event object that we use to get the value
-  * selected by the user from the select element
+  * @param {object} value - selected Language Id And BibleId 'hi_ulb', 'en_ulb'.
   * @return {state} This will set the state to the selectedPane object
   */
-  selectSourceLanguage(event) {
-    let selectedBibleId = event.target.value;
-    this.setState({ selectedPane: selectedBibleId });
+  selectSourceLanguage(value) {
+    const identifier = value.split('_');
+    const selectedBibleId = {
+      languageId: identifier[0],
+      bibleId: identifier[1]
+    };
+    this.setState({ selectedPane: value ? selectedBibleId : false });
   }
   /**
    * @description This handles loading a new resource to the scripture pane
