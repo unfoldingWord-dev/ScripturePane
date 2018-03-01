@@ -63,7 +63,7 @@ class Verse extends React.Component {
   }
 
   verseArray(verseText = []) {
-    const { bibleId, contextIdReducer: { contextId } } = this.props;
+    const { bibleId, contextIdReducer: { contextId }, isGrayVerseRow } = this.props;
     const words = this.props.actions.getWordListForVerse(verseText);
     let wordSpacing = '';
     let previousWord = null;
@@ -86,30 +86,36 @@ class Verse extends React.Component {
         }
         // Save word to be used as previousWord in next word.
         previousWord = word;
+        // if isGrayVerseRow is true then background is gray in the ChapterViewModal.
+        const paddingSpanStyle = {
+          backgroundColor: isBetweenHighlightedWord ? "var(--highlight-color)" :
+            isGrayVerseRow ? 'var(--background-color-light)' : '#FFFFFF'
+        };
 
         if (word.strong) { // if clickable
           return (
             <span
               key={index}
               onClick={(e) => this.onWordClick(e, word)}
-              style={{ cursor: 'pointer', backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
+              style={{ cursor: 'pointer' }}
             >
-              <span style={{ backgroundColor: isBetweenHighlightedWord ? "var(--highlight-color)" : "#FFFFFF" }}>
+              <span style={paddingSpanStyle}>
                 {padding}
               </span>
-              {text}
+              <span style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}>
+                {text}
+              </span>
             </span>
           );
         } else {
           return (
-            <span
-              key={index}
-              style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}
-            >
-              <span style={{ backgroundColor: isBetweenHighlightedWord ? "var(--highlight-color)" : "#FFFFFF" }}>
+            <span key={index}>
+              <span style={paddingSpanStyle}>
                 {padding}
               </span>
-              {text}
+              <span style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}>
+                {text}
+              </span>
             </span>
           );
         }
@@ -118,7 +124,6 @@ class Verse extends React.Component {
         wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
         return this.createTextSpan(index, word.text);
       }
-      // if (!isWord(word)) previousWord = null;
     });
 
     return verseSpan;
@@ -183,7 +188,8 @@ Verse.propTypes = {
   bibleId: PropTypes.string,
   isCurrent: PropTypes.bool.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
-  selectionsReducer: PropTypes.object.isRequired
+  selectionsReducer: PropTypes.object.isRequired,
+  isGrayVerseRow: PropTypes.bool.isRequired
 };
 
 export default Verse;

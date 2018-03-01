@@ -79,10 +79,13 @@ AddPaneModal.propTypes = {
   addPane: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
-  selectedPane: PropTypes.shape({
-    bibleId: PropTypes.string,
-    languageId: PropTypes.string
-  }),
+  selectedPane: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.shape({
+      bibleId: PropTypes.string,
+      languageId: PropTypes.string
+    })
+  ]),
   currentPaneSettings: PropTypes.array.isRequired,
   resourcesReducer: PropTypes.object.isRequired
 };

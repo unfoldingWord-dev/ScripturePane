@@ -113,10 +113,13 @@ View.propTypes = {
   showModal: PropTypes.func.isRequired,
   addPane: PropTypes.func.isRequired,
   expandedPaneVisibility: PropTypes.bool.isRequired,
-  selectedPane: PropTypes.shape({
-    bibleId: PropTypes.string,
-    languageId: PropTypes.string
-  }),
+  selectedPane: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.shape({
+      bibleId: PropTypes.string,
+      languageId: PropTypes.string
+    })
+  ]),
   hideExpandModal: PropTypes.func.isRequired,
   hideModal: PropTypes.func.isRequired,
   removePane: PropTypes.func.isRequired
