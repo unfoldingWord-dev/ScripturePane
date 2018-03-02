@@ -8,20 +8,18 @@ import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
 
 class AddPaneModal extends React.Component {
   render() {
-    let { selectSourceLanguage, addPane, show, onHide, selectedPane, currentPaneSettings } = this.props;
-    let { bibles } = this.props.resourcesReducer;
+    const { selectSourceLanguage, addPane, show, onHide, selectedPane, currentPaneSettings } = this.props;
+    const { bibles } = this.props.resourcesReducer;
     let panes = [];
 
     // generate a list of resource names for dropdown list.
     Object.keys(bibles).forEach((languageId) => {
       const bibleIds = bibles[languageId];
       Object.keys(bibleIds).forEach((bibleId) => {
-        console.log(languageId, bibleId);
-        let { language_name, resource_title } = bibles[languageId][bibleId]["manifest"];
-        let resourceText = bibleId !== "targetBible" ? " (" + resource_title + ")" : " (Current project)";
-        let displayText = language_name + resourceText;
+        const { language_name, resource_title } = bibles[languageId][bibleId]["manifest"];
+        const resourceText = bibleId !== "targetBible" ? " (" + resource_title + ")" : " (Current project)";
+        const displayText = language_name + resourceText;
         const foundInCurrentPaneSettings = currentPaneSettings.filter((paneSetting) => {
-          if (languageId === 'hi') console.log(paneSetting.bibleId, bibleId, paneSetting.languageId);
           return paneSetting.bibleId === bibleId && paneSetting.languageId === languageId;
         }).length > 0;
 
