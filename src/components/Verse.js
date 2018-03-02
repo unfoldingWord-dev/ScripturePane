@@ -189,7 +189,7 @@ Verse.propTypes = {
   isCurrent: PropTypes.bool.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
   selectionsReducer: PropTypes.object.isRequired,
-  isGrayVerseRow: PropTypes.bool.isRequired
+  isGrayVerseRow: PropTypes.bool
 };
 
 export default Verse;
