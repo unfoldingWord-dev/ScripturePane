@@ -8,23 +8,27 @@ import {shallow} from 'enzyme';
 describe('Test AddPaneModal component',()=>{
   test('Test "(Current project)" is in language select', () => {
     const props = {
-      selectSourceLanguage: jest.fn(), 
-      addPane: jest.fn(), 
-      show: true, 
-      onHide: jest.fn(), 
+      selectSourceLanguage: jest.fn(),
+      addPane: jest.fn(),
+      show: true,
+      onHide: jest.fn(),
       selectedPane: false,
       resourcesReducer: {
         bibles: {
-          'en_ulb': {
-            'manifest': {
-              'language_name': 'English',
-              'resource_title': 'Unlocked Literal Bible'
+          en: {
+            ulb: {
+              manifest: {
+                language_name: 'English',
+                resource_title: 'Unlocked Literal Bible'
+              }
             }
           },
-          'targetLanguage': {
-            'manifest': {
-              'language_name': 'French',
-              'resource_title': 'My Bible'
+          targetLanguage: {
+            targetBible: {
+              manifest: {
+                language_name: 'French',
+                resource_title: 'My Bible'
+              }
             }
           }
         }
@@ -38,23 +42,27 @@ describe('Test AddPaneModal component',()=>{
 
   test('Test source is disabled in AddPanelModal if already selected', () => {
     const props = {
-      selectSourceLanguage: jest.fn(), 
-      addPane: jest.fn(), 
-      show: true, 
-      onHide: jest.fn(), 
+      selectSourceLanguage: jest.fn(),
+      addPane: jest.fn(),
+      show: true,
+      onHide: jest.fn(),
       selectedPane: false,
       resourcesReducer: {
         bibles: {
-          'ulb': {
-            'manifest': {
-              'language_name': 'English',
-              'resource_title': 'Unlocked Literal Bible'
+          en: {
+            ulb: {
+              manifest: {
+                'language_name': 'English',
+                'resource_title': 'Unlocked Literal Bible'
+              }
             }
           },
-          'targetLanguage': {
-            'manifest': {
-              'language_name': 'French',
-              'resource_title': 'My Bible'
+          targetLanguage: {
+            targetBible: {
+              manifest: {
+                language_name: 'French',
+                resource_title: 'My Bible'
+              }
             }
           }
         }

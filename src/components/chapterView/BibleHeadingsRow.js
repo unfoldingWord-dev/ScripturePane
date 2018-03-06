@@ -11,8 +11,10 @@ class BibleHeadingsRow extends React.Component {
     // if required data, then populate bibleHeadings
     let bibleHeadings = [];
     if (currentPaneSettings.length > 0) {
-      bibleHeadings = currentPaneSettings.map((bibleId, index) => {
-        let { language_name, direction } = bibles[bibleId]["manifest"];
+      bibleHeadings = currentPaneSettings.map((paneSetting, index) => {
+        const languageId = paneSetting.languageId;
+        const bibleId = paneSetting.bibleId;
+        let { language_name, direction } = bibles[languageId][bibleId]["manifest"];
         let resourceText = bibleId !== "targetLanguage" ? " (" + bibleId.toUpperCase() + ")" : "" ;
         let headingText = language_name + resourceText;
         let dir = direction;
