@@ -19,7 +19,6 @@ class Pane extends React.Component {
     description = description || "";
     let verseText = bibles && bibles[languageId][bibleId] && bibles[languageId][bibleId][reference.chapter] ? bibles[languageId][bibleId][reference.chapter][reference.verse] : '';
     let headingText = bibleId !== "targetLanguage" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name ? language_name : '';
-    console.log(headingText);
     let contentStyle;
     const PANECHAR = 9;
 
