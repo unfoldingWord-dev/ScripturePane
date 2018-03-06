@@ -19,6 +19,7 @@ class Pane extends React.Component {
     description = description || "";
     let verseText = bibles && bibles[languageId][bibleId] && bibles[languageId][bibleId][reference.chapter] ? bibles[languageId][bibleId][reference.chapter][reference.verse] : '';
     let headingText = bibleId !== "targetLanguage" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name ? language_name : '';
+    console.log(headingText);
     let contentStyle;
     const PANECHAR = 9;
 
@@ -32,9 +33,9 @@ class Pane extends React.Component {
       <div style={index > 0 ? style.otherPane : style.firstPane}>
         <div style={style.verseTitle}>
           <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-            <span style={style.pane.title} className={headingText.length > 15 ?
+            <span style={style.pane.title} className={headingText.length > 21 ?
                 "hint--bottom hint--medium" : null} aria-label={headingText}>
-              {headingText.length > 15 ? headingText.slice(0, 15) + '...' : headingText}
+              {headingText.length > 21 ? headingText.slice(0, 21) + '...' : headingText}
             </span>
             <ContainerDimensions>
               {
