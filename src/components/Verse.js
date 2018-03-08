@@ -4,8 +4,9 @@ import isEqual from 'deep-equal';
 import stringTokenizer from 'string-punctuation-tokenizer';
 // helpers
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
+import * as highlightHelpers from '../helpers/highlightHelpers';
 import {removeMarker} from '../helpers/UsfmHelpers';
-import {isWord} from '../helpers/stringHelpers';
+import {isWord, isNestedMilestone} from '../helpers/stringHelpers';
 // components
 import WordDetails from './WordDetails';
 // constants
@@ -67,7 +68,9 @@ class Verse extends React.Component {
     const words = this.props.actions.getWordListForVerse(verseText);
     let wordSpacing = '';
     let previousWord = null;
-    const verseSpan = words.map((word, index) => {
+    const verseSpan = [];
+
+    words.forEach((word, index) => {
       if (isWord(word)) {
         const padding = wordSpacing;
         wordSpacing = ' '; // spacing between words
@@ -75,14 +78,21 @@ class Verse extends React.Component {
         let isHighlightedWord = false;
         let isBetweenHighlightedWord = false;
 
-        if (bibleId === 'ugnt' && contextId.quote) {
+        if (bibleId === 'ugnt' && contextId.quote && word.text) {
           isHighlightedWord = contextId.quote.split(' ').includes(word.text);
           isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
             contextId.quote.split(' ').includes(previousWord.text) && isHighlightedWord : false;
         } else if (bibleId === 'ulb' && contextId.quote && word.content) {
-          isHighlightedWord = word.content.some(wordContent => contextId.quote.split(' ').includes(wordContent));
-          isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) && previousWord.content ?
-            previousWord.content.some(wordContent => contextId.quote.split(' ').includes(wordContent)) && isHighlightedWord : false;
+          const highlightedDetails = highlightHelpers.getWordHighlightedDetails(
+            isHighlightedWord,
+            word.content,
+            contextId.quote,
+            isBetweenHighlightedWord,
+            previousWord,
+            word
+          );
+          isHighlightedWord = highlightedDetails.isHighlightedWord;
+          isBetweenHighlightedWord = highlightedDetails.isBetweenHighlightedWord;
         }
         // Save word to be used as previousWord in next word.
         previousWord = word;
@@ -93,9 +103,9 @@ class Verse extends React.Component {
         };
 
         if (word.strong) { // if clickable
-          return (
+          verseSpan.push(
             <span
-              key={index}
+              key={index.toString()}
               onClick={(e) => this.onWordClick(e, word)}
               style={{ cursor: 'pointer' }}
             >
@@ -108,25 +118,33 @@ class Verse extends React.Component {
             </span>
           );
         } else {
-          return (
-            <span key={index}>
-              <span style={paddingSpanStyle}>
-                {padding}
-              </span>
-              <span style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}>
-                {text}
-              </span>
-            </span>
-          );
+          verseSpan.push(this.createNonClickableSpan(index, paddingSpanStyle, padding, isHighlightedWord, text));
         }
+      } else if (isNestedMilestone(word)) { // if nested milestone
+        const nestedWordSpans = highlightHelpers.getWordsFromNestedMilestone(word, contextId.quote, index, isGrayVerseRow);
+        nestedWordSpans.forEach((nestedWordSpan) => verseSpan.push(nestedWordSpan));
+        wordSpacing = ' ';
       } else if (word.text) { // if not word, show punctuation, etc. but not clickable
         const lastChar = word.text.substr(word.text.length - 1);
         wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
-        return this.createTextSpan(index, word.text);
+        verseSpan.push(this.createTextSpan(index, word.text));
       }
     });
 
     return verseSpan;
+  }
+
+  createNonClickableSpan(index, paddingSpanStyle, padding, isHighlightedWord, text) {
+    return (
+      <span key={index.toString()}>
+        <span style={paddingSpanStyle}>
+          {padding}
+        </span>
+        <span style={{ backgroundColor: isHighlightedWord ? "var(--highlight-color)" : "" }}>
+          {text}
+        </span>
+      </span>
+    );
   }
 
   createTextSpan(index, text) {
