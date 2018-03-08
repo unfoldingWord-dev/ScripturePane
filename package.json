@@ -50,6 +50,7 @@
     "react-dom": "16.2.0",
     "string-punctuation-tokenizer": "^0.7.0",
     "usfm-js": "1.0.0-beta.23",
-    "xregexp": "3.2.0"
+    "xregexp": "3.2.0",
+    "deep-equal": "^1.0.1"
   }
 }

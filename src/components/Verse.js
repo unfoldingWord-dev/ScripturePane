@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'deep-equal';
 import stringTokenizer from 'string-punctuation-tokenizer';
 // helpers
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
