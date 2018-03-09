@@ -13,8 +13,11 @@ import ChapterView from './chapterView/ChapterView';
 class ChapterViewModal extends React.Component {
 
   render() {
-    let { onHide, show, projectDetailsReducer } = this.props;
-    const title = projectDetailsReducer.manifest.project.name;
+    const { onHide, show, projectDetailsReducer } = this.props;
+    const { target_language, project } = projectDetailsReducer.manifest;
+    const title = target_language && target_language.book && target_language.book.name ?
+        target_language.book.name :
+        project.name;
     return (
       <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
         <Modal.Header style={{ backgroundColor: "var(--accent-color-dark)" }}>
