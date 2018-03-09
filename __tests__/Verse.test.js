@@ -11,10 +11,21 @@ describe('Test Verse component',()=>{
   test('Test when verse is null that the WARNING placeholder is displayed', () => {
     const props = {
       verseText: null,
-      chapter: '1',
-      verse: '1',
+      chapter: 1,
+      verse: 1,
+      direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
+      },
+      actions: {
+        setToolSettings: () => {},
+        getWordListForVerse: () => {},
+        loadLexiconEntry: () => {},
+        showPopover: () => {}
       }
     };
     const expectedText = '1:1 '+PLACE_HOLDER_TEXT;
@@ -25,10 +36,21 @@ describe('Test Verse component',()=>{
   test('Test when verse is empty string that the WARNING placeholder is displayed', () => {
     const props = {
       verseText: '',
-      chapter: '1',
-      verse: '1',
+      chapter: 1,
+      verse: 1,
+      direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
+      },
+      actions: {
+        setToolSettings: () => {},
+        getWordListForVerse: () => {},
+        loadLexiconEntry: () => {},
+        showPopover: () => {}
       }
     };
     const expectedText = '1:1 '+PLACE_HOLDER_TEXT;
@@ -39,10 +61,21 @@ describe('Test Verse component',()=>{
   test('Test when verse is not null that the verse is displayed', () => {
     const props = {
       verseText: 'Jesus wept',
-      chapter: '11',
-      verse: '35',
+      chapter: 11,
+      verse: 35,
+      direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
+      },
+      actions: {
+        setToolSettings: () => {},
+        getWordListForVerse: () => {},
+        loadLexiconEntry: () => {},
+        showPopover: () => {}
       }
     };
     const expectedText = '11:35 Jesus wept';
@@ -53,13 +86,24 @@ describe('Test Verse component',()=>{
   test('Test that USFM is stripped out', () => {
     const props = {
       verseText: 'Also, we are writing these things to you so that our joy will be complete. \\f + \\ft Some older versions read, \\fqa And we are writing these things to you so that your joy will be complete \\fqa* . \\f*\n\n\\s5\n\\p\n\\q1\n',
-      chapter: '1',
-      verse: '1',
+      chapter: 1,
+      verse: 1,
+      direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
+      },
+      actions: {
+        setToolSettings: () => {},
+        getWordListForVerse: () => {},
+        loadLexiconEntry: () => {},
+        showPopover: () => {}
       }
     };
-    const expectedText = '1:1 Also, we are writing these things to you so that our joy will be complete. \n\n\n\n\n';
+    const expectedText = '1:1 Also, we are writing these things to you so that our joy will be complete. ';
     const enzymeWrapper = mount(<Verse {...props} />);
     validateVerse(enzymeWrapper, expectedText);
   });
@@ -72,14 +116,22 @@ describe('Test Verse component',()=>{
           text: 'Jesus wept.'
         }
       ],
-      chapter: '11',
-      verse: '35',
+      chapter: 11,
+      verse: 35,
+      direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
       actions: {
-        'getWordListForVerse': mock_getWordListForVerse
-      }
+        getWordListForVerse: mock_getWordListForVerse,
+        setToolSettings: () => {},
+        loadLexiconEntry: () => {},
+        showPopover: () => {}
+      },
     };
     const expectedText = '11:35 Jesus wept.';
     const enzymeWrapper = mount(<Verse {...props} />);
@@ -97,26 +149,40 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
   test('Test with two populated verses', () => {
     const props = {
       verseText: [{strong: "G38700"}],
-      chapter: '1',
-      verse: '1',
+      chapter: 1,
+      verse: 1,
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
+      direction: 'ltr',
       actions: {
-        'loadLexiconEntry': jest.fn(),
-        'getWordListForVerse': mock_getWordListForVerse
+        loadLexiconEntry: jest.fn(),
+        getWordListForVerse: mock_getWordListForVerse,
+        setToolSettings: () => {},
+        showPopover: () => {}
       }
     };
     const props2 = {
       verseText: [{strong: "G25320"}],
-      chapter: '1',
-      verse: '2',
+      chapter: 1,
+      verse: 2,
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
       contextIdReducer: {
         contextId: {}
       },
+      direction: 'ltr',
       actions: {
-        'loadLexiconEntry': jest.fn(),
-        'getWordListForVerse': mock_getWordListForVerse
+        loadLexiconEntry: jest.fn(),
+        getWordListForVerse: mock_getWordListForVerse,
+        setToolSettings: () => {},
+        showPopover: () => {}
       }
     };
 
@@ -133,7 +199,7 @@ describe('Test Verse.componentWillReceiveProps', ()=>{
     );
     expect(wrapper.find(Verse).props().verse).toEqual(props.verse);
     wrapper.setProps(props2);
-    expect(wrapper.find(Verse).props().verse).toEqual(props2.verse);  
+    expect(wrapper.find(Verse).props().verse).toEqual(props2.verse);
   });
 });
 

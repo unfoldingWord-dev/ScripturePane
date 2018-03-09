@@ -21,16 +21,15 @@ class View extends React.Component {
       hideExpandModal,
       hideModal
     } = this.props;
-    let staticPaneSettings = settingsReducer.toolsSettings.ScripturePane.staticPaneSettings;
     let currentPaneSettings = settingsReducer.toolsSettings.ScripturePane.currentPaneSettings;
-
-    let scripturePane = currentPaneSettings.map((bibleId, index) => {
+    let scripturePane = currentPaneSettings.map((paneSetting, index) => {
       return (
         <Pane
           {...this.props}
           key={index}
           index={index}
-          bibleId={bibleId}
+          bibleId={paneSetting.bibleId}
+          languageId={paneSetting.languageId}
           removePane={this.props.removePane}
           arrayLength={currentPaneSettings.length}
         />
@@ -73,7 +72,6 @@ class View extends React.Component {
           {...this.props}
           show={modalVisibility}
           onHide={hideModal}
-          staticPaneSettings={staticPaneSettings}
           selectSourceLanguage={selectSourceLanguage}
           addPane={addPane}
           selectedPane={selectedPane}
@@ -99,7 +97,6 @@ View.propTypes = {
   settingsReducer: PropTypes.shape({
     toolsSettings: PropTypes.shape({
       ScripturePane: PropTypes.shape({
-        staticPaneSettings: PropTypes.array,
         currentPaneSettings: PropTypes.array
       })
     })
@@ -116,9 +113,12 @@ View.propTypes = {
   showModal: PropTypes.func.isRequired,
   addPane: PropTypes.func.isRequired,
   expandedPaneVisibility: PropTypes.bool.isRequired,
-  selectedPane:PropTypes.oneOfType([
-    PropTypes.string.isRequired,
-    PropTypes.bool.isRequired,
+  selectedPane: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.shape({
+      bibleId: PropTypes.string,
+      languageId: PropTypes.string
+    })
   ]),
   hideExpandModal: PropTypes.func.isRequired,
   hideModal: PropTypes.func.isRequired,
