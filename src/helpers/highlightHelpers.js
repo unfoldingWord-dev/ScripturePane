@@ -3,8 +3,8 @@ import isEqual from 'lodash/isEqual';
 import { isWord } from './stringHelpers';
 
 export function getWordHighlightedDetails(isHighlightedWord, wordContents, quote, isBetweenHighlightedWord, previousWord, word) {
-  isHighlightedWord = wordContents.some(wordContent => quote.split(' ').includes(wordContent));
-  isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) && previousWord.content ?
+  isHighlightedWord = quote && wordContents ? wordContents.some(wordContent => quote.split(' ').includes(wordContent)) : false;
+  isBetweenHighlightedWord = previousWord && quote && !isEqual(previousWord, word) && previousWord.content ?
     previousWord.content.some(wordContent => quote.split(' ').includes(wordContent)) && isHighlightedWord : false;
   return {
     isHighlightedWord,
