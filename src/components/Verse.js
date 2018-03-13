@@ -79,18 +79,11 @@ class Verse extends React.Component {
         let isBetweenHighlightedWord = false;
 
         if (bibleId === 'ugnt' && contextId.quote && word.text) {
-          isHighlightedWord = contextId.quote.split(' ').includes(word.text);
-          isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) ?
-            contextId.quote.split(' ').includes(previousWord.text) && isHighlightedWord : false;
+          isHighlightedWord = highlightHelpers.isWordMatch(word, contextId, words, index);
+          isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) &&
+            highlightHelpers.isWordMatch(previousWord, contextId, words, index - 1) && isHighlightedWord;
         } else if (bibleId === 'ulb' && contextId.quote && word.content) {
-          const highlightedDetails = highlightHelpers.getWordHighlightedDetails(
-            isHighlightedWord,
-            word.content,
-            contextId.quote,
-            isBetweenHighlightedWord,
-            previousWord,
-            word
-          );
+          const highlightedDetails = highlightHelpers.getWordHighlightedDetails(contextId, previousWord, word);
           isHighlightedWord = highlightedDetails.isHighlightedWord;
           isBetweenHighlightedWord = highlightedDetails.isBetweenHighlightedWord;
         }
@@ -121,7 +114,7 @@ class Verse extends React.Component {
           verseSpan.push(this.createNonClickableSpan(index, paddingSpanStyle, padding, isHighlightedWord, text));
         }
       } else if (isNestedMilestone(word)) { // if nested milestone
-        const nestedWordSpans = highlightHelpers.getWordsFromNestedMilestone(word, contextId.quote, index, isGrayVerseRow);
+        const nestedWordSpans = highlightHelpers.getWordsFromNestedMilestone(word, contextId, index, isGrayVerseRow);
         nestedWordSpans.forEach((nestedWordSpan) => verseSpan.push(nestedWordSpan));
         wordSpacing = ' ';
       } else if (word.text) { // if not word, show punctuation, etc. but not clickable

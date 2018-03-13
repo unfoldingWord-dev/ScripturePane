@@ -2,17 +2,49 @@ import React from 'react';
 import isEqual from 'lodash/isEqual';
 import { isWord } from './stringHelpers';
 
-export function getWordHighlightedDetails(isHighlightedWord, wordContents, quote, isBetweenHighlightedWord, previousWord, word) {
-  isHighlightedWord = quote && wordContents ? wordContents.some(wordContent => quote.split(' ').includes(wordContent)) : false;
-  isBetweenHighlightedWord = previousWord && quote && !isEqual(previousWord, word) && previousWord.content ?
-    previousWord.content.some(wordContent => quote.split(' ').includes(wordContent)) && isHighlightedWord : false;
+export function isWordArrayMatch(word, contextId) {
+  let isMatch = false;
+  if (word && word.content && contextId && contextId.quote) {
+    isMatch = word.content.some(wordItem => {
+      let foundMatch = false;
+      if (contextId.quote.split(' ').includes(wordItem.content)) {
+        foundMatch = (contextId.occurrence === wordItem.occurrence);
+      }
+      return foundMatch;
+    });
+  }
+  return isMatch;
+}
+
+export function isWordMatch(word, contextId, words, index) {
+  let isMatch = false;
+  if (word && word.text && contextId && contextId.quote) {
+    if (contextId.quote.split(' ').includes(word.text)) {
+      // get occurrence of word
+      let occurrence = 0;
+      for (let i = 0; i <= index; i++) {
+        const wordItem = words[i];
+        if (wordItem.text === word.text) {
+          occurrence++;
+        }
+      }
+      isMatch = (occurrence === contextId.occurrence);
+    }
+  }
+  return isMatch;
+}
+
+export function getWordHighlightedDetails( contextId, previousWord, word) {
+  const isHighlightedWord = isWordArrayMatch(word, contextId);
+  const isBetweenHighlightedWord = isHighlightedWord && previousWord && !isEqual(previousWord, word) 
+      && isWordArrayMatch(previousWord, contextId);
   return {
     isHighlightedWord,
     isBetweenHighlightedWord
   };
 }
 
-export function getWordsFromNestedMilestone(nestedWords, quote, index, isGrayVerseRow) {
+export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGrayVerseRow) {
   // if its an array of an array (nested nested milestone)
   if (Array.isArray(nestedWords[0])) nestedWords = nestedWords[0];
   let isHighlightedWord = false;
@@ -26,10 +58,7 @@ export function getWordsFromNestedMilestone(nestedWords, quote, index, isGrayVer
       let padding = wordSpacing;
       if (nestedPreviousWord && isPuntuationAndNeedsNoSpace(nestedPreviousWord)) padding = '';
       const highlightedDetails = getWordHighlightedDetails(
-        isHighlightedWord,
-        nestedWord.content,
-        quote,
-        isBetweenHighlightedWord,
+        contextId,
         nestedPreviousWord,
         nestedWord
       );
