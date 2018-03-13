@@ -5,9 +5,13 @@ import { isWord } from './stringHelpers';
 export function isWordArrayMatch(word, contextId) {
   let isMatch = false;
   if (word && word.content && contextId && contextId.quote) {
-    if (word.content.some(wordContent => contextId.quote.split(' ').includes(wordContent))) {
-      isMatch = (word.occurrence === contextId.occurrence);
-    }
+    isMatch = word.content.some(wordItem => {
+      let foundMatch = false;
+      if (contextId.quote.split(' ').includes(wordItem.content)) {
+        foundMatch = (contextId.occurrence === wordItem.occurrence);
+      }
+      return foundMatch;
+    });
   }
   return isMatch;
 }
