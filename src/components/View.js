@@ -10,10 +10,15 @@ import AddBible from './AddBible';
 class View extends React.Component {
   render() {
     let {
+      actions,
+      selectionsReducer,
       settingsReducer,
       selectSourceLanguage,
       showExpandModal,
+      projectDetailsReducer,
+      contextIdReducer,
       modalVisibility,
+      resourcesReducer,
       showModal,
       addPane,
       expandedPaneVisibility,
@@ -78,7 +83,12 @@ class View extends React.Component {
           currentPaneSettings={currentPaneSettings}
         />
         <ChapterViewModal
-          {...this.props}
+          actions={actions}
+          selectionsReducer={selectionsReducer}
+          settingsReducer={settingsReducer}
+          resourcesReducer={resourcesReducer}
+          projectDetailsReducer={projectDetailsReducer}
+          contextIdReducer={contextIdReducer}
           bibles={this.props.resourcesReducer.bibles}
           show={expandedPaneVisibility}
           onHide={hideExpandModal}
@@ -91,6 +101,7 @@ class View extends React.Component {
 }
 
 View.propTypes = {
+  projectDetailsReducer: PropTypes.object.isRequired,
   currentToolViews: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
@@ -100,13 +111,14 @@ View.propTypes = {
         currentPaneSettings: PropTypes.array
       })
     })
-  }),
+  }).isRequired,
   actions: PropTypes.shape({
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,
     loadLexiconEntry: PropTypes.func.isRequired,
     showPopover: PropTypes.func.isRequired,
-  }),
+  }).isRequired,
+  selectionsReducer: PropTypes.object.isRequired,
   selectSourceLanguage: PropTypes.func.isRequired,
   showExpandModal: PropTypes.func.isRequired,
   modalVisibility: PropTypes.bool.isRequired,

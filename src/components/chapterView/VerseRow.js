@@ -5,8 +5,8 @@ import Verse from '../Verse';
 
 class VerseRow extends React.Component {
   render() {
-    const {verseNumber} = this.props;
-    const {bibles} = this.props.resourcesReducer;
+    const {verseNumber, actions, resourcesReducer, contextIdReducer, selectionsReducer} = this.props;
+    const {bibles} = resourcesReducer;
     const {currentPaneSettings} = this.props.settingsReducer.toolsSettings.ScripturePane;
     const {chapter, verse} = this.props.contextIdReducer.contextId.reference;
     const isCurrent = verseNumber === verse.toString();
@@ -37,7 +37,10 @@ class VerseRow extends React.Component {
         return (
           <Col key={index} md={4} sm={4} xs={4} lg={4} style={colStyle}>
             <Verse
-              {...this.props}
+              resourcesReducer={resourcesReducer}
+              contextIdReducer={contextIdReducer}
+              selectionsReducer={selectionsReducer}
+              actions={actions}
               sourceName={bibleId}
               bibleId={bibleId}
               isCurrent={isCurrent}
@@ -61,6 +64,8 @@ class VerseRow extends React.Component {
 }
 
 VerseRow.propTypes = {
+  selectionsReducer: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
   verseNumber: PropTypes.string.isRequired,
   settingsReducer: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,

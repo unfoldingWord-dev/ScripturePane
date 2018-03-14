@@ -13,7 +13,7 @@ import ChapterView from './chapterView/ChapterView';
 class ChapterViewModal extends React.Component {
 
   render() {
-    const { onHide, show, projectDetailsReducer } = this.props;
+    const { onHide, show, actions, selectionsReducer, showModal, settingsReducer, projectDetailsReducer, contextIdReducer, resourcesReducer } = this.props;
     const { target_language, project } = projectDetailsReducer.manifest;
     const title = target_language && target_language.book && target_language.book.name ?
         target_language.book.name :
@@ -32,7 +32,13 @@ class ChapterViewModal extends React.Component {
         </Modal.Header>
         <Modal.Body style={{ padding: '0px', height: "500px", backgroundColor: "var(--reverse-color)", color: "var(--text-color)" }}>
           <div style={{height: "500px", display: 'flex'}}>
-            <ChapterView {...this.props} />
+            <ChapterView contextIdReducer={contextIdReducer}
+                         settingsReducer={settingsReducer}
+                         actions={actions}
+                         selectionsReducer={selectionsReducer}
+                         showModal={showModal}
+                         projectDetailsReducer={projectDetailsReducer}
+                         resourcesReducer={resourcesReducer} />
           </div>
         </Modal.Body>
         <Modal.Footer style={{ padding: '0', backgroundColor: "var(--reverse-color)" }}>
@@ -44,7 +50,13 @@ class ChapterViewModal extends React.Component {
 }
 
 ChapterViewModal.propTypes = {
+  actions: PropTypes.object.isRequired,
+  selectionsReducer: PropTypes.object.isRequired,
+  contextIdReducer: PropTypes.object.isRequired,
+  resourcesReducer:PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
+  showModal: PropTypes.func.isRequired,
+  settingsReducer: PropTypes.object.isRequired,
   onHide: PropTypes.func.isRequired,
   projectDetailsReducer: PropTypes.object.isRequired,
 };

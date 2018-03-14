@@ -78,11 +78,19 @@ class ScripturePane extends React.Component {
   }
 
   render() {
+    const {contextIdReducer, actions, settingsReducer, resourcesReducer, projectDetailsReducer, currentToolViews, selectionsReducer} = this.props;
+
     return (
       <MuiThemeProvider>
         <View
-          {...this.props}
-          contextId={this.props.contextIdReducer.contextId}
+          actions={actions}
+          resourcesReducer={resourcesReducer}
+          settingsReducer={settingsReducer}
+          selectionsReducer={selectionsReducer}
+          contextIdReducer={contextIdReducer}
+          currentToolViews={currentToolViews}
+          contextId={contextIdReducer.contextId}
+          projectDetailsReducer={projectDetailsReducer}
           removePane={this.removePane.bind(this)}
           modalVisibility={this.state.modalVisibility}
           showModal={() => this.setState({ modalVisibility: true, selectedPane: false })}
@@ -101,6 +109,8 @@ class ScripturePane extends React.Component {
 
 ScripturePane.propTypes = {
   translate: PropTypes.func,
+  projectDetailsReducer: PropTypes.object.isRequired,
+  selectionsReducer: PropTypes.object.isRequired,
   currentToolViews: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,
   contextIdReducer: PropTypes.object.isRequired,

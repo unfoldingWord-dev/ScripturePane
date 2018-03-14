@@ -33,11 +33,12 @@ class Verse extends React.Component {
   }
 
   onWordClick(e, word) {
+    const {resourcesReducer} = this.props;
     if (word && word.strong) {
       let positionCoord = e.target;
       const PopoverTitle = <strong style={{fontSize: '1.2em'}}>{word.word}</strong>;
       let {showPopover} = this.props.actions;
-      const wordDetails = <WordDetails {...this.props} word={word}/>;
+      const wordDetails = <WordDetails resourcesReducer={resourcesReducer} word={word}/>;
       showPopover(PopoverTitle, wordDetails, positionCoord);
     }
   }
@@ -179,22 +180,23 @@ class Verse extends React.Component {
 }
 
 Verse.propTypes = {
+  resourcesReducer: PropTypes.object.isRequired,
   actions: PropTypes.shape({
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,
     loadLexiconEntry: PropTypes.func.isRequired,
     showPopover: PropTypes.func.isRequired
-  }),
+  }).isRequired,
   verseText: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.array.isRequired,
     PropTypes.object.isRequired
-  ]),
+  ]).isRequired,
   chapter: PropTypes.number.isRequired,
   verse: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.number.isRequired
-  ]),
+  ]).isRequired,
   direction: PropTypes.string.isRequired,
   bibleId: PropTypes.string,
   isCurrent: PropTypes.bool.isRequired,
