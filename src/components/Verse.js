@@ -82,7 +82,7 @@ class Verse extends React.Component {
           isHighlightedWord = highlightHelpers.isWordMatch(word, contextId, words, index);
           isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) &&
             highlightHelpers.isWordMatch(previousWord, contextId, words, index - 1) && isHighlightedWord;
-        } else if (bibleId === 'ulb' && contextId.quote && word.content) {
+        } else if (bibleId === 'ult' && contextId.quote && word.content) {
           const highlightedDetails = highlightHelpers.getWordHighlightedDetails(contextId, previousWord, word);
           isHighlightedWord = highlightedDetails.isHighlightedWord;
           isBetweenHighlightedWord = highlightedDetails.isBetweenHighlightedWord;

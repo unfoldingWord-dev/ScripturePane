@@ -109,15 +109,15 @@ exports[`View component Tests before Project Loaded 1`] = `
         },
         "repo": "https://git.door43.org/benjore/sw_tit_text_ulb.git",
         "resource": Object {
-          "id": "ulb",
-          "name": "Unlocked Literal Bible",
+          "id": "ult",
+          "name": "unfoldingWord Literal Text",
         },
         "source_translations": Array [
           Object {
             "checking_level": 3,
             "date_modified": 20160614,
             "language_id": "en",
-            "resource_id": "ulb",
+            "resource_id": "ult",
             "version": "5",
           },
         ],
@@ -139,7 +139,7 @@ exports[`View component Tests before Project Loaded 1`] = `
           "name": "Text",
         },
       },
-      "projectSaveLocation": "/Users/jay/translationCore/projects/sw_tit_text_ulb",
+      "projectSaveLocation": "/Users/jay/translationCore/projects/sw_tit_text_ult",
       "projectType": null,
     }
   }
@@ -211,7 +211,7 @@ exports[`View component Tests before Project Loaded 1`] = `
             "subject": "Bible",
           },
         },
-        "ulb": Object {
+        "ult": Object {
           "1": Object {
             "1": "Paul, a servant of God and an apostle of Jesus Christ, for the faith of God's chosen people and the knowledge of the truth that agrees with godliness,",
             "10": "For there are many rebellious people, empty talkers and deceivers, especially those of the circumcision.",
@@ -302,7 +302,7 @@ exports[`View component Tests before Project Loaded 1`] = `
           "currentPaneSettings": Array [
             "targetLanguage",
             "bhp",
-            "ulb",
+            "ult",
           ],
         },
       },
