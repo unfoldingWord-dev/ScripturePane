@@ -11,7 +11,6 @@ describe('Test ChapterViewModal component', () => {
     const props = {
       show: true,
       onHide: jest.fn(),
-      show: true,
       projectDetailsReducer: {
         manifest: {
           project: {
