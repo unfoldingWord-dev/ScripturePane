@@ -100,6 +100,7 @@ class ScripturePane extends React.Component {
 }
 
 ScripturePane.propTypes = {
+  translate: PropTypes.func,
   currentToolViews: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
