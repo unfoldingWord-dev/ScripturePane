@@ -24,7 +24,7 @@ const styles = {
 class VerseEditorDialog extends BaseDialog {
   render() {
 
-    const {translate, onCancel, open, onSubmit, verseTitle} = this.props;
+    const {translate, onCancel, open, onSubmit, verseText, verseTitle} = this.props;
 
     const title = (
       <span>
@@ -39,6 +39,7 @@ class VerseEditorDialog extends BaseDialog {
                   bodyStyle={styles.body}
                   title={title}>
         <VerseEditor onCancel={onCancel}
+                     verseText={verseText}
                      translate={translate}
                      onSubmit={onSubmit}/>
       </BaseDialog>

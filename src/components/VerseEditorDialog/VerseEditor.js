@@ -4,7 +4,6 @@ import VerseEditorStepper from './VerseEditorStepper';
 import EditScreen  from './screens/EditScreen';
 import DoneIcon from 'material-ui/svg-icons/action/done';
 import ReasonScreen from './screens/ReasonScreen';
-import * as stepTypes from './steps';
 
 const styles = {
   screen: {
@@ -38,8 +37,12 @@ class VerseEditor extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.onLastStep = this.onLastStep.bind(this);
+    this.handleVerseChange = this.handleVerseChange.bind(this);
+    const {verseText} = this.props;
     this.state = {
-      stepIndex: 0
+      stepIndex: 0,
+      newVerse: verseText,
+      verseChanged: false
     };
   }
 
@@ -67,6 +70,14 @@ class VerseEditor extends React.Component {
     }
   }
 
+  handleVerseChange(newVerse) {
+    const {verseText} = this.props;
+    this.setState({
+      newVerse,
+      verseChanged: newVerse !== verseText
+    });
+  }
+
   onLastStep() {
     const {stepIndex} = this.state;
     return stepIndex === steps.length - 1;
@@ -74,16 +85,18 @@ class VerseEditor extends React.Component {
 
   render() {
     const {translate, onCancel} = this.props;
-    const {stepIndex} = this.state;
+    const {stepIndex, verseChanged, newVerse} = this.state;
 
     let screen;
     switch(stepIndex) {
       case 0:
-        screen = (<ReasonScreen/>);
+        screen = (<EditScreen verseText={newVerse} onChange={this.handleVerseChange}/>);
         break;
       case 1:
+        screen = (<ReasonScreen/>);
+        break;
       default:
-        screen = (<EditScreen/>);
+        screen = "Oops!";
     }
 
     let nextStepButtonTitle = translate('buttons.next_button');
@@ -115,6 +128,7 @@ class VerseEditor extends React.Component {
             {translate('buttons.cancel_button')}
           </button>
           <button className="btn-prime"
+                  disabled={!verseChanged && newVerse}
                   onClick={this.handleNext}>
             {nextStepButtonTitle}
           </button>
@@ -125,6 +139,7 @@ class VerseEditor extends React.Component {
 }
 
 VerseEditor.propTypes = {
+  verseText: PropTypes.string.isRequired,
   translate: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
