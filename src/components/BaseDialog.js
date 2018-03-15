@@ -98,7 +98,8 @@ class BaseDialog extends React.Component {
                   color: 'var(--reverse-color)',
                   backgroundColor: 'var(--accent-color-dark)',
                   padding: '15px',
-                  marginBottom: '15px'
+                  display: 'block',
+                  width: '100%'
                 }}
                 onRequestClose={onClose}
                 actions={dialogActions}>

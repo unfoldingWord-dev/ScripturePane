@@ -66,7 +66,7 @@ class ChapterViewModal extends React.Component {
         </Modal.Body>
         <Modal.Footer
           style={{padding: '0', backgroundColor: 'var(--reverse-color)'}}>
-          <button className="btn-prime" onClick={onHide}>Close</button>
+          <button className="btn-prime" onClick={onHide}>{translate('buttons.close_button')}</button>
         </Modal.Footer>
       </Modal>
     );

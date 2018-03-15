@@ -28,7 +28,7 @@ class VerseEditorStepper extends React.Component {
 
 VerseEditorStepper.propTypes = {
   stepIndex: PropTypes.number,
-  steps: PropTypes.string
+  steps: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default VerseEditorStepper;

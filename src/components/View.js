@@ -66,7 +66,7 @@ class View extends React.Component {
       <div style={style.scripturePane}>
         <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
           <div style={style.titleBar}>
-            <span>Step 1. Read</span>
+            <span>{translate('step1')}</span>
             <Glyphicon
               onClick={showExpandModal}
               glyph={'fullscreen'}

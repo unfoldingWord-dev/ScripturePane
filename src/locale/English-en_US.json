@@ -1,7 +1,9 @@
 {
   "buttons": {
+    "close_button": "Close",
     "cancel_button": "Cancel",
     "next_button": "Next"
   },
+  "step1": "Step 1. Read",
   "edit_verse": "Edit Verse - ${passage}"
 }
