@@ -14,17 +14,27 @@ const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text fo
 
 class Verse extends React.Component {
 
+  componentWillMount() {
+    this.updateLexiconEntries(this.props);
+  }
+  
   componentWillReceiveProps(nextProps) {
-    if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
-      if ((nextProps.verseText.constructor === Array) || (nextProps.verseText.verseObjects)) {
-        const words = nextProps.actions.getWordListForVerse(nextProps.verseText);
+    if (this.props.verseText !== nextProps.verseText) {
+      this.updateLexiconEntries(nextProps);
+    }
+  }
+
+  updateLexiconEntries(props) {
+    if (props && props.verseText) {
+      if ((props.verseText.constructor === Array) || (props.verseText.verseObjects)) {
+        const words = props.actions.getWordListForVerse(props.verseText);
         words.forEach((word) => {
           if (isWord(word)) {
             const {strong} = word;
             if (strong) {
               const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strong);
               const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strong);
-              nextProps.actions.loadLexiconEntry(lexiconId, entryId);
+              props.actions.loadLexiconEntry(lexiconId, entryId);
             }
           }
         });
