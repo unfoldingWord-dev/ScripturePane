@@ -4,28 +4,43 @@ import BaseDialog from '../BaseDialog';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import VerseEditor from './VerseEditor';
 
+const styles = {
+  icon: {
+    color: '#ffffff',
+    width: 25,
+    height: 25,
+    marginRight: 5,
+    marginBottom: 5,
+    verticalAlign: 'middle'
+  },
+  body: {
+    padding: 0
+  }
+};
+
+/**
+ * Renders a dialog for editing verses
+ */
 class VerseEditorDialog extends BaseDialog {
   render() {
 
-    const {translate, onCancel, open, onNext, verseTitle} = this.props;
+    const {translate, onCancel, open, onSubmit, verseTitle} = this.props;
 
     const title = (
       <span>
-        <EditIcon/>
+        <EditIcon style={styles.icon}/>
         {translate('edit_verse', {passage: verseTitle})}
       </span>
     );
 
-    // TODO: pass in custom actions so we can have a back button
     return (
-      <BaseDialog secondaryLabel={translate('buttons.cancel_button')}
-                  modal={true}
+      <BaseDialog modal={true}
                   open={open}
-                  primaryLabel={translate('buttons.next_button')}
-                  onSubmit={onNext}
-                  title={title}
-                  onClose={onCancel}>
-        <VerseEditor/>
+                  bodyStyle={styles.body}
+                  title={title}>
+        <VerseEditor onCancel={onCancel}
+                     translate={translate}
+                     onSubmit={onSubmit}/>
       </BaseDialog>
     );
   }
@@ -38,8 +53,6 @@ VerseEditorDialog.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   verseTitle: PropTypes.string.isRequired,
   verseText: PropTypes.string.isRequired,
-
-  onNext: PropTypes.func // deprecated
 };
 
 export default VerseEditorDialog;

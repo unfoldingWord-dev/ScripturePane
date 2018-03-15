@@ -103,7 +103,8 @@ class ChapterView extends React.Component {
     let verseText = '';
     if(openEditor) {
       // TODO: get the actual book name
-      verseTitle = `${bookId} ${editVerse.chapter}:${editVerse.verse}`;
+      const bookName = projectDetailsReducer.manifest.target_language.book.name;
+      verseTitle = `${bookName} ${editVerse.chapter}:${editVerse.verse}`;
       verseText = editVerse.verseText;
     }
 

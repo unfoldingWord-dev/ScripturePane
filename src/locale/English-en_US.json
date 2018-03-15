@@ -1,5 +1,7 @@
 {
   "buttons": {
+    "save_button": "Save",
+    "back_button": "Back",
     "close_button": "Close",
     "cancel_button": "Cancel",
     "next_button": "Next"

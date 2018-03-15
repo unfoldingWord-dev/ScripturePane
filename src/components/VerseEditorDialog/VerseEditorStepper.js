@@ -8,11 +8,13 @@ import { Step, Stepper, StepLabel } from "material-ui/Stepper";
  */
 class VerseEditorStepper extends React.Component {
   render() {
-    const {stepIndex, steps} = this.props;
+    const {stepIndex, steps, style} = this.props;
+
+    console.log('step', stepIndex);
 
     return (
       <MuiThemeProvider>
-        <Stepper activeStep={stepIndex}>
+        <Stepper activeStep={stepIndex} style={style}>
           {steps.map((step, index) => {
             return (
               <Step key={index}>
@@ -27,7 +29,8 @@ class VerseEditorStepper extends React.Component {
 }
 
 VerseEditorStepper.propTypes = {
-  stepIndex: PropTypes.number,
+  style: PropTypes.object,
+  stepIndex: PropTypes.number.isRequired,
   steps: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 

@@ -74,7 +74,19 @@ class BaseDialog extends React.Component {
   }
 
   render () {
-    const {actionsEnabled, modal, title, secondaryLabel, primaryLabel, onClose, onSubmit, open, children, actions} = this.props;
+    const {
+      actionsEnabled,
+      modal,
+      title,
+      secondaryLabel,
+      primaryLabel,
+      onClose,
+      onSubmit,
+      open,
+      bodyStyle,
+      children,
+      actions
+    } = this.props;
 
     let dialogActions = actions ? actions : makeDialogActions({
       actionsEnabled,
@@ -101,6 +113,7 @@ class BaseDialog extends React.Component {
                   display: 'block',
                   width: '100%'
                 }}
+                bodyStyle={bodyStyle}
                 onRequestClose={onClose}
                 actions={dialogActions}>
           {children}
@@ -111,6 +124,7 @@ class BaseDialog extends React.Component {
 }
 
 BaseDialog.propTypes = {
+  bodyStyle: PropTypes.object,
   modal: PropTypes.bool,
   actions: PropTypes.array,
   title: PropTypes.any,
