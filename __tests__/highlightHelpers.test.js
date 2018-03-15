@@ -2,14 +2,14 @@
 import fs from 'fs-extra';
 import * as highlightHelpers from '../src/helpers/highlightHelpers';
 
-const ulb_project = '__tests__/fixtures/ulb/tit/1.json';
+const ult_project = '__tests__/fixtures/ult/tit/1.json';
 const ugnt_project = '__tests__/fixtures/ugnt/tit/1.json';
 
 // Tests for Verse React Component
 describe('isWordArrayMatch',()=>{
-  test('en ULB should match first Θεοῦ to "of God"', () => {
+  test('en ULT should match first Θεοῦ to "of God"', () => {
     //given
-    const chapter = fs.readJSONSync(ulb_project);
+    const chapter = fs.readJSONSync(ult_project);
     const verse1 = chapter[1];
     const wordArray = [];
     flattenVerseObjects(verse1.verseObjects, wordArray);
@@ -17,17 +17,17 @@ describe('isWordArrayMatch',()=>{
       quote: "Θεοῦ",
       occurrence: 1
     };
-    
+
     // when
     let matchWords = getMatches_isWordArrayMatch(wordArray, contextID);
-    
+
     // then
     expect(matchWords.join(' ')).toEqual('of God');
   });
 
-  test('en ULB should match 2nd Θεοῦ to "God\'s"', () => {
+  test('en ULT should match 2nd Θεοῦ to "God\'s"', () => {
     //given
-    const chapter = fs.readJSONSync(ulb_project);
+    const chapter = fs.readJSONSync(ult_project);
     const verse1 = chapter[1];
     const wordArray = [];
     flattenVerseObjects(verse1.verseObjects, wordArray);
@@ -60,7 +60,7 @@ describe('isWordArrayMatch',()=>{
     // then
     expect(matchIndices).toEqual([5]);
   });
-  
+
   test('UGNT should match 2nd Θεοῦ only', () => {
     //given
     const chapter = fs.readJSONSync(ugnt_project);
