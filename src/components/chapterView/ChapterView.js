@@ -46,7 +46,6 @@ class ChapterView extends React.Component {
    * @param verseText
    */
   handleEditTargetVerse(bibleId, chapter, verse, verseText) {
-    console.log('editing verse!');
     this.setState({
       editVerse: {
         bibleId,
@@ -100,11 +99,12 @@ class ChapterView extends React.Component {
 
     const {editVerse} = this.state;
     const openEditor = editVerse !== null;
-    let verseTitle;
-    let verseText;
-    if(editVerse) {
+    let verseTitle = '';
+    let verseText = '';
+    if(openEditor) {
       verseTitle = ` ${editVerse.chapter}:${editVerse.verse}`;
-      console.log(bibles[editVerse.bibleId]);
+      verseText = editVerse.verseText;
+      console.warn('TODO: get book name', bibles);
     }
 
     return (

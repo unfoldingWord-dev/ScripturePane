@@ -4,7 +4,7 @@ import BaseDialog from '../BaseDialog';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import VerseEditor from './VerseEditor';
 
-class EditorDialog extends BaseDialog {
+class VerseEditorDialog extends BaseDialog {
   render() {
 
     const {translate, onCancel, open, onNext, verseTitle} = this.props;
@@ -31,7 +31,7 @@ class EditorDialog extends BaseDialog {
   }
 }
 
-EditorDialog.propTypes = {
+VerseEditorDialog.propTypes = {
   translate: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
@@ -42,4 +42,4 @@ EditorDialog.propTypes = {
   onNext: PropTypes.func // deprecated
 };
 
-export default EditorDialog;
+export default VerseEditorDialog;
