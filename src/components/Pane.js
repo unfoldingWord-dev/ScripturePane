@@ -7,8 +7,9 @@ import Verse from './Verse';
 
 class Pane extends React.Component {
   render() {
-    let { removePane, index, bibleId, languageId, resourcesReducer: { bibles } } = this.props;
-    let { reference } = this.props.contextIdReducer.contextId;
+    let { actions, contextIdReducer, selectionsReducer, removePane, index, bibleId, languageId, resourcesReducer } = this.props;
+    const {bibles} = resourcesReducer;
+    let { reference } = contextIdReducer.contextId;
     let {
       direction,
       language_name,
@@ -53,7 +54,10 @@ class Pane extends React.Component {
         </div>
         <div style={contentStyle}>
           <Verse
-            {...this.props}
+            selectionsReducer={selectionsReducer}
+            resourcesReducer={resourcesReducer}
+            contextIdReducer={contextIdReducer}
+            actions={actions}
             verseText={verseText}
             chapter={reference.chapter}
             verse={reference.verse}
@@ -68,6 +72,7 @@ class Pane extends React.Component {
 }
 
 Pane.propTypes = {
+  selectionsReducer: PropTypes.object.isRequired,
   removePane: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   bibleId: PropTypes.string.isRequired,
@@ -77,7 +82,7 @@ Pane.propTypes = {
     getWordListForVerse: PropTypes.func.isRequired,
     loadLexiconEntry: PropTypes.func.isRequired,
     showPopover: PropTypes.func.isRequired
-  }),
+  }).isRequired,
   contextIdReducer: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired
 

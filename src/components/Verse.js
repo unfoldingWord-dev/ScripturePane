@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'deep-equal';
 import stringTokenizer from 'string-punctuation-tokenizer';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import IconButton from 'material-ui/IconButton';
 // helpers
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 import * as highlightHelpers from '../helpers/highlightHelpers';
@@ -12,7 +14,33 @@ import WordDetails from './WordDetails';
 // constants
 const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text for this reference.]';
 
+const makeStyles = (props) => {
+  const { verseText, direction } = props;
+  const verseIsPlaceHolder = !!verseText;
+
+  return {
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%'
+    },
+    verse: {
+      direction: direction,
+      flex: 1,
+      fontStyle: verseIsPlaceHolder ? 'italic' : 'normal'
+    },
+    edit: {
+      textAlign: 'right'
+    }
+  };
+};
+
 class Verse extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
@@ -149,31 +177,51 @@ class Verse extends React.Component {
     );
   }
 
+  handleEdit() {
+    const {bibleId, chapter, verse, verseText, onEdit} = this.props;
+    if(typeof onEdit === 'function') {
+      onEdit(bibleId, chapter, verse, verseText);
+    }
+  }
+
   render() {
     let verseSpan = <span/>;
-    let { verseText, chapter, verse, direction } = this.props;
-    let verseIsPlaceHolder = false;
+    const { bibleId, verseText, chapter, verse, direction } = this.props;
 
+    let text = verseText;
     if (!verseText) {
-      verseText = PLACE_HOLDER_TEXT;
-      verseIsPlaceHolder = true;
+      text = PLACE_HOLDER_TEXT;
     }
 
-    if (verseText && typeof verseText === 'string') { // if the verse content is string / text.
-      verseSpan = this.verseString(verseText);
+    if (text && typeof text === 'string') { // if the verse content is string / text.
+      verseSpan = this.verseString(text);
     } else { // then the verse content is an array / verse objects.
-      verseSpan = this.verseArray(verseText);
+      verseSpan = this.verseArray(text);
     }
 
+    const isEditable = bibleId === 'targetBible' && !!verseText;
     const chapterVerseContent = direction === 'rtl' ? `${verse}:${chapter} ` : `${chapter}:${verse} `;
     const chapterVerse = <strong>{chapterVerseContent}</strong>;
-    let divStyle = { direction: direction };
-    if (verseIsPlaceHolder) divStyle['fontStyle'] = 'italic';
+    const styles = makeStyles(this.props);
+
+    let edit = null;
+    if(isEditable) {
+      edit = (
+        <div style={styles.edit}>
+          <IconButton onClick={this.handleEdit}>
+            <EditIcon/>
+          </IconButton>
+        </div>
+      );
+    }
 
     return (
-      <div style={divStyle}>
-        {chapterVerse}
-        {verseSpan}
+      <div style={styles.root}>
+        <div style={styles.verse}>
+          {chapterVerse}
+          {verseSpan}
+        </div>
+        {edit}
       </div>
     );
   }
@@ -199,6 +247,7 @@ Verse.propTypes = {
   ]).isRequired,
   direction: PropTypes.string.isRequired,
   bibleId: PropTypes.string,
+  onEdit: PropTypes.func,
   isCurrent: PropTypes.bool.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
   selectionsReducer: PropTypes.object.isRequired,

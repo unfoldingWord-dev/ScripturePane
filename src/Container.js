@@ -21,13 +21,14 @@ class ScripturePane extends React.Component {
       selectedPane: false
     };
   }
+
   /**
    * @description - This removes a scripture source from the scripture pane.
    * @param {number} key - position index of the scripture source language
    *        in the currentPaneSettings array.
    */
   removePane(key) {
-    let { settingsReducer, actions } = this.props;
+    let {settingsReducer, actions} = this.props;
     try {
       if (settingsReducer.toolsSettings.ScripturePane) {
         let paneSettings = settingsReducer.toolsSettings.ScripturePane.currentPaneSettings;
@@ -38,22 +39,24 @@ class ScripturePane extends React.Component {
       console.warn(e);
     }
   }
+
   /**
-  * This method is called when an user selects a resource name to
-  * be added to the scripture pane and it sets the state with this name in the
-  * selectedPane property. it matches that name that was sleected with the
-  * staticPaneSettings.
-  * @param {object} value - selected Language Id And BibleId 'hi_ulb', 'en_ulb'.
-  * @return {state} This will set the state to the selectedPane object
-  */
+   * This method is called when an user selects a resource name to
+   * be added to the scripture pane and it sets the state with this name in the
+   * selectedPane property. it matches that name that was sleected with the
+   * staticPaneSettings.
+   * @param {object} value - selected Language Id And BibleId 'hi_ulb', 'en_ulb'.
+   * @return {state} This will set the state to the selectedPane object
+   */
   selectSourceLanguage(value) {
     const identifier = value.split('_');
     const selectedBibleId = {
       languageId: identifier[0],
       bibleId: identifier[1]
     };
-    this.setState({ selectedPane: value ? selectedBibleId : false });
+    this.setState({selectedPane: value ? selectedBibleId : false});
   }
+
   /**
    * @description This handles loading a new resource to the scripture pane
    * it gets the currentPaneSettings array (the info of all the panes currently
@@ -62,14 +65,15 @@ class ScripturePane extends React.Component {
    * sets the modalVisibility to false to close the modal.
    */
   addPane() {
-    let { settingsReducer, actions } = this.props;
+    let {settingsReducer, actions} = this.props;
     try {
       if (settingsReducer.toolsSettings[NAMESPACE]) {
         let currentPaneSettings = settingsReducer.toolsSettings[NAMESPACE].currentPaneSettings;
         if (this.state.selectedPane) {
           currentPaneSettings.push(this.state.selectedPane);
-          actions.setToolSettings(NAMESPACE, 'currentPaneSettings', currentPaneSettings);
-          this.setState({ modalVisibility: false });
+          actions.setToolSettings(NAMESPACE, 'currentPaneSettings',
+            currentPaneSettings);
+          this.setState({modalVisibility: false});
         }
       }
     } catch (e) {
@@ -78,11 +82,21 @@ class ScripturePane extends React.Component {
   }
 
   render() {
-    const {contextIdReducer, actions, settingsReducer, resourcesReducer, projectDetailsReducer, currentToolViews, selectionsReducer} = this.props;
+    const {
+      contextIdReducer,
+      actions,
+      translate,
+      settingsReducer,
+      resourcesReducer,
+      projectDetailsReducer,
+      currentToolViews,
+      selectionsReducer
+    } = this.props;
 
     return (
       <MuiThemeProvider>
         <View
+          translate={translate}
           actions={actions}
           resourcesReducer={resourcesReducer}
           settingsReducer={settingsReducer}
@@ -93,12 +107,13 @@ class ScripturePane extends React.Component {
           projectDetailsReducer={projectDetailsReducer}
           removePane={this.removePane.bind(this)}
           modalVisibility={this.state.modalVisibility}
-          showModal={() => this.setState({ modalVisibility: true, selectedPane: false })}
-          hideModal={() => this.setState({ modalVisibility: false })}
+          showModal={() => this.setState(
+            {modalVisibility: true, selectedPane: false})}
+          hideModal={() => this.setState({modalVisibility: false})}
           expandedPaneVisibility={this.state.expandedPaneVisibility}
           selectedPane={this.state.selectedPane}
-          showExpandModal={() => this.setState({ expandedPaneVisibility: true })}
-          hideExpandModal={() => this.setState({ expandedPaneVisibility: false })}
+          showExpandModal={() => this.setState({expandedPaneVisibility: true})}
+          hideExpandModal={() => this.setState({expandedPaneVisibility: false})}
           selectSourceLanguage={this.selectSourceLanguage.bind(this)}
           addPane={this.addPane.bind(this)}
         />
@@ -108,7 +123,7 @@ class ScripturePane extends React.Component {
 }
 
 ScripturePane.propTypes = {
-  translate: PropTypes.func,
+  translate: PropTypes.func.isRequired,
   projectDetailsReducer: PropTypes.object.isRequired,
   selectionsReducer: PropTypes.object.isRequired,
   currentToolViews: PropTypes.object.isRequired,

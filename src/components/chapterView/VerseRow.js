@@ -4,6 +4,19 @@ import {Col, Row} from 'react-bootstrap';
 import Verse from '../Verse';
 
 class VerseRow extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  handleEdit(bibleId, chapter, verse, verseText) {
+    const {onEditTargetVerse} = this.props;
+    if(bibleId === 'targetBible' && typeof onEditTargetVerse === 'function') {
+      onEditTargetVerse(bibleId, chapter, verse, verseText);
+    }
+  }
+
   render() {
     const {verseNumber, actions, resourcesReducer, contextIdReducer, selectionsReducer} = this.props;
     const {bibles} = resourcesReducer;
@@ -30,6 +43,7 @@ class VerseRow extends React.Component {
         const manifest = bibles[languageId][bibleId].manifest;
         const verseText = bibles[languageId][bibleId][chapter] ? bibles[languageId][bibleId][chapter][verseNumber] : null;
         let direction = manifest.direction;
+        // TODO: is this line right?
         if (bibleId === 'targetLanguage') {
           direction = this.props.projectDetailsReducer.manifest.target_language.direction;
         }
@@ -37,6 +51,7 @@ class VerseRow extends React.Component {
         return (
           <Col key={index} md={4} sm={4} xs={4} lg={4} style={colStyle}>
             <Verse
+              onEdit={this.handleEdit}
               resourcesReducer={resourcesReducer}
               contextIdReducer={contextIdReducer}
               selectionsReducer={selectionsReducer}
@@ -64,6 +79,7 @@ class VerseRow extends React.Component {
 }
 
 VerseRow.propTypes = {
+  onEditTargetVerse: PropTypes.func,
   selectionsReducer: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   verseNumber: PropTypes.string.isRequired,

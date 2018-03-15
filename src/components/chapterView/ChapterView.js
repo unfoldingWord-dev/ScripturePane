@@ -6,8 +6,19 @@ import ReactDOM from 'react-dom';
 // components
 import BibleHeadingsRow from './BibleHeadingsRow';
 import VerseRow from './VerseRow';
+import VerseEditorDialog from '../VerseEditorDialog';
 
 class ChapterView extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleEditTargetVerse = this.handleEditTargetVerse.bind(this);
+    this.handleEditorCancel = this.handleEditorCancel.bind(this);
+    this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
+    this.state = {
+      editVerse: null
+    };
+  }
 
   componentDidMount() {
     let {chapter, verse} = this.props.contextIdReducer.contextId.reference;
@@ -27,8 +38,40 @@ class ChapterView extends React.Component {
     return `c${chapter.toString()}v${verse.toString()}`;
   }
 
+  /**
+   * Handles events to edit the target verse
+   * @param bibleId
+   * @param chapter
+   * @param verse
+   * @param verseText
+   */
+  handleEditTargetVerse(bibleId, chapter, verse, verseText) {
+    console.log('editing verse!');
+    this.setState({
+      editVerse: {
+        bibleId,
+        chapter,
+        verse,
+        verseText
+      }
+    });
+  }
+
+  handleEditorSubmit() {
+    // TODO: save
+    this.setState({
+      editVerse: null
+    });
+  }
+
+  handleEditorCancel() {
+    this.setState({
+      editVerse: null
+    });
+  }
+
   render() {
-    const {resourcesReducer, contextIdReducer, actions, selectionsReducer, settingsReducer, showModal, projectDetailsReducer} = this.props;
+    const {translate, resourcesReducer, contextIdReducer, actions, selectionsReducer, settingsReducer, showModal, projectDetailsReducer} = this.props;
     let {bibles} = this.props.resourcesReducer;
     let {chapter} = this.props.contextIdReducer.contextId.reference;
     let verseNumbers = Object.keys(bibles['en']['ulb'][chapter]);
@@ -43,6 +86,7 @@ class ChapterView extends React.Component {
         return (
           <VerseRow key={verseNumber}
                     verseNumber={verseNumber}
+                    onEditTargetVerse={this.handleEditTargetVerse}
                     actions={actions}
                     selectionsReducer={selectionsReducer}
                     settingsReducer={settingsReducer}
@@ -54,21 +98,40 @@ class ChapterView extends React.Component {
       });
     }
 
+    const {editVerse} = this.state;
+    const openEditor = editVerse !== null;
+    let verseTitle;
+    let verseText;
+    if(editVerse) {
+      verseTitle = ` ${editVerse.chapter}:${editVerse.verse}`;
+      console.log(bibles[editVerse.bibleId]);
+    }
+
     return (
-      <div style={{width: '100%', height: '100%'}}>
-        <BibleHeadingsRow settingsReducer={settingsReducer}
-                          resourcesReducer={resourcesReducer}
-                          projectDetailsReducer={projectDetailsReducer}
-                          showModal={showModal} />
-        <div style={{overflowY: 'scroll', overflowX: 'hidden', height: '430px'}}>
-          {verseRows}
+      <div>
+        <div style={{width: '100%', height: '100%'}}>
+          <BibleHeadingsRow settingsReducer={settingsReducer}
+                            resourcesReducer={resourcesReducer}
+                            projectDetailsReducer={projectDetailsReducer}
+                            showModal={showModal} />
+          <div style={{overflowY: 'scroll', overflowX: 'hidden', height: '430px'}}>
+            {verseRows}
+          </div>
         </div>
+        <VerseEditorDialog translate={translate}
+                           onSubmit={this.handleEditorSubmit}
+                           open={openEditor}
+                           onCancel={this.handleEditorCancel}
+                           verseText={verseText}
+                           verseTitle={verseTitle}/>
       </div>
+
     );
   }
 }
 
 ChapterView.propTypes = {
+  translate: PropTypes.func.isRequired,
   actions: PropTypes.object.isRequired,
   selectionsReducer: PropTypes.object.isRequired,
   settingsReducer: PropTypes.object.isRequired,
