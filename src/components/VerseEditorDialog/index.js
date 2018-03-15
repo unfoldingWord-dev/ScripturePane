@@ -12,7 +12,7 @@ class EditorDialog extends BaseDialog {
     const title = (
       <span>
         <EditIcon/>
-        {translate('edit_verse', {verse: verseTitle})}
+        {translate('edit_verse', {passage: verseTitle})}
       </span>
     );
 
