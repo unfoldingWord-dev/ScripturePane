@@ -4,6 +4,30 @@ import * as highlightHelpers from '../src/helpers/highlightHelpers';
 
 const ult_project = '__tests__/fixtures/ult/tit/1.json';
 const ugnt_project = '__tests__/fixtures/ugnt/tit/1.json';
+const expectedNestedChildren = [
+  {
+    "text": "good",
+    "tag": "w",
+    "type": "word",
+    "occurrence": 1,
+    "occurrences": 1
+  },
+  {
+    "text": "for",
+    "tag": "w",
+    "type": "word",
+    "occurrence": 1,
+    "occurrences": 1
+  },
+  {
+    "text": "him",
+    "tag": "w",
+    "type": "word",
+    "occurrence": 2,
+    "occurrences": 2
+  }
+];
+const deepNestedMilestone = [[expectedNestedChildren]];
 
 // Tests for Verse React Component
 describe('isWordArrayMatch',()=>{
@@ -138,3 +162,10 @@ const addContentAttributeToChildren = (childrens, parentObject, grandParentConte
     return child;
   });
 };
+
+describe('getDeepNestedWords', () => {
+  test('Returns the nested children that contains the array of word objects', () => {
+    const wordObjects = highlightHelpers.getDeepNestedWords(deepNestedMilestone);
+    expect(wordObjects).toEqual(expectedNestedChildren);
+  });
+});

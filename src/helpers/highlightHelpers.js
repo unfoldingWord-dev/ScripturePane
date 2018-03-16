@@ -106,7 +106,7 @@ function isPuntuationAndNeedsNoSpace(wordObject) {
  * Gets a words object array from a deep nested milestone.
  * @param {array} nestedWords
  */
-function getDeepNestedWords(nestedWords) {
+export function getDeepNestedWords(nestedWords) {
   let deepNestedWords = null;
   nestedWords.forEach(nestedWord => {
     if (nestedWord.text) {
