@@ -34,9 +34,9 @@ export function isWordMatch(word, contextId, words, index) {
   return isMatch;
 }
 
-export function getWordHighlightedDetails( contextId, previousWord, word) {
+export function getWordHighlightedDetails(contextId, previousWord, word) {
   const isHighlightedWord = isWordArrayMatch(word, contextId);
-  const isBetweenHighlightedWord = isHighlightedWord && previousWord && !isEqual(previousWord, word) 
+  const isBetweenHighlightedWord = isHighlightedWord && previousWord && !isEqual(previousWord, word)
       && isWordArrayMatch(previousWord, contextId);
   return {
     isHighlightedWord,
@@ -44,12 +44,13 @@ export function getWordHighlightedDetails( contextId, previousWord, word) {
   };
 }
 
-export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGrayVerseRow) {
-  // if its an array of an array (nested nested milestone)
-  if (Array.isArray(nestedWords[0])) nestedWords = nestedWords[0];
+export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGrayVerseRow, previousWord) {
+  // if its an array of an array thus get deep nested words array.
+  if (Array.isArray(nestedWords[0])) nestedWords = getDeepNestedWords(nestedWords);
+
   let isHighlightedWord = false;
   let isBetweenHighlightedWord = false;
-  let nestedPreviousWord = null;
+  let nestedPreviousWord = previousWord;
   let wordSpacing = ' ';
 
   const wordSpans = nestedWords.map((nestedWord, nestedWordIndex) => {
@@ -93,10 +94,26 @@ export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGra
 }
 
 /**
- * Determines if the revious word is a punctuation that
+ * Determines if the previous word is a punctuation that
  * doesnt need spacing after it.
  * @param {Object} wordObject
  */
 function isPuntuationAndNeedsNoSpace(wordObject) {
   return !isWord(wordObject) && (wordObject.text === '"') || (wordObject.text === "'");
+}
+
+/**
+ * Gets a words object array from a deep nested milestone.
+ * @param {array} nestedWords
+ */
+function getDeepNestedWords(nestedWords) {
+  let deepNestedWords = null;
+  nestedWords.forEach(nestedWord => {
+    if (nestedWord.text) {
+      deepNestedWords = nestedWords;
+    } else {
+      deepNestedWords = getDeepNestedWords(nestedWord);
+    }
+  });
+  return deepNestedWords;
 }
