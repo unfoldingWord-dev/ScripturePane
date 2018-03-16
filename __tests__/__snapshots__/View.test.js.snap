@@ -182,7 +182,7 @@ exports[`View component Tests before Project Loaded 1`] = `
             "subject": "Bible",
           },
         },
-        "udb": Object {
+        "udt": Object {
           "1": Object {
             "1": "I, Paul, write this letter. This is Paul, who is a servant of God and an apostle of Jesus Christ. I work to help God's people trust him more. God chose us to be his people and I work to help them truly know how to live in a way that pleases God.",
             "10": "I tell you these things, because there are many people who do not want anyone to control them, especially the people who tell all followers of Christ to become circumcised. What they say has no value. They fool people and persuade them to believe wrong things.",
@@ -206,7 +206,7 @@ exports[`View component Tests before Project Loaded 1`] = `
             "direction": "ltr",
             "language_id": "en",
             "language_name": "English",
-            "resource_id": "udb",
+            "resource_id": "udt",
             "resource_title": "Unlocked Dynamic Bible",
             "subject": "Bible",
           },
