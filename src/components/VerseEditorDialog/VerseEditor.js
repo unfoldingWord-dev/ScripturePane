@@ -73,7 +73,7 @@ class VerseEditor extends React.Component {
   handleVerseChange(newVerse) {
     const {verseText} = this.props;
     this.setState({
-      newVerse,
+      newVerse: newVerse,
       verseChanged: newVerse !== verseText
     });
   }
