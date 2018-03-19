@@ -13,7 +13,6 @@ import WordDetails from './WordDetails';
 const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text for this reference.]';
 
 class Verse extends React.Component {
-
   onWordClick(e, word) {
     if (word && word.strong) {
       const {strong} = word;
@@ -169,7 +168,8 @@ Verse.propTypes = {
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,
     loadLexiconEntry: PropTypes.func.isRequired,
-    showPopover: PropTypes.func.isRequired
+    showPopover: PropTypes.func.isRequired,
+    getLexiconData: PropTypes.func.isRequired
   }),
   verseText: PropTypes.oneOfType([
     PropTypes.string.isRequired,
