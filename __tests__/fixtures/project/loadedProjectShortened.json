@@ -50,7 +50,7 @@
   },
   "resourcesReducer": {
     "bibles": {
-      "udb": {
+      "udt": {
         "1": {
           "1": "I, Paul, write this letter. This is Paul, who is a servant of God and an apostle of Jesus Christ. I work to help God's people trust him more. God chose us to be his people and I work to help them truly know how to live in a way that pleases God.",
           "2": "His people can learn how to live like this, because they are confident that God will cause them to live forever. God tells no lies. Even before the world began, he promised to cause us to live forever.",
@@ -74,7 +74,7 @@
           "language_name": "English",
           "direction": "ltr",
           "subject": "Bible",
-          "resource_id": "udb",
+          "resource_id": "udt",
           "resource_title": "Unlocked Dynamic Bible",
           "description": "Gateway Language"
         }

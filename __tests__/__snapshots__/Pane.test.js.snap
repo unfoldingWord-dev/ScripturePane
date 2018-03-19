@@ -10,7 +10,7 @@ exports[`Test Pane behavior Test book name and language layout. 1`] = `
       "showPopover": [Function],
     }
   }
-  bibleId="udb"
+  bibleId="udt"
   contextIdReducer={
     Object {
       "contextId": Object {
@@ -30,7 +30,7 @@ exports[`Test Pane behavior Test book name and language layout. 1`] = `
     Array [
       "targetLanguage",
       "bhp",
-      "udb",
+      "udt",
     ]
   }
   index={2}
@@ -38,7 +38,7 @@ exports[`Test Pane behavior Test book name and language layout. 1`] = `
   resourcesReducer={
     Object {
       "bibles": Object {
-        "udb": Object {
+        "udt": Object {
           "1": Object {
             "1": "This is the record of the ancestors of Jesus the Messiah, the descendant of King David and of Abraham.",
             "2": "Abraham was the father of Isaac. Isaac was the father of Jacob. Jacob was the father of Judah and of his brothers.",
