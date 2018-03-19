@@ -47,7 +47,7 @@ class View extends React.Component {
         <div key={index} style={index > 0 ? style.otherBible : style.firstBible}>
           <AddBible
             scripturePane={scripturePane}
-            showModal={this.props.showModal}
+            showModal={showModal}
           />
         </div>
       );
@@ -78,12 +78,16 @@ class View extends React.Component {
           currentPaneSettings={currentPaneSettings}
         />
         <ChapterViewModal
-          {...this.props}
-          bibles={this.props.resourcesReducer.bibles}
           show={expandedPaneVisibility}
           onHide={hideExpandModal}
-          currentPaneSettings={currentPaneSettings}
+          actions={this.props.actions}
           showModal={showModal}
+          bibles={this.props.resourcesReducer.bibles}
+          selectionsReducer={this.props.selectionsReducer}
+          settingsReducer={this.props.settingsReducer}
+          contextIdReducer={this.props.contextIdReducer}
+          resourcesReducer={this.props.resourcesReducer}
+          projectDetailsReducer={this.props.projectDetailsReducer}
         />
       </div>
     );
@@ -101,6 +105,8 @@ View.propTypes = {
       })
     })
   }),
+  selectionsReducer: PropTypes.object.isRequired,
+  projectDetailsReducer: PropTypes.object.isRequired,
   actions: PropTypes.shape({
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,
