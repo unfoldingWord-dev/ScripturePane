@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "direction": "ltr",
+    }
+  }
+>
+  <strong>
+    11:35 
+  </strong>
+  <span>
+    Jesus wept
+  </span>
+</div>
+`;

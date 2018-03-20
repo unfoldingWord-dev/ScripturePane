@@ -3,8 +3,7 @@
 import React from 'react';
 import Verse, {PLACE_HOLDER_TEXT} from '../src/components/Verse';
 import {mount} from 'enzyme';
-import PropTypes from 'prop-types';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import renderer from 'react-test-renderer';
 
 // Tests for Verse React Component
 describe('Test Verse component',()=>{
@@ -139,69 +138,39 @@ describe('Test Verse component',()=>{
   });
 });
 
+describe('', () => {
+  it('renders correctly', () => {
+    const props = {
+      verseText: 'Jesus wept',
+      chapter: 11,
+      verse: 35,
+      direction: 'ltr',
+      isCurrent: true,
+      selectionsReducer: {
+        selections: []
+      },
+      contextIdReducer: {
+        contextId: {}
+      },
+      actions: {
+        setToolSettings: () => {},
+        getWordListForVerse: () => {},
+        loadLexiconEntry: () => {},
+        showPopover: () => {}
+      }
+    };
+    const tree = renderer
+      .create(<Verse {...props} />)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
 function validateVerse(enzymeWrapper, expectedText) {
   const verseDiv = enzymeWrapper.find('div');
   expect(verseDiv.length).toEqual(1);
   expect(verseDiv.text()).toEqual(expectedText);
 }
-
-describe('Test Verse.componentWillReceiveProps', ()=>{
-  test('Test with two populated verses', () => {
-    const props = {
-      verseText: [{strong: "G38700"}],
-      chapter: 1,
-      verse: 1,
-      isCurrent: true,
-      selectionsReducer: {
-        selections: []
-      },
-      contextIdReducer: {
-        contextId: {}
-      },
-      direction: 'ltr',
-      actions: {
-        loadLexiconEntry: jest.fn(),
-        getWordListForVerse: mock_getWordListForVerse,
-        setToolSettings: () => {},
-        showPopover: () => {}
-      }
-    };
-    const props2 = {
-      verseText: [{strong: "G25320"}],
-      chapter: 1,
-      verse: 2,
-      isCurrent: true,
-      selectionsReducer: {
-        selections: []
-      },
-      contextIdReducer: {
-        contextId: {}
-      },
-      direction: 'ltr',
-      actions: {
-        loadLexiconEntry: jest.fn(),
-        getWordListForVerse: mock_getWordListForVerse,
-        setToolSettings: () => {},
-        showPopover: () => {}
-      }
-    };
-
-    const wrapper = mount(
-      <Verse {...props} />,
-      {
-        context: {
-          muiTheme: getMuiTheme()
-        },
-        childContextTypes: {
-          muiTheme: PropTypes.object.isRequired
-        }
-      }
-    );
-    expect(wrapper.find(Verse).props().verse).toEqual(props.verse);
-    wrapper.setProps(props2);
-    expect(wrapper.find(Verse).props().verse).toEqual(props2.verse);
-  });
-});
 
 //
 // helpers
