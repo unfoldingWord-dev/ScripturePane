@@ -24,7 +24,8 @@ describe('Test Verse component',()=>{
         setToolSettings: () => {},
         getWordListForVerse: () => {},
         loadLexiconEntry: () => {},
-        showPopover: () => {}
+        showPopover: () => {},
+        getLexiconData: () => {}
       }
     };
     const expectedText = '1:1 '+PLACE_HOLDER_TEXT;
