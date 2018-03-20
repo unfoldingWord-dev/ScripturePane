@@ -50,7 +50,8 @@ describe('Test Verse component',()=>{
         setToolSettings: () => {},
         getWordListForVerse: () => {},
         loadLexiconEntry: () => {},
-        showPopover: () => {}
+        showPopover: () => {},
+        getLexiconData: () => {}
       }
     };
     const expectedText = '1:1 '+PLACE_HOLDER_TEXT;
@@ -75,7 +76,8 @@ describe('Test Verse component',()=>{
         setToolSettings: () => {},
         getWordListForVerse: () => {},
         loadLexiconEntry: () => {},
-        showPopover: () => {}
+        showPopover: () => {},
+        getLexiconData: () => {}
       }
     };
     const expectedText = '11:35 Jesus wept';
@@ -100,7 +102,8 @@ describe('Test Verse component',()=>{
         setToolSettings: () => {},
         getWordListForVerse: () => {},
         loadLexiconEntry: () => {},
-        showPopover: () => {}
+        showPopover: () => {},
+        getLexiconData: () => {}
       }
     };
     const expectedText = '1:1 Also, we are writing these things to you so that our joy will be complete. ';
@@ -130,7 +133,8 @@ describe('Test Verse component',()=>{
         getWordListForVerse: mock_getWordListForVerse,
         setToolSettings: () => {},
         loadLexiconEntry: () => {},
-        showPopover: () => {}
+        showPopover: () => {},
+        getLexiconData: () => {}
       },
     };
     const expectedText = '11:35 Jesus wept.';
@@ -157,7 +161,8 @@ describe('Verse.js', () => {
         setToolSettings: () => {},
         getWordListForVerse: () => {},
         loadLexiconEntry: () => {},
-        showPopover: () => {}
+        showPopover: () => {},
+        getLexiconData: () => {}
       }
     };
     const tree = renderer
