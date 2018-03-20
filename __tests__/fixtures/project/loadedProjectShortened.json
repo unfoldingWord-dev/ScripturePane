@@ -32,7 +32,7 @@
         "currentPaneSettings": [
           "targetLanguage",
           "bhp",
-          "ulb"
+          "ult"
         ]
       }
     },
@@ -50,7 +50,7 @@
   },
   "resourcesReducer": {
     "bibles": {
-      "udb": {
+      "udt": {
         "1": {
           "1": "I, Paul, write this letter. This is Paul, who is a servant of God and an apostle of Jesus Christ. I work to help God's people trust him more. God chose us to be his people and I work to help them truly know how to live in a way that pleases God.",
           "2": "His people can learn how to live like this, because they are confident that God will cause them to live forever. God tells no lies. Even before the world began, he promised to cause us to live forever.",
@@ -74,12 +74,12 @@
           "language_name": "English",
           "direction": "ltr",
           "subject": "Bible",
-          "resource_id": "udb",
+          "resource_id": "udt",
           "resource_title": "Unlocked Dynamic Bible",
           "description": "Gateway Language"
         }
       },
-      "ulb": {
+      "ult": {
         "1": {
           "1": "Paul, a servant of God and an apostle of Jesus Christ, for the faith of God's chosen people and the knowledge of the truth that agrees with godliness,",
           "2": "with the certain hope of everlasting life that God, who does not lie, promised before all the ages of time.",
@@ -165,7 +165,7 @@
     }
   },
   "projectDetailsReducer": {
-    "projectSaveLocation": "/Users/jay/translationCore/projects/sw_tit_text_ulb",
+    "projectSaveLocation": "/Users/jay/translationCore/projects/sw_tit_text_ult",
     "manifest": {
       "generator": {
         "name": "ts-desktop",
@@ -187,7 +187,7 @@
       "source_translations": [
         {
           "language_id": "en",
-          "resource_id": "ulb",
+          "resource_id": "ult",
           "checking_level": 3,
           "date_modified": 20160614,
           "version": "5"
@@ -207,8 +207,8 @@
       "package_version": 6,
       "format": "usfm",
       "resource": {
-        "id": "ulb",
-        "name": "Unlocked Literal Bible"
+        "id": "ult",
+        "name": "unfoldingWord Literal Text"
       },
       "parent_draft": {},
       "finished_chunks": [

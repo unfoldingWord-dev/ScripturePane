@@ -26,7 +26,7 @@ describe('Test Pane behavior',()=>{
       },
       resourcesReducer: {
         "bibles":{
-          "udb":{
+          "udt":{
             "1":{
               "1":"This is the record of the ancestors of Jesus the Messiah, " +
                   "the descendant of King David and of Abraham.",
@@ -37,8 +37,8 @@ describe('Test Pane behavior',()=>{
         }
       },
       index: 2,
-      bibleId: "udb",
-      currentPaneSettings: ["targetLanguage","bhp","udb"],
+      bibleId: "udt",
+      currentPaneSettings: ["targetLanguage","bhp","udt"],
       removePane: () => {}
     };
     let myPane = (

@@ -109,15 +109,15 @@ exports[`View component Tests before Project Loaded 1`] = `
         },
         "repo": "https://git.door43.org/benjore/sw_tit_text_ulb.git",
         "resource": Object {
-          "id": "ulb",
-          "name": "Unlocked Literal Bible",
+          "id": "ult",
+          "name": "unfoldingWord Literal Text",
         },
         "source_translations": Array [
           Object {
             "checking_level": 3,
             "date_modified": 20160614,
             "language_id": "en",
-            "resource_id": "ulb",
+            "resource_id": "ult",
             "version": "5",
           },
         ],
@@ -139,7 +139,7 @@ exports[`View component Tests before Project Loaded 1`] = `
           "name": "Text",
         },
       },
-      "projectSaveLocation": "/Users/jay/translationCore/projects/sw_tit_text_ulb",
+      "projectSaveLocation": "/Users/jay/translationCore/projects/sw_tit_text_ult",
       "projectType": null,
     }
   }
@@ -182,7 +182,7 @@ exports[`View component Tests before Project Loaded 1`] = `
             "subject": "Bible",
           },
         },
-        "udb": Object {
+        "udt": Object {
           "1": Object {
             "1": "I, Paul, write this letter. This is Paul, who is a servant of God and an apostle of Jesus Christ. I work to help God's people trust him more. God chose us to be his people and I work to help them truly know how to live in a way that pleases God.",
             "10": "I tell you these things, because there are many people who do not want anyone to control them, especially the people who tell all followers of Christ to become circumcised. What they say has no value. They fool people and persuade them to believe wrong things.",
@@ -206,12 +206,12 @@ exports[`View component Tests before Project Loaded 1`] = `
             "direction": "ltr",
             "language_id": "en",
             "language_name": "English",
-            "resource_id": "udb",
+            "resource_id": "udt",
             "resource_title": "Unlocked Dynamic Bible",
             "subject": "Bible",
           },
         },
-        "ulb": Object {
+        "ult": Object {
           "1": Object {
             "1": "Paul, a servant of God and an apostle of Jesus Christ, for the faith of God's chosen people and the knowledge of the truth that agrees with godliness,",
             "10": "For there are many rebellious people, empty talkers and deceivers, especially those of the circumcision.",
@@ -302,7 +302,7 @@ exports[`View component Tests before Project Loaded 1`] = `
           "currentPaneSettings": Array [
             "targetLanguage",
             "bhp",
-            "ulb",
+            "ult",
           ],
         },
       },

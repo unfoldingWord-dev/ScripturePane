@@ -16,10 +16,10 @@ describe('Test AddPaneModal component',()=>{
       resourcesReducer: {
         bibles: {
           en: {
-            ulb: {
+            ult: {
               manifest: {
                 language_name: 'English',
-                resource_title: 'Unlocked Literal Bible'
+                resource_title: 'unfoldingWord Literal Text'
               }
             }
           },
@@ -33,9 +33,9 @@ describe('Test AddPaneModal component',()=>{
           }
         }
       },
-      currentPaneSettings: ['ulb']
+      currentPaneSettings: ['ult']
     };
-    const expectedOptions = ['Select', 'English (Unlocked Literal Bible)', 'French (Current project)']; // expect options to have in the language select
+    const expectedOptions = ['Select', 'English (unfoldingWord Literal Text)', 'French (Current project)']; // expect options to have in the language select
     const enzymeWrapper = shallow(<AddPaneModal {...props} />);
     validateSelectOptions(enzymeWrapper, expectedOptions);
   });
@@ -50,10 +50,10 @@ describe('Test AddPaneModal component',()=>{
       resourcesReducer: {
         bibles: {
           en: {
-            ulb: {
+            ult: {
               manifest: {
                 'language_name': 'English',
-                'resource_title': 'Unlocked Literal Bible'
+                'resource_title': 'unfoldingWord Literal Text'
               }
             }
           },
@@ -67,7 +67,7 @@ describe('Test AddPaneModal component',()=>{
           }
         }
       },
-      currentPaneSettings: ['ulb']
+      currentPaneSettings: ['ult']
     };
     const expectedDisabled = props.currentPaneSettings; // expect these options to be disabled
     const enzymeWrapper = shallow(<AddPaneModal {...props} />);

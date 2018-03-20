@@ -72,8 +72,8 @@ class ChapterView extends React.Component {
   render() {
     const {translate, resourcesReducer, contextIdReducer, actions, selectionsReducer, settingsReducer, showModal, projectDetailsReducer} = this.props;
     let {bibles} = resourcesReducer;
-    let {chapter, bookId} = contextIdReducer.contextId.reference;
-    let verseNumbers = Object.keys(bibles['en']['ulb'][chapter]);
+    let {chapter} = contextIdReducer.contextId.reference;
+    let verseNumbers = Object.keys(bibles['en']['ult'][chapter]);
 
     this.verseRefs = {};
 
@@ -102,7 +102,6 @@ class ChapterView extends React.Component {
     let verseTitle = '';
     let verseText = '';
     if(openEditor) {
-      // TODO: get the actual book name
       const bookName = projectDetailsReducer.manifest.target_language.book.name;
       verseTitle = `${bookName} ${editVerse.chapter}:${editVerse.verse}`;
       verseText = editVerse.verseText;

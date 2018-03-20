@@ -37,22 +37,33 @@ const makeStyles = (props) => {
 
 class Verse extends React.Component {
 
+
   constructor(props) {
     super(props);
     this.handleEdit = this.handleEdit.bind(this);
   }
+  
+  componentWillMount() {
+    this.updateLexiconEntries(this.props);
+  }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.verseText && this.props.verseText !== nextProps.verseText) {
-      if ((nextProps.verseText.constructor === Array) || (nextProps.verseText.verseObjects)) {
-        const words = nextProps.actions.getWordListForVerse(nextProps.verseText);
+    if (this.props.verseText !== nextProps.verseText) {
+      this.updateLexiconEntries(nextProps);
+    }
+  }
+
+  updateLexiconEntries(props) {
+    if (props && props.verseText) {
+      if ((props.verseText.constructor === Array) || (props.verseText.verseObjects)) {
+        const words = props.actions.getWordListForVerse(props.verseText);
         words.forEach((word) => {
           if (isWord(word)) {
             const {strong} = word;
             if (strong) {
               const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strong);
               const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strong);
-              nextProps.actions.loadLexiconEntry(lexiconId, entryId);
+              props.actions.loadLexiconEntry(lexiconId, entryId);
             }
           }
         });
@@ -111,7 +122,7 @@ class Verse extends React.Component {
           isHighlightedWord = highlightHelpers.isWordMatch(word, contextId, words, index);
           isBetweenHighlightedWord = previousWord && !isEqual(previousWord, word) &&
             highlightHelpers.isWordMatch(previousWord, contextId, words, index - 1) && isHighlightedWord;
-        } else if (bibleId === 'ulb' && contextId.quote && word.content) {
+        } else if (bibleId === 'ult' || bibleId === 'udt' && contextId.quote && word.content) {
           const highlightedDetails = highlightHelpers.getWordHighlightedDetails(contextId, previousWord, word);
           isHighlightedWord = highlightedDetails.isHighlightedWord;
           isBetweenHighlightedWord = highlightedDetails.isBetweenHighlightedWord;
@@ -143,7 +154,7 @@ class Verse extends React.Component {
           verseSpan.push(this.createNonClickableSpan(index, paddingSpanStyle, padding, isHighlightedWord, text));
         }
       } else if (isNestedMilestone(word)) { // if nested milestone
-        const nestedWordSpans = highlightHelpers.getWordsFromNestedMilestone(word, contextId, index, isGrayVerseRow);
+        const nestedWordSpans = highlightHelpers.getWordsFromNestedMilestone(word, contextId, index, isGrayVerseRow, previousWord);
         nestedWordSpans.forEach((nestedWordSpan) => verseSpan.push(nestedWordSpan));
         wordSpacing = ' ';
       } else if (word.text) { // if not word, show punctuation, etc. but not clickable
