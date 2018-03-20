@@ -138,7 +138,7 @@ describe('Test Verse component',()=>{
   });
 });
 
-describe('', () => {
+describe('Verse.js', () => {
   it('renders correctly', () => {
     const props = {
       verseText: 'Jesus wept',
