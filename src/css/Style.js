@@ -24,7 +24,7 @@ var style = {
     },
   },
   scripturePane: {
-    flex: '1 0 180px',
+    flex: '1',
     margin: '10px',
     boxShadow: '0 3px 10px var(--background-color)',
     borderRadius: '2px',
