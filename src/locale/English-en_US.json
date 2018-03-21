@@ -13,5 +13,13 @@
     "select_language": "Select language",
     "add_resources": "Add Resources",
     "select": "Select"
+  },
+  "editor": {
+    "spelling": "Spelling",
+    "punctuation": "Punctuation",
+    "word_choice": "Word Choice",
+    "meaning": "Meaning",
+    "grammar": "Grammar",
+    "other": "Other"
   }
 }

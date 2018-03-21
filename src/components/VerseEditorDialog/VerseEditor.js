@@ -93,7 +93,7 @@ class VerseEditor extends React.Component {
         screen = (<EditScreen verseText={newVerse} onChange={this.handleVerseChange}/>);
         break;
       case 1:
-        screen = (<ReasonScreen/>);
+        screen = (<ReasonScreen translate={translate}/>);
         break;
       default:
         screen = "Oops!";
