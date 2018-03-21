@@ -25,6 +25,7 @@ class EditScreen extends React.Component {
     const {verseText} = this.props;
     return (
       <TextField multiLine={true}
+                 id="verse-editor-field"
                  rows={4}
                  autoFocus={true}
                  fullWidth={true}

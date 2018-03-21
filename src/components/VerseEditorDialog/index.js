@@ -11,7 +11,7 @@ const styles = {
     height: 25,
     marginRight: 5,
     marginBottom: 5,
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
   },
   body: {
     padding: 0
@@ -21,7 +21,7 @@ const styles = {
 /**
  * Renders a dialog for editing verses
  */
-class VerseEditorDialog extends BaseDialog {
+class VerseEditorDialog extends React.Component {
   render() {
 
     const {translate, onCancel, open, onSubmit, verseText, verseTitle} = this.props;

@@ -114,7 +114,7 @@ class ChapterView extends React.Component {
                             resourcesReducer={resourcesReducer}
                             projectDetailsReducer={projectDetailsReducer}
                             showModal={showModal} />
-          <div style={{overflowY: 'scroll', overflowX: 'hidden', height: '430px'}}>
+          <div style={{overflowY: 'scroll', overflowX: 'hidden', height: '310px'}}>
             {verseRows}
           </div>
         </div>

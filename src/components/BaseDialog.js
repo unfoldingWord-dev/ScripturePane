@@ -56,6 +56,8 @@ const makeDialogActions = ({actionsEnabled, primaryLabel, secondaryLabel, onPrim
  *
  * @class
  *
+ * @property {object} [titleStyles] - styles applied to the dialog title
+ * @property {object} [bodyStyles] - styles applied to the dialog body
  * @property {bool} [modal] - controls whether this dialog is modal
  * @property {Object[]} [actions] - a custom list of actions. This overrides the default secondary and primary actions.
  * @property {*} [title] - the title of the dialog
@@ -84,6 +86,7 @@ class BaseDialog extends React.Component {
       onSubmit,
       open,
       bodyStyle,
+      titleStyle,
       children,
       actions
     } = this.props;
@@ -111,7 +114,8 @@ class BaseDialog extends React.Component {
                   backgroundColor: 'var(--accent-color-dark)',
                   padding: '15px',
                   display: 'block',
-                  width: '100%'
+                  width: '100%',
+                  ...titleStyle
                 }}
                 bodyStyle={bodyStyle}
                 onRequestClose={onClose}
@@ -124,6 +128,7 @@ class BaseDialog extends React.Component {
 }
 
 BaseDialog.propTypes = {
+  titleStyle: PropTypes.object,
   bodyStyle: PropTypes.object,
   modal: PropTypes.bool,
   actions: PropTypes.array,
@@ -137,7 +142,8 @@ BaseDialog.propTypes = {
   children: PropTypes.any
 };
 BaseDialog.defaultProps = {
-  actionsEnabled: true
+  actionsEnabled: true,
+  modal: false
 };
 
 export default BaseDialog;
