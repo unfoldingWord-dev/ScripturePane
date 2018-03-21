@@ -78,15 +78,6 @@ class View extends React.Component {
             {scripturePane}
           </div>
         </div>
-        <AddPaneModal
-          {...this.props}
-          show={modalVisibility}
-          onHide={hideModal}
-          selectSourceLanguage={selectSourceLanguage}
-          addPane={addPane}
-          selectedPane={selectedPane}
-          currentPaneSettings={currentPaneSettings}
-        />
         <ChapterViewModal
           translate={translate}
           actions={actions}
@@ -100,6 +91,16 @@ class View extends React.Component {
           onHide={hideExpandModal}
           currentPaneSettings={currentPaneSettings}
           showModal={showModal}
+        />
+        <AddPaneModal
+          {...this.props}
+          translate={translate}
+          show={modalVisibility}
+          onHide={hideModal}
+          selectSourceLanguage={selectSourceLanguage}
+          addPane={addPane}
+          selectedPane={selectedPane}
+          currentPaneSettings={currentPaneSettings}
         />
       </div>
     );

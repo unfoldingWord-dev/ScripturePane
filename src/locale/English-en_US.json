@@ -4,8 +4,14 @@
     "back_button": "Back",
     "close_button": "Close",
     "cancel_button": "Cancel",
-    "next_button": "Next"
+    "next_button": "Next",
+    "load_button": "Load"
   },
   "step1": "Step 1. Read",
-  "edit_verse": "Edit Verse - ${passage}"
+  "edit_verse": "Edit Verse - ${passage}",
+  "resources": {
+    "select_language": "Select language",
+    "add_resources": "Add Resources",
+    "select": "Select"
+  }
 }
