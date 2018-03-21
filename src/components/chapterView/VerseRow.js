@@ -58,6 +58,7 @@ class VerseRow extends React.Component {
               actions={actions}
               sourceName={bibleId}
               bibleId={bibleId}
+              languageId={languageId}
               isCurrent={isCurrent}
               verseText={verseText}
               chapter={chapter}

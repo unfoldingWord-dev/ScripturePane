@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WordDetails component renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "margin": "-10px 10px -20px",
+      "maxWidth": "400px",
+    }
+  }
+>
+  <span>
+    <strong>
+      Lemma:
+    </strong>
+     
+    καί
+  </span>
+  <br />
+  <span>
+    <strong>
+      Morphology:
+    </strong>
+     
+    Gr,CC,,,,,,,,
+  </span>
+  <br />
+  <span>
+    <strong>
+      Strongs:
+    </strong>
+     
+    G25320
+  </span>
+  <br />
+  <span>
+    <strong>
+      Lexicon:
+    </strong>
+     
+    and, even, also, namely.
+  </span>
+  <br />
+</div>
+`;

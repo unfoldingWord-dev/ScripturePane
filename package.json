@@ -40,6 +40,8 @@
     "fs-extra": "5.0.0",
     "jest": "21.1.0",
     "material-ui": "0.20.0",
+    "react-addons-test-utils": "15.6.2",
+    "react-test-renderer": "^16.2.0",
     "prop-types": "15.6.0",
     "react": "16.2.0",
     "react-bootstrap": "0.32.0",

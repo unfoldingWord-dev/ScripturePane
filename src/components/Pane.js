@@ -63,6 +63,7 @@ class Pane extends React.Component {
             verse={reference.verse}
             direction={direction}
             bibleId={resource_id}
+            languageId={languageId}
             isCurrent={true}
           />
         </div>

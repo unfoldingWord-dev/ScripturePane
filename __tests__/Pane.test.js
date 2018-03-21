@@ -38,6 +38,7 @@ describe('Test Pane behavior',()=>{
       },
       index: 2,
       bibleId: "udt",
+      languageId: 'en',
       currentPaneSettings: ["targetLanguage","bhp","udt"],
       removePane: () => {}
     };

@@ -34,6 +34,7 @@ exports[`Test Pane behavior Test book name and language layout. 1`] = `
     ]
   }
   index={2}
+  languageId="en"
   removePane={[Function]}
   resourcesReducer={
     Object {

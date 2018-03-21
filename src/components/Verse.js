@@ -37,47 +37,24 @@ const makeStyles = (props) => {
 
 class Verse extends React.Component {
 
-
   constructor(props) {
     super(props);
+    this.verseArray = this.verseArray.bind(this);
+    this.onWordClick = this.onWordClick.bind(this);
+    this.verseString = this.verseString.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-  }
-  
-  componentWillMount() {
-    this.updateLexiconEntries(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.verseText !== nextProps.verseText) {
-      this.updateLexiconEntries(nextProps);
-    }
-  }
-
-  updateLexiconEntries(props) {
-    if (props && props.verseText) {
-      if ((props.verseText.constructor === Array) || (props.verseText.verseObjects)) {
-        const words = props.actions.getWordListForVerse(props.verseText);
-        words.forEach((word) => {
-          if (isWord(word)) {
-            const {strong} = word;
-            if (strong) {
-              const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strong);
-              const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strong);
-              props.actions.loadLexiconEntry(lexiconId, entryId);
-            }
-          }
-        });
-      }
-    }
   }
 
   onWordClick(e, word) {
-    const {resourcesReducer} = this.props;
     if (word && word.strong) {
-      let positionCoord = e.target;
+      const {strong} = word;
+      const entryId = lexiconHelpers.lexiconEntryIdFromStrongs(strong);
+      const lexiconId = lexiconHelpers.lexiconIdFromStrongs(strong);
+      const lexiconData = this.props.actions.getLexiconData(lexiconId, entryId);
+      const positionCoord = e.target;
       const PopoverTitle = <strong style={{fontSize: '1.2em'}}>{word.word}</strong>;
-      let {showPopover} = this.props.actions;
-      const wordDetails = <WordDetails resourcesReducer={resourcesReducer} word={word}/>;
+      const {showPopover} = this.props.actions;
+      const wordDetails = <WordDetails lexiconData={lexiconData} word={word}/>;
       showPopover(PopoverTitle, wordDetails, positionCoord);
     }
   }
@@ -244,7 +221,8 @@ Verse.propTypes = {
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,
     loadLexiconEntry: PropTypes.func.isRequired,
-    showPopover: PropTypes.func.isRequired
+    showPopover: PropTypes.func.isRequired,
+    getLexiconData: PropTypes.func.isRequired
   }).isRequired,
   verseText: PropTypes.oneOfType([
     PropTypes.string.isRequired,

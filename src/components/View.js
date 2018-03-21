@@ -57,7 +57,7 @@ class View extends React.Component {
              style={index > 0 ? style.otherBible : style.firstBible}>
           <AddBible
             scripturePane={scripturePane}
-            showModal={this.props.showModal}
+            showModal={showModal}
           />
         </div>
       );
