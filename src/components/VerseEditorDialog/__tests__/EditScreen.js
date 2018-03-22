@@ -1,0 +1,14 @@
+import React from 'react';
+import renderer from 'react-test-renderer';
+import EditScreen from '../EditScreen';
+
+describe('snapshot', () => {
+
+  it('has text', () => {
+    const wrapper = renderer.create(
+      <EditScreen onChange={jest.fn()} verseText="verse text"/>
+    );
+    expect(wrapper).toMatchSnapshot();
+  });
+
+});
