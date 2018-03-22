@@ -38,11 +38,13 @@ class VerseEditor extends React.Component {
     this.handleNext = this.handleNext.bind(this);
     this.onLastStep = this.onLastStep.bind(this);
     this.handleVerseChange = this.handleVerseChange.bind(this);
+    this.handleReasonChange = this.handleReasonChange.bind(this);
     const {verseText} = this.props;
     this.state = {
       stepIndex: 0,
       newVerse: verseText,
-      verseChanged: false
+      verseChanged: false,
+      reasons: []
     };
   }
 
@@ -59,10 +61,10 @@ class VerseEditor extends React.Component {
   }
 
   handleNext() {
-    const {stepIndex} = this.state;
+    const {stepIndex, newVerse, reasons} = this.state;
     const {onSubmit} = this.props;
     if(this.onLastStep()) {
-      onSubmit();
+      onSubmit(newVerse, reasons);
     } else {
       this.setState({
         stepIndex: stepIndex + 1
@@ -77,6 +79,13 @@ class VerseEditor extends React.Component {
       verseChanged: newVerse !== verseText
     });
   }
+  
+  handleReasonChange(newReasons) {
+    this.setState({
+      reasons: newReasons
+    });
+  }
+  
 
   onLastStep() {
     const {stepIndex} = this.state;
@@ -85,7 +94,7 @@ class VerseEditor extends React.Component {
 
   render() {
     const {translate, onCancel} = this.props;
-    const {stepIndex, verseChanged, newVerse} = this.state;
+    const {stepIndex, verseChanged, newVerse, reasons} = this.state;
 
     let screen;
     switch(stepIndex) {
@@ -93,7 +102,7 @@ class VerseEditor extends React.Component {
         screen = (<EditScreen verseText={newVerse} onChange={this.handleVerseChange}/>);
         break;
       case 1:
-        screen = (<ReasonScreen translate={translate}/>);
+        screen = (<ReasonScreen translate={translate} selectedReasons={reasons} onChange={this.handleReasonChange}/>);
         break;
       default:
         screen = "Oops!";
