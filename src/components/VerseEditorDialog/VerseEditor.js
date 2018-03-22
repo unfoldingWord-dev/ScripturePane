@@ -92,9 +92,25 @@ class VerseEditor extends React.Component {
     return stepIndex === steps.length - 1;
   }
 
+  /**
+   * Checks if the next button is enabled
+   * @return {*}
+   */
+  isNextEnabled() {
+    const {stepIndex, verseChanged, newVerse, reasons} = this.state;
+    switch(stepIndex) {
+      case 0:
+        return verseChanged && newVerse;
+      case 1:
+        return reasons.length > 0;
+      default:
+        return false;
+    }
+  }
+
   render() {
     const {translate, onCancel} = this.props;
-    const {stepIndex, verseChanged, newVerse, reasons} = this.state;
+    const {stepIndex, newVerse, reasons} = this.state;
 
     let screen;
     switch(stepIndex) {
@@ -137,7 +153,7 @@ class VerseEditor extends React.Component {
             {translate('buttons.cancel_button')}
           </button>
           <button className="btn-prime"
-                  disabled={!verseChanged && newVerse}
+                  disabled={!this.isNextEnabled()}
                   onClick={this.handleNext}>
             {nextStepButtonTitle}
           </button>
