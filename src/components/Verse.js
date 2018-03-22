@@ -19,7 +19,7 @@ const makeStyles = (props) => {
   const verseIsPlaceHolder = !!verseText;
 
   return {
-    root: {
+    flex: {
       display: 'flex',
       flexDirection: 'column',
       height: '100%'
@@ -204,7 +204,7 @@ class Verse extends React.Component {
     }
 
     return (
-      <div style={styles.root}>
+      <div style={styles.flex}>
         <div style={styles.verse}>
           {chapterVerse}
           {verseSpan}

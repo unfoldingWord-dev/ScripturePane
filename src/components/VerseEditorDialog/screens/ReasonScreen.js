@@ -6,11 +6,18 @@ const styles = {
   root: {
     display: 'flex'
   },
+  content: {
+    display: 'flex',
+    flexGrow: 1
+  },
   column: {
     flexGrow: 1
   },
   checkbox: {
     marginBottom: 16
+  },
+  spacer: {
+    flexGrow: 2
   }
 };
 
@@ -91,35 +98,40 @@ class ReasonScreen extends React.Component {
 
     return (
       <div style={styles.root}>
-        <div style={styles.column}>
-          <ReasonCheckbox reason="spelling"
-                          label={translate('editor.spelling')}
-                          onCheck={this._handleCheck}
-                          selectedReasons={selectedReasons}/>
-          <ReasonCheckbox reason="punctuation"
-                          label={translate('editor.punctuation')}
-                          onCheck={this._handleCheck}
-                          selectedReasons={selectedReasons}/>
-          <ReasonCheckbox reason="word_choice"
-                          label={translate('editor.word_choice')}
-                          onCheck={this._handleCheck}
-                          selectedReasons={selectedReasons}/>
+        <div style={styles.spacer}/>
+        <div style={styles.content}>
+          <div style={styles.column}>
+            <ReasonCheckbox reason="spelling"
+                            label={translate('editor.spelling')}
+                            onCheck={this._handleCheck}
+                            selectedReasons={selectedReasons}/>
+            <ReasonCheckbox reason="punctuation"
+                            label={translate('editor.punctuation')}
+                            onCheck={this._handleCheck}
+                            selectedReasons={selectedReasons}/>
+            <ReasonCheckbox reason="word_choice"
+                            label={translate('editor.word_choice')}
+                            onCheck={this._handleCheck}
+                            selectedReasons={selectedReasons}/>
+          </div>
+          <div style={styles.column}>
+            <ReasonCheckbox reason="meaning"
+                            label={translate('editor.meaning')}
+                            onCheck={this._handleCheck}
+                            selectedReasons={selectedReasons}/>
+            <ReasonCheckbox reason="grammar"
+                            label={translate('editor.grammar')}
+                            onCheck={this._handleCheck}
+                            selectedReasons={selectedReasons}/>
+            <ReasonCheckbox reason="other"
+                            label={translate('editor.other')}
+                            onCheck={this._handleCheck}
+                            selectedReasons={selectedReasons}/>
+          </div>
         </div>
-        <div style={styles.column}>
-          <ReasonCheckbox reason="meaning"
-                          label={translate('editor.meaning')}
-                          onCheck={this._handleCheck}
-                          selectedReasons={selectedReasons}/>
-          <ReasonCheckbox reason="grammar"
-                          label={translate('editor.grammar')}
-                          onCheck={this._handleCheck}
-                          selectedReasons={selectedReasons}/>
-          <ReasonCheckbox reason="other"
-                          label={translate('editor.other')}
-                          onCheck={this._handleCheck}
-                          selectedReasons={selectedReasons}/>
-        </div>
+        <div style={styles.spacer}/>
       </div>
+
     );
   }
 }

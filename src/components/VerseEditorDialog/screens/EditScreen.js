@@ -2,6 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 
+const styles = {
+  input: {
+    width: '100%',
+    resize: 'none',
+    padding: '10px',
+    border: 'solid 1px var(--border-color)',
+    fontStyle: 'inherit',
+    fontVariant: 'inherit',
+    fontWeight: 'inherit',
+    fontStretch: 'inherit',
+    fontSize: 'inherit',
+    lineHeight: 'inherit',
+    fontFamily: 'inherit',
+    cursor: 'inherit',
+    outline: 'none',
+    backgroundColor: 'transparent',
+    WebkitAppearance: 'textfield',
+    color: 'rgba(0, 0, 0, 0.870588)'
+  }
+};
+
 /**
  * Renders a text area for editing the verse
  */
@@ -24,14 +45,13 @@ class EditScreen extends React.Component {
   render() {
     const {verseText} = this.props;
     return (
-      <TextField multiLine={true}
-                 id="verse-editor-field"
-                 rows={4}
-                 autoFocus={true}
-                 fullWidth={true}
-                 onChange={this._handleChange}
-                 value={verseText}
-                 rowsMax={6}/>
+      <textarea
+        id="verse-editor-field"
+        rows={4}
+        style={styles.input}
+        autoFocus={true}
+        onChange={this._handleChange}
+        value={verseText}/>
     );
   }
 }
