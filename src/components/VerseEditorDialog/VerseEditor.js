@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import VerseEditorStepper from './VerseEditorStepper';
-import EditScreen  from './screens/EditScreen';
+import EditScreen  from './EditScreen';
 import DoneIcon from 'material-ui/svg-icons/action/done';
-import ReasonScreen from './screens/ReasonScreen';
+import ReasonScreen from './ReasonScreen';
 
 const styles = {
   screen: {
@@ -79,13 +79,13 @@ class VerseEditor extends React.Component {
       verseChanged: newVerse !== verseText
     });
   }
-  
+
   handleReasonChange(newReasons) {
     this.setState({
       reasons: newReasons
     });
   }
-  
+
 
   onLastStep() {
     const {stepIndex} = this.state;
