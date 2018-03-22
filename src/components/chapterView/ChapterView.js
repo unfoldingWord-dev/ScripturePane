@@ -58,6 +58,8 @@ class ChapterView extends React.Component {
 
   handleEditorSubmit(newVerse, reasons) {
     console.log('edited verse', newVerse, reasons);
+    const { actions: { verseEditorActions: { addVerseEdit }}} = this.props;
+    addVerseEdit(newVerse);
     this.setState({
       editVerse: null
     });

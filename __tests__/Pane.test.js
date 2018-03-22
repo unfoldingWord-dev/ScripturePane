@@ -13,6 +13,7 @@ describe('Test Pane behavior',()=>{
         loadLexiconEntry: () => {},
         showPopover: () => {}
       },
+      selectionsReducer: {},
       contextIdReducer: {
         "contextId":{
                 "reference":{

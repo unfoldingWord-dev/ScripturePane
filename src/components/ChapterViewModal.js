@@ -39,6 +39,19 @@ const styles = {
 
 class ChapterViewModal extends React.Component {
 
+  /**
+   * Generates the title of the dialog
+   * @param {object} manifest
+   */
+  static makeTitle(manifest) {
+    const {target_language, project} = manifest;
+    if(target_language && target_language.book && target_language.book.name) {
+      return target_language.book.name;
+    } else {
+      return project.name;
+    }
+  }
+
   render() {
     const {
       translate,
@@ -52,11 +65,7 @@ class ChapterViewModal extends React.Component {
       contextIdReducer,
       resourcesReducer
     } = this.props;
-    const {target_language, project} = projectDetailsReducer.manifest;
-    const titleText = target_language && target_language.book &&
-    target_language.book.name ?
-      target_language.book.name :
-      project.name;
+    const titleText =ChapterViewModal.makeTitle(projectDetailsReducer.manifest);
 
     const title = (
       <h4>

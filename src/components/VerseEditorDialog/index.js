@@ -20,6 +20,12 @@ const styles = {
 
 /**
  * Renders a dialog for editing verses
+ * @property {func} translate - the locale function
+ * @property {func} onCancel - callback when the edit is canceled
+ * @property {bool} open - controls whether the dialog is open
+ * @property {func} onSubmit - callback when the edit is submitted
+ * @property {string} verseTitle - the human readable title of the verse passage
+ * @property {string} verseText - the verse text to be edited
  */
 class VerseEditorDialog extends React.Component {
   render() {

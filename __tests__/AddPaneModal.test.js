@@ -10,6 +10,7 @@ describe('Test AddPaneModal component',()=>{
     const props = {
       selectSourceLanguage: jest.fn(),
       addPane: jest.fn(),
+      translate: k=>k,
       show: true,
       onHide: jest.fn(),
       selectedPane: false,
@@ -35,7 +36,7 @@ describe('Test AddPaneModal component',()=>{
       },
       currentPaneSettings: ['ult']
     };
-    const expectedOptions = ['Select', 'English (unfoldingWord Literal Text)', 'French (Current project)']; // expect options to have in the language select
+    const expectedOptions = ['resources.select', 'English (unfoldingWord Literal Text)', 'French (Current project)']; // expect options to have in the language select
     const enzymeWrapper = shallow(<AddPaneModal {...props} />);
     validateSelectOptions(enzymeWrapper, expectedOptions);
   });
@@ -44,6 +45,7 @@ describe('Test AddPaneModal component',()=>{
     const props = {
       selectSourceLanguage: jest.fn(),
       addPane: jest.fn(),
+      translate: k=>k,
       show: true,
       onHide: jest.fn(),
       selectedPane: false,

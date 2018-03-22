@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import BaseDialog from './BaseDialog';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
-import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
+import {FormControl} from 'react-bootstrap';
 
 const styles = {
   icon: {

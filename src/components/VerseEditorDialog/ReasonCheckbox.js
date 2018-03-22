@@ -9,13 +9,17 @@ const styles = {
 };
 
 /**
+ * @callback ReasonCheckbox~onCheck
+ * @param {string} reason - the reason being checked
+ * @param {bool} checked - indicates if the reason is checked
+ */
+
+/**
  * Renders a reason checkbox
- * @param {string} reason - the reason for the edit
- * @param {string} label - the checkbox label
- * @param {string[]} selectedReasons - an array of selected reasons
- * @param {func} onCheck - callback when the checkbox is changed
- * @return {*}
- * @constructor
+ * @property {string} reason - the reason for the edit
+ * @property {string} label - the checkbox label
+ * @property {string[]} selectedReasons - an array of selected reasons
+ * @property {ReasonCheckbox~onCheck} onCheck - callback when the checkbox is changed
  */
 class ReasonCheckbox extends React.Component {
 

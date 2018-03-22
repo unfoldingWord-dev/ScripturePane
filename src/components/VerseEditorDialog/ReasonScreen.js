@@ -19,7 +19,15 @@ const styles = {
 };
 
 /**
- * Renders checkboxes for the user to indicate the reason for the change
+ * @callback ReasonScreen~onChange
+ * @param {string[]} newReasons - an array of reasons for editing the verse
+ */
+
+/**
+ * Renders checkboxes to indicate the reason for the change
+ * @property {ReasonScreen~onChange} onChange - callback when the selected reasons change
+ * @property {func} translate - the locale function
+ * @property {string[]} selectedReasons - an array of selected reasons
  */
 class ReasonScreen extends React.Component {
   constructor(props) {

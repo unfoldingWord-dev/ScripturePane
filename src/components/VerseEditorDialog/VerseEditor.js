@@ -29,16 +29,30 @@ const styles = {
 
 const steps = ['Edit Verse', 'Select reason(s) for change'];
 
+/**
+ * @callback VerseEditor~submitCallback
+ * @param {string} originalVerse - the original verse text
+ * @param {string} newVerse - the edited version of the verse text
+ * @param {string[]} reasons - an array of reasons for editing the verse
+ */
+
+/**
+ * Renders a form for editing a single verse
+ * @property {string} verseText - the verse text to edit
+ * @property {func} translate - the locale function
+ * @property {VerseEditor~submitCallback} onSubmit - callback when the edit is submitted
+ * @property {func} onCancel - callback when the edit is canceled
+ */
 class VerseEditor extends React.Component {
 
   constructor(props) {
     super(props);
-    this.handleBack = this.handleBack.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-    this.handleNext = this.handleNext.bind(this);
-    this.onLastStep = this.onLastStep.bind(this);
-    this.handleVerseChange = this.handleVerseChange.bind(this);
-    this.handleReasonChange = this.handleReasonChange.bind(this);
+    this._handleBack = this._handleBack.bind(this);
+    this._handleCancel = this._handleCancel.bind(this);
+    this._handleNext = this._handleNext.bind(this);
+    this._isLastStep = this._isLastStep.bind(this);
+    this._handleVerseChange = this._handleVerseChange.bind(this);
+    this._handleReasonChange = this._handleReasonChange.bind(this);
     const {verseText} = this.props;
     this.state = {
       stepIndex: 0,
@@ -48,23 +62,23 @@ class VerseEditor extends React.Component {
     };
   }
 
-  handleBack() {
+  _handleBack() {
     const {stepIndex} = this.state;
     this.setState({
       stepIndex: Math.max(stepIndex - 1, 0)
     });
   }
 
-  handleCancel() {
+  _handleCancel() {
     const {onCancel} = this.props;
     onCancel();
   }
-
-  handleNext() {
+  
+  _handleNext() {
     const {stepIndex, newVerse, reasons} = this.state;
-    const {onSubmit} = this.props;
-    if(this.onLastStep()) {
-      onSubmit(newVerse, reasons);
+    const {verseText, onSubmit} = this.props;
+    if(this._isLastStep()) {
+      onSubmit(verseText, newVerse, reasons);
     } else {
       this.setState({
         stepIndex: stepIndex + 1
@@ -72,7 +86,7 @@ class VerseEditor extends React.Component {
     }
   }
 
-  handleVerseChange(newVerse) {
+  _handleVerseChange(newVerse) {
     const {verseText} = this.props;
     this.setState({
       newVerse: newVerse,
@@ -80,14 +94,14 @@ class VerseEditor extends React.Component {
     });
   }
 
-  handleReasonChange(newReasons) {
+  _handleReasonChange(newReasons) {
     this.setState({
       reasons: newReasons
     });
   }
 
 
-  onLastStep() {
+  _isLastStep() {
     const {stepIndex} = this.state;
     return stepIndex === steps.length - 1;
   }
@@ -96,7 +110,7 @@ class VerseEditor extends React.Component {
    * Checks if the next button is enabled
    * @return {*}
    */
-  isNextEnabled() {
+  _isNextEnabled() {
     const {stepIndex, verseChanged, newVerse, reasons} = this.state;
     switch(stepIndex) {
       case 0:
@@ -115,17 +129,17 @@ class VerseEditor extends React.Component {
     let screen;
     switch(stepIndex) {
       case 0:
-        screen = (<EditScreen verseText={newVerse} onChange={this.handleVerseChange}/>);
+        screen = (<EditScreen verseText={newVerse} onChange={this._handleVerseChange}/>);
         break;
       case 1:
-        screen = (<ReasonScreen translate={translate} selectedReasons={reasons} onChange={this.handleReasonChange}/>);
+        screen = (<ReasonScreen translate={translate} selectedReasons={reasons} onChange={this._handleReasonChange}/>);
         break;
       default:
         screen = "Oops!";
     }
 
     let nextStepButtonTitle = translate('buttons.next_button');
-    if(this.onLastStep()) {
+    if(this._isLastStep()) {
       nextStepButtonTitle = (
         <React.Fragment>
           <DoneIcon style={styles.icon}/>
@@ -145,7 +159,7 @@ class VerseEditor extends React.Component {
         <div style={styles.actions}>
           <button className="btn"
                   disabled={stepIndex === 0}
-                  onClick={this.handleBack}>
+                  onClick={this._handleBack}>
             {translate('buttons.back_button')}
           </button>
           <button className="btn-second"
@@ -153,8 +167,8 @@ class VerseEditor extends React.Component {
             {translate('buttons.cancel_button')}
           </button>
           <button className="btn-prime"
-                  disabled={!this.isNextEnabled()}
-                  onClick={this.handleNext}>
+                  disabled={!this._isNextEnabled()}
+                  onClick={this._handleNext}>
             {nextStepButtonTitle}
           </button>
         </div>

@@ -1,18 +1,175 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Test Verse component Test that USFM is stripped out 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "direction": "ltr",
+        "flex": 1,
+        "fontStyle": "italic",
+      }
+    }
+  >
+    <strong>
+      1:1 
+    </strong>
+    <span>
+      Also, we are writing these things to you so that our joy will be complete. 
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Test Verse component Test when verse is empty string that the WARNING placeholder is displayed 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "direction": "ltr",
+        "flex": 1,
+        "fontStyle": "normal",
+      }
+    }
+  >
+    <strong>
+      1:1 
+    </strong>
+    <span>
+      [WARNING: This Bible version does not include text for this reference.]
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Test Verse component Test when verse is not null that the verse is displayed 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "direction": "ltr",
+        "flex": 1,
+        "fontStyle": "italic",
+      }
+    }
+  >
+    <strong>
+      11:35 
+    </strong>
+    <span>
+      Jesus wept
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Test Verse component Test when verse is null that the WARNING placeholder is displayed 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "direction": "ltr",
+        "flex": 1,
+        "fontStyle": "normal",
+      }
+    }
+  >
+    <strong>
+      1:1 
+    </strong>
+    <span>
+      [WARNING: This Bible version does not include text for this reference.]
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Test Verse component Test when verse is verseObject that the verse is displayed 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "direction": "ltr",
+        "flex": 1,
+        "fontStyle": "italic",
+      }
+    }
+  >
+    <strong>
+      11:35 
+    </strong>
+    <span>
+      Jesus wept.
+    </span>
+  </div>
+</div>
+`;
+
 exports[`Verse.js renders correctly 1`] = `
 <div
   style={
     Object {
-      "direction": "ltr",
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
     }
   }
 >
-  <strong>
-    11:35 
-  </strong>
-  <span>
-    Jesus wept
-  </span>
+  <div
+    style={
+      Object {
+        "direction": "ltr",
+        "flex": 1,
+        "fontStyle": "italic",
+      }
+    }
+  >
+    <strong>
+      11:35 
+    </strong>
+    <span>
+      Jesus wept
+    </span>
+  </div>
 </div>
 `;

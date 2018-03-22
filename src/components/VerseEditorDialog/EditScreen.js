@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
 
 const styles = {
   input: {
@@ -24,7 +23,14 @@ const styles = {
 };
 
 /**
+ * @callback EditScreen~onChange
+ * @param {string} newVerse - the edited verse
+ */
+
+/**
  * Renders a text area for editing the verse
+ * @property {string} verseText - the verse text to edit
+ * @property {EditScreen~onChange} onChange - callback when the text has changed
  */
 class EditScreen extends React.Component {
 
@@ -33,10 +39,6 @@ class EditScreen extends React.Component {
     this._handleChange = this._handleChange.bind(this);
   }
 
-  /**
-   * Handles changes to the text field
-   * @param event
-   */
   _handleChange(event) {
     const {onChange} = this.props;
     onChange(event.target.value);
