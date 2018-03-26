@@ -6,7 +6,11 @@ import AddBible from '../AddBible';
 class BibleHeadingsRow extends React.Component {
 
   render() {
-    let {currentPaneSettings} = this.props.settingsReducer.toolsSettings.ScripturePane;
+    let {
+      scripturePane: {
+        currentPaneSettings
+      }
+    } = this.props;
     let {bibles} = this.props.resourcesReducer;
     // if required data, then populate bibleHeadings
     let bibleHeadings = [];
@@ -65,7 +69,7 @@ class BibleHeadingsRow extends React.Component {
 }
 
 BibleHeadingsRow.propTypes = {
-  settingsReducer: PropTypes.object.isRequired,
+  scripturePane: PropTypes.object.isRequired,
   projectDetailsReducer: PropTypes.shape({
     manifest: PropTypes.shape({
       target_language: PropTypes.shape({

@@ -60,7 +60,7 @@ class ChapterViewModal extends React.Component {
       actions,
       selectionsReducer,
       showModal,
-      settingsReducer,
+      scripturePane,
       projectDetailsReducer,
       contextIdReducer,
       resourcesReducer
@@ -88,7 +88,7 @@ class ChapterViewModal extends React.Component {
         <div style={styles.content}>
           <ChapterView contextIdReducer={contextIdReducer}
                        translate={translate}
-                       settingsReducer={settingsReducer}
+                       scripturePane={scripturePane}
                        actions={actions}
                        selectionsReducer={selectionsReducer}
                        showModal={showModal}
@@ -109,7 +109,7 @@ ChapterViewModal.propTypes = {
   resourcesReducer: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
   showModal: PropTypes.func.isRequired,
-  settingsReducer: PropTypes.object.isRequired,
+  scripturePane: PropTypes.object.isRequired,
   onHide: PropTypes.func.isRequired,
   projectDetailsReducer: PropTypes.object.isRequired
 };

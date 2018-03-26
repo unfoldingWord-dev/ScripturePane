@@ -71,7 +71,7 @@ class ChapterView extends React.Component {
   }
 
   render() {
-    const {translate, resourcesReducer, contextIdReducer, actions, selectionsReducer, settingsReducer, showModal, projectDetailsReducer} = this.props;
+    const {translate, resourcesReducer, contextIdReducer, actions, selectionsReducer, scripturePane, showModal, projectDetailsReducer} = this.props;
     let {bibles} = resourcesReducer;
     let {chapter} = contextIdReducer.contextId.reference;
     let verseNumbers = Object.keys(bibles['en']['ult'][chapter]);
@@ -89,7 +89,7 @@ class ChapterView extends React.Component {
                     onEditTargetVerse={this.handleEditTargetVerse}
                     actions={actions}
                     selectionsReducer={selectionsReducer}
-                    settingsReducer={settingsReducer}
+                    scripturePane={scripturePane}
                     resourcesReducer={resourcesReducer}
                     contextIdReducer={contextIdReducer}
                     projectDetailsReducer={projectDetailsReducer}
@@ -111,7 +111,7 @@ class ChapterView extends React.Component {
     return (
       <div>
         <div style={{width: '100%', height: '100%'}}>
-          <BibleHeadingsRow settingsReducer={settingsReducer}
+          <BibleHeadingsRow scripturePane={scripturePane}
                             resourcesReducer={resourcesReducer}
                             projectDetailsReducer={projectDetailsReducer}
                             showModal={showModal} />
@@ -135,7 +135,7 @@ ChapterView.propTypes = {
   translate: PropTypes.func.isRequired,
   actions: PropTypes.object.isRequired,
   selectionsReducer: PropTypes.object.isRequired,
-  settingsReducer: PropTypes.object.isRequired,
+  scripturePane: PropTypes.object.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,
   showModal: PropTypes.func.isRequired,

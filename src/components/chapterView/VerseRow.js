@@ -18,9 +18,17 @@ class VerseRow extends React.Component {
   }
 
   render() {
-    const {verseNumber, actions, resourcesReducer, contextIdReducer, selectionsReducer} = this.props;
+    const {
+      verseNumber,
+      actions,
+      resourcesReducer,
+      contextIdReducer,
+      selectionsReducer,
+      scripturePane: {
+        currentPaneSettings
+      }
+    } = this.props;
     const {bibles} = resourcesReducer;
-    const {currentPaneSettings} = this.props.settingsReducer.toolsSettings.ScripturePane;
     const {chapter, verse} = this.props.contextIdReducer.contextId.reference;
     const isCurrent = verseNumber === verse.toString();
     let verseCells = <div />;
@@ -83,7 +91,7 @@ VerseRow.propTypes = {
   selectionsReducer: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   verseNumber: PropTypes.string.isRequired,
-  settingsReducer: PropTypes.object.isRequired,
+  scripturePane: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
   projectDetailsReducer: PropTypes.object.isRequired

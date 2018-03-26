@@ -9,11 +9,15 @@ import AddBible from './AddBible';
 
 class View extends React.Component {
   render() {
-    let {
+    const {
       actions,
       translate,
       selectionsReducer,
-      settingsReducer,
+      settingsReducer: {
+        toolsSettings: {
+          ScripturePane
+        }
+      },
       selectSourceLanguage,
       showExpandModal,
       projectDetailsReducer,
@@ -27,8 +31,8 @@ class View extends React.Component {
       hideExpandModal,
       hideModal
     } = this.props;
-    let currentPaneSettings = settingsReducer.toolsSettings.ScripturePane.currentPaneSettings;
-    let scripturePane = currentPaneSettings.map((paneSetting, index) => {
+    const currentPaneSettings = ScripturePane && ScripturePane.currentPaneSettings ? ScripturePane.currentPaneSettings : [];
+    const scripturePane = currentPaneSettings.map((paneSetting, index) => {
       return (
         <Pane
           actions={actions}
@@ -82,7 +86,7 @@ class View extends React.Component {
           translate={translate}
           actions={actions}
           selectionsReducer={selectionsReducer}
-          settingsReducer={settingsReducer}
+          scripturePane={ScripturePane}
           resourcesReducer={resourcesReducer}
           projectDetailsReducer={projectDetailsReducer}
           contextIdReducer={contextIdReducer}
