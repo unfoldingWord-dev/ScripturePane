@@ -18,6 +18,19 @@ const styles = {
   }
 };
 
+export const updateReasons = (reason, checked, selectedReasons) => {
+  let newReasons = [
+    ...selectedReasons
+  ];
+  if(checked && !newReasons.includes(reason)) {
+    newReasons.push(reason);
+  } else if(!checked && newReasons.includes(reason)) {
+    const index = newReasons.indexOf(reason);
+    newReasons.splice(index, 1);
+  }
+  return newReasons;
+};
+
 /**
  * @callback ReasonScreen~onChange
  * @param {string[]} newReasons - an array of reasons for editing the verse
@@ -33,9 +46,6 @@ class ReasonScreen extends React.Component {
   constructor(props) {
     super(props);
     this._handleCheck = this._handleCheck.bind(this);
-    this.state = {
-      selectedReasons: {}
-    };
   }
 
   /**
@@ -47,15 +57,7 @@ class ReasonScreen extends React.Component {
    */
   _handleCheck(reason, checked) {
     const {selectedReasons, onChange} = this.props;
-    let newReasons = [
-      ...selectedReasons
-    ];
-    if(checked && !newReasons.includes(reason)) {
-      newReasons.push(reason);
-    } else if(!checked && newReasons.includes(reason)) {
-      const index = newReasons.indexOf(reason);
-      newReasons.splice(index, 1);
-    }
+    const newReasons = updateReasons(reason, checked, selectedReasons);
     onChange(newReasons);
   }
 

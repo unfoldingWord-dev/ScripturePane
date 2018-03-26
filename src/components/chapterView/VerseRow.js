@@ -43,7 +43,6 @@ class VerseRow extends React.Component {
         const manifest = bibles[languageId][bibleId].manifest;
         const verseText = bibles[languageId][bibleId][chapter] ? bibles[languageId][bibleId][chapter][verseNumber] : null;
         let direction = manifest.direction;
-        // TODO: is this line right?
         if (bibleId === 'targetLanguage') {
           direction = this.props.projectDetailsReducer.manifest.target_language.direction;
         }

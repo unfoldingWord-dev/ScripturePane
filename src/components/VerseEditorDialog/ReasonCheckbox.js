@@ -47,8 +47,12 @@ class ReasonCheckbox extends React.Component {
 ReasonCheckbox.propTypes = {
   reason: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  selectedReasons: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedReasons: PropTypes.arrayOf(PropTypes.string),
   onCheck: PropTypes.func.isRequired
+};
+
+ReasonCheckbox.defaultProps = {
+  selectedReasons: []
 };
 
 export default ReasonCheckbox;

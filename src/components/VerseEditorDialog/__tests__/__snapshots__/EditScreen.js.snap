@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snapshot has text 1`] = `
+exports[`<EditScreen/> has text 1`] = `
 <textarea
   autoFocus={true}
   id="verse-editor-field"

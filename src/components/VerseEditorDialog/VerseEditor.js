@@ -30,6 +30,23 @@ const styles = {
 const steps = ['Edit Verse', 'Select reason(s) for change'];
 
 /**
+ * Checks if the next butt should be enabled
+ * @param state
+ * @return {*}
+ */
+export const isNextEnabled = (state) => {
+  const {stepIndex, verseChanged, newVerse, reasons} = state;
+  switch(stepIndex) {
+    case 0:
+      return verseChanged && Boolean(newVerse);
+    case 1:
+      return reasons.length > 0;
+    default:
+      return false;
+  }
+};
+
+/**
  * @callback VerseEditor~submitCallback
  * @param {string} originalVerse - the original verse text
  * @param {string} newVerse - the edited version of the verse text
@@ -73,7 +90,7 @@ class VerseEditor extends React.Component {
     const {onCancel} = this.props;
     onCancel();
   }
-  
+
   _handleNext() {
     const {stepIndex, newVerse, reasons} = this.state;
     const {verseText, onSubmit} = this.props;
@@ -111,15 +128,7 @@ class VerseEditor extends React.Component {
    * @return {*}
    */
   _isNextEnabled() {
-    const {stepIndex, verseChanged, newVerse, reasons} = this.state;
-    switch(stepIndex) {
-      case 0:
-        return verseChanged && newVerse;
-      case 1:
-        return reasons.length > 0;
-      default:
-        return false;
-    }
+    return isNextEnabled(this.state);
   }
 
   render() {

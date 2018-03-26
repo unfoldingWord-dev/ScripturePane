@@ -4,7 +4,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import EditScreen from '../EditScreen';
 
-describe('snapshot', () => {
+describe('<EditScreen/>', () => {
 
   it('has text', () => {
     const wrapper = renderer.create(

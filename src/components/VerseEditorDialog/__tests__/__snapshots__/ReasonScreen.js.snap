@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReasonScreen/> has no selections 1`] = `
+<div
+  style="display:flex"
+>
+  <div
+    style="flex-grow:2"
+  />
+  <div
+    style="display:flex;flex-grow:1"
+  >
+    <div
+      style="flex-grow:1"
+    >
+      <div>
+        <input
+          name="spelling"
+          type="checkbox"
+        />
+         editor.spelling
+      </div>
+      <div>
+        <input
+          name="punctuation"
+          type="checkbox"
+        />
+         editor.punctuation
+      </div>
+      <div>
+        <input
+          name="word_choice"
+          type="checkbox"
+        />
+         editor.word_choice
+      </div>
+    </div>
+    <div
+      style="flex-grow:1"
+    >
+      <div>
+        <input
+          name="meaning"
+          type="checkbox"
+        />
+         editor.meaning
+      </div>
+      <div>
+        <input
+          name="grammar"
+          type="checkbox"
+        />
+         editor.grammar
+      </div>
+      <div>
+        <input
+          name="other"
+          type="checkbox"
+        />
+         editor.other
+      </div>
+    </div>
+  </div>
+  <div
+    style="flex-grow:2"
+  />
+</div>
+`;
+
+exports[`<ReasonScreen/> has selections 1`] = `
+<div
+  style="display:flex"
+>
+  <div
+    style="flex-grow:2"
+  />
+  <div
+    style="display:flex;flex-grow:1"
+  >
+    <div
+      style="flex-grow:1"
+    >
+      <div>
+        <input
+          checked=""
+          name="spelling"
+          type="checkbox"
+        />
+         editor.spelling
+      </div>
+      <div>
+        <input
+          name="punctuation"
+          type="checkbox"
+        />
+         editor.punctuation
+      </div>
+      <div>
+        <input
+          name="word_choice"
+          type="checkbox"
+        />
+         editor.word_choice
+      </div>
+    </div>
+    <div
+      style="flex-grow:1"
+    >
+      <div>
+        <input
+          name="meaning"
+          type="checkbox"
+        />
+         editor.meaning
+      </div>
+      <div>
+        <input
+          name="grammar"
+          type="checkbox"
+        />
+         editor.grammar
+      </div>
+      <div>
+        <input
+          name="other"
+          type="checkbox"
+        />
+         editor.other
+      </div>
+    </div>
+  </div>
+  <div
+    style="flex-grow:2"
+  />
+</div>
+`;
