@@ -9,8 +9,12 @@ import AddBible from './AddBible';
 
 class View extends React.Component {
   render() {
-    let {
-      settingsReducer,
+    const {
+      settingsReducer: {
+        toolsSettings: {
+          ScripturePane
+        }
+      },
       selectSourceLanguage,
       showExpandModal,
       modalVisibility,
@@ -21,8 +25,8 @@ class View extends React.Component {
       hideExpandModal,
       hideModal
     } = this.props;
-    let currentPaneSettings = settingsReducer.toolsSettings.ScripturePane.currentPaneSettings;
-    let scripturePane = currentPaneSettings.map((paneSetting, index) => {
+    const currentPaneSettings = ScripturePane && ScripturePane.currentPaneSettings ? ScripturePane.currentPaneSettings : [];
+    const scripturePane = currentPaneSettings.map((paneSetting, index) => {
       return (
         <Pane
           {...this.props}
