@@ -22,7 +22,8 @@ class Verse extends React.Component {
       const positionCoord = e.target;
       const PopoverTitle = <strong style={{fontSize: '1.2em'}}>{word.word}</strong>;
       const {showPopover} = this.props.actions;
-      const wordDetails = <WordDetails lexiconData={lexiconData} word={word}/>;
+      const {translate} = this.props;
+      const wordDetails = <WordDetails lexiconData={lexiconData} word={word} translate={translate} />;
       showPopover(PopoverTitle, wordDetails, positionCoord);
     }
   }
@@ -164,6 +165,7 @@ class Verse extends React.Component {
 }
 
 Verse.propTypes = {
+  translate: PropTypes.func.isRequired,
   actions: PropTypes.shape({
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,

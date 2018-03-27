@@ -7,5 +7,10 @@
   "select": "Select",
   "close": "Close",
   "load": "Load",
-  "click_remove_resource": "Click to remove resource"
+  "click_remove_resource": "Click to remove resource",
+  "lemma": "Lemma:",
+  "morphology": "Morphology:",
+  "strongs": "Strongs:",
+  "lexicon": "Lexicon:",
+  "greek": "Greek (el)"
 }

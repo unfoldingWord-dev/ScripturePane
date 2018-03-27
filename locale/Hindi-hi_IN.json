@@ -7,5 +7,10 @@
   "select": "चुनते हैं",
   "close": "बंद करे",
   "load": "भार",
-  "click_remove_resource": "संसाधन को हटाने के लिए क्लिक करें"
+  "click_remove_resource": "संसाधन को हटाने के लिए क्लिक करें",
+  "lemma": "लेम्मा:",
+  "morphology": "आकृति विज्ञान:",
+  "strongs": "मजबूत की:",
+  "lexicon": "शब्दकोश:",
+  "greek": "यूनानी (el)"
 }

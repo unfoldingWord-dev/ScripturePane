@@ -5,12 +5,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
+import {getTranslation} from '../helpers/translationHelpers'
 
 class AddPaneModal extends React.Component {
   render() {
-    const { selectSourceLanguage, addPane, show, onHide, selectedPane, currentPaneSettings } = this.props;
+    const { translate, selectSourceLanguage, addPane, show, onHide, selectedPane, currentPaneSettings } = this.props;
     const { bibles } = this.props.resourcesReducer;
-    let { translate } = this.props;
     let panes = [];
 
     // generate a list of resource names for dropdown list.
@@ -19,7 +19,7 @@ class AddPaneModal extends React.Component {
       Object.keys(bibleIds).forEach((bibleId) => {
         const { language_name, resource_title } = bibles[languageId][bibleId]["manifest"];
         const resourceText = bibleId !== "targetBible" ? " (" + resource_title + ")" : " (Current project)";
-        const displayText = language_name + resourceText;
+        const displayText = getTranslation(translate, language_name) + resourceText;
         const foundInCurrentPaneSettings = currentPaneSettings.filter((paneSetting) => {
           return paneSetting.bibleId === bibleId && paneSetting.languageId === languageId;
         }).length > 0;
