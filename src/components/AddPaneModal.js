@@ -53,20 +53,20 @@ class AddPaneModal extends React.Component {
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: "var(--reverse-color)", color: "var(--accent-color-dark)", padding: "45px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <h4 style={{ marginBottom: "30px" }}>
-            Select language
+            {translate("select_language")}
           </h4>
           <FormControl
             componentClass="select"
             style={{ width: "300px" }}
             onChange={e => selectSourceLanguage(e.target.value)}
           >
-            <option value="">Select</option>
+            <option value="">{translate("select")}</option>
             {panes}
           </FormControl>
         </Modal.Body>
         <Modal.Footer style={{ padding: '0', backgroundColor: "var(--reverse-color)" }}>
-          <button className="btn-second" onClick={onHide}>Close</button>
-          <button className="btn-prime" disabled={ !selectedPane } onClick={() => addPane()}>Load</button>
+          <button className="btn-second" onClick={onHide}>{translate("close")}</button>
+          <button className="btn-prime" disabled={ !selectedPane } onClick={() => addPane()}>{translate("load")}</button>
         </Modal.Footer>
       </Modal>
     );

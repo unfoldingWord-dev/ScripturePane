@@ -7,7 +7,7 @@ import Verse from './Verse';
 
 class Pane extends React.Component {
   render() {
-    let { removePane, index, bibleId, languageId, resourcesReducer: { bibles } } = this.props;
+    let { translate, removePane, index, bibleId, languageId, resourcesReducer: { bibles } } = this.props;
     let { reference } = this.props.contextIdReducer.contextId;
     let {
       direction,
@@ -49,7 +49,7 @@ class Pane extends React.Component {
             </ContainerDimensions>
           </div>
           <Glyphicon glyph={"remove"} style={{color: "var(--text-color-light)", cursor: 'pointer'}}
-                     onClick={() => removePane(index)} title="Click to remove resource"/>
+                     onClick={() => removePane(index)} title={translate("click_remove_resource")} />
         </div>
         <div style={contentStyle}>
           <Verse
@@ -69,6 +69,7 @@ class Pane extends React.Component {
 }
 
 Pane.propTypes = {
+  translate: PropTypes.func.isRequired,
   removePane: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   bibleId: PropTypes.string.isRequired,
