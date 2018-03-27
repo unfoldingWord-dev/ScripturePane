@@ -57,8 +57,15 @@ class ChapterView extends React.Component {
   }
 
   handleEditorSubmit(originalVerse, newVerse, reasons) {
-    const { actions: { addVerseEdit }} = this.props;
-    addVerseEdit(originalVerse, newVerse, reasons);
+    const { actions: { editTargetVerse }} = this.props;
+    const {editVerse} = this.state;
+    if(editVerse === null) return;
+    const {chapter, verse} = editVerse;
+    if(typeof editTargetVerse === 'function') {
+      editTargetVerse(chapter, verse, originalVerse, newVerse, reasons);
+    } else {
+      console.warn('Unable to edit verse. Callback is not a function.');
+    }
     this.setState({
       editVerse: null
     });
