@@ -23,7 +23,8 @@ class View extends React.Component {
       expandedPaneVisibility,
       selectedPane,
       hideExpandModal,
-      hideModal
+      hideModal,
+      translate
     } = this.props;
     const currentPaneSettings = ScripturePane && ScripturePane.currentPaneSettings ? ScripturePane.currentPaneSettings : [];
     const scripturePane = currentPaneSettings.map((paneSetting, index) => {
@@ -56,16 +57,18 @@ class View extends React.Component {
         </div>
       );
     }
+    const step1 = translate("step1_read");
+    const click = translate("show_exp_resource");
     return (
       <div style={style.scripturePane}>
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
           <div style={style.titleBar}>
-            <span>Step 1. Read</span>
+            <span>{step1}</span>
             <Glyphicon
               onClick={showExpandModal}
               glyph={"fullscreen"}
               style={{ cursor: "pointer" }}
-              title="Click to show expanded resource panes"
+              title={click}
             />
           </div>
           <div style={style.body}>
@@ -99,6 +102,7 @@ class View extends React.Component {
 }
 
 View.propTypes = {
+  translate: PropTypes.func.isRequired,
   currentToolViews: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
