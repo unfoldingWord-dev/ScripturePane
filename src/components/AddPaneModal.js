@@ -10,6 +10,7 @@ class AddPaneModal extends React.Component {
   render() {
     const { selectSourceLanguage, addPane, show, onHide, selectedPane, currentPaneSettings } = this.props;
     const { bibles } = this.props.resourcesReducer;
+    let { translate } = this.props;
     let panes = [];
 
     // generate a list of resource names for dropdown list.
@@ -42,7 +43,7 @@ class AddPaneModal extends React.Component {
         <Modal.Header style={{ backgroundColor: "var(--accent-color-dark)" }}>
           <Modal.Title id="contained-modal-title-sm"
             style={{ textAlign: "center", color: "var(--reverse-color)" }}>
-            Add Resources
+            {translate("add_resource")}
             <Glyphicon
                 onClick={onHide}
                 glyph={"remove"}
@@ -73,6 +74,7 @@ class AddPaneModal extends React.Component {
 }
 
 AddPaneModal.propTypes = {
+  translate: PropTypes.func.isRequired,
   selectSourceLanguage: PropTypes.func.isRequired,
   addPane: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,

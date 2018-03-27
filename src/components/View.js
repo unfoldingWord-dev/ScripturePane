@@ -53,22 +53,21 @@ class View extends React.Component {
           <AddBible
             scripturePane={scripturePane}
             showModal={showModal}
+            translate={translate}
           />
         </div>
       );
     }
-    const step1 = translate("step1_read");
-    const click = translate("show_exp_resource");
     return (
       <div style={style.scripturePane}>
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
           <div style={style.titleBar}>
-            <span>{step1}</span>
+            <span>{translate("step1_read")}</span>
             <Glyphicon
               onClick={showExpandModal}
               glyph={"fullscreen"}
               style={{ cursor: "pointer" }}
-              title={click}
+              title={translate("show_exp_resource")}
             />
           </div>
           <div style={style.body}>
@@ -83,6 +82,7 @@ class View extends React.Component {
           addPane={addPane}
           selectedPane={selectedPane}
           currentPaneSettings={currentPaneSettings}
+          translate={translate}
         />
         <ChapterViewModal
           show={expandedPaneVisibility}
@@ -95,6 +95,7 @@ class View extends React.Component {
           contextIdReducer={this.props.contextIdReducer}
           resourcesReducer={this.props.resourcesReducer}
           projectDetailsReducer={this.props.projectDetailsReducer}
+          translate={translate}
         />
       </div>
     );

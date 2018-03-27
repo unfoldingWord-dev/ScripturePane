@@ -8,6 +8,7 @@ class BibleHeadingsRow extends React.Component {
   render() {
     let {currentPaneSettings} = this.props.settingsReducer.toolsSettings.ScripturePane;
     let {bibles} = this.props.resourcesReducer;
+    const { translate } = this.props;
     // if required data, then populate bibleHeadings
     let bibleHeadings = [];
     if (currentPaneSettings.length > 0) {
@@ -46,7 +47,7 @@ class BibleHeadingsRow extends React.Component {
       let remaining = 3 - bibleHeadings.length;
       bibleHeadings.push(
         <Col key={3-remaining} md={4} sm={4} xs={4} lg={4} style={colStyle} >
-          <AddBible showModal={this.props.showModal} />
+          <AddBible showModal={this.props.showModal} translate={translate} />
         </Col>
       );
     }
@@ -65,6 +66,7 @@ class BibleHeadingsRow extends React.Component {
 }
 
 BibleHeadingsRow.propTypes = {
+  translate: PropTypes.func.isRequired,
   settingsReducer: PropTypes.object.isRequired,
   projectDetailsReducer: PropTypes.shape({
     manifest: PropTypes.shape({
