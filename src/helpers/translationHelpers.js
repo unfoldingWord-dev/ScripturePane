@@ -7,9 +7,9 @@ export const getTranslation = function (translate, text) {
     key = key.split(' ').join('_');
   }
   let translation = nonTranslatable[key]; // check for static translation
-  if (!translation && translate) {
-    const haveTranslation = translatable[key]; // if we should have a dynamic translation
-    if (haveTranslation) { // if not found, try translation lookup
+  if (!translation && translate) { // if not found, try translation lookup
+    const shouldHaveTranslation = translatable[key]; // if we should have a dynamic translation
+    if (shouldHaveTranslation) {
       translation = translate(key);
     }
   }
