@@ -158,7 +158,9 @@ export function isPunctuationHighlighted(previousWord, nextWord, contextId) {
     return isWordArrayMatch(previousWord, contextId) && isWordArrayMatch(nextWord, contextId);
   } else if (previousWord) {
     return isWordArrayMatch(previousWord, contextId);
-  } else {
+  } else if (nextWord) {
     return isWordArrayMatch(nextWord, contextId);
+  } else {
+    return false;
   }
 }
