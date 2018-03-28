@@ -7,8 +7,5 @@
  * You may access these variables like `translate('_.variable_name_in_this_file')`
  */
 
-export const english = 'English (en)';
-export const hindi = 'हिंदी (hi)';
-export const autographa = 'Autographa';
-export const help_desk_email = 'help@door43.org';
-export const translation_helps = 'translationHelps';
+export const english = 'English';
+export const hindi = 'हिंदी';

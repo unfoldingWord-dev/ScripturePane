@@ -12,5 +12,7 @@
   "morphology": "Morphology:",
   "strongs": "Strongs:",
   "lexicon": "Lexicon:",
-  "greek": "Greek (el)"
+  "greek": "Greek",
+  "target_language": "Target Language",
+  "gateway_language": "Gateway Language"
 }

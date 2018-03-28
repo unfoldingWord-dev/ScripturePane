@@ -4,6 +4,7 @@ import ContainerDimensions from 'react-container-dimensions';
 import {Glyphicon} from 'react-bootstrap';
 import style from '../css/Style';
 import Verse from './Verse';
+import {getTranslation} from "../helpers/translationHelpers";
 
 class Pane extends React.Component {
   render() {
@@ -16,9 +17,10 @@ class Pane extends React.Component {
       description
     } = bibles && bibles[languageId][bibleId] ? bibles[languageId][bibleId]["manifest"] : {};
     direction = direction || 'ltr';
-    description = description || "";
+    description = getTranslation(translate, description || "");
     let verseText = bibles && bibles[languageId][bibleId] && bibles[languageId][bibleId][reference.chapter] ? bibles[languageId][bibleId][reference.chapter][reference.verse] : '';
-    let headingText = bibleId !== "targetBible" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name ? language_name : '';
+    let languageName = getTranslation(translate, language_name);
+    let headingText = bibleId !== "targetBible" ? languageName + " (" + bibleId.toUpperCase() + ")" : (languageName || '');
     let contentStyle;
     const PANECHAR = 9;
 

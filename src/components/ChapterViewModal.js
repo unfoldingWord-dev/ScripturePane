@@ -13,7 +13,7 @@ import ChapterView from './chapterView/ChapterView';
 class ChapterViewModal extends React.Component {
 
   render() {
-    const { onHide, show, projectDetailsReducer } = this.props;
+    const { translate, onHide, show, projectDetailsReducer } = this.props;
     const { target_language, project } = projectDetailsReducer.manifest;
     const title = target_language && target_language.book && target_language.book.name ?
         target_language.book.name :
@@ -36,7 +36,7 @@ class ChapterViewModal extends React.Component {
           </div>
         </Modal.Body>
         <Modal.Footer style={{ padding: '0', backgroundColor: "var(--reverse-color)" }}>
-          <button className="btn-prime" onClick={onHide}>Close</button>
+          <button className="btn-prime" onClick={onHide}>{translate("close")}</button>
         </Modal.Footer>
       </Modal>
     );
@@ -44,6 +44,7 @@ class ChapterViewModal extends React.Component {
 }
 
 ChapterViewModal.propTypes = {
+  translate: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
   projectDetailsReducer: PropTypes.object.isRequired,

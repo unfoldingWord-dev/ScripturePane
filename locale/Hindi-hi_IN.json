@@ -12,5 +12,7 @@
   "morphology": "आकृति विज्ञान:",
   "strongs": "मजबूत की:",
   "lexicon": "शब्दकोश:",
-  "greek": "यूनानी (el)"
+  "greek": "यूनानी",
+  "target_language": "लक्ष्य भाषा",
+  "gateway_language": "गेटवे भाषा"
 }

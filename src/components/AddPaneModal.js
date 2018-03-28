@@ -5,7 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
-import {getTranslation} from '../helpers/translationHelpers'
+import {getLanguageTranslation} from '../helpers/translationHelpers'
 
 class AddPaneModal extends React.Component {
   render() {
@@ -17,9 +17,9 @@ class AddPaneModal extends React.Component {
     Object.keys(bibles).forEach((languageId) => {
       const bibleIds = bibles[languageId];
       Object.keys(bibleIds).forEach((bibleId) => {
-        const { language_name, resource_title } = bibles[languageId][bibleId]["manifest"];
+        const { language_name, language_id, resource_title } = bibles[languageId][bibleId]["manifest"];
         const resourceText = bibleId !== "targetBible" ? " (" + resource_title + ")" : " (Current project)";
-        const displayText = getTranslation(translate, language_name) + resourceText;
+        const displayText = getLanguageTranslation(translate, language_name, language_id) + resourceText;
         const foundInCurrentPaneSettings = currentPaneSettings.filter((paneSetting) => {
           return paneSetting.bibleId === bibleId && paneSetting.languageId === languageId;
         }).length > 0;

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Col, Row} from 'react-bootstrap';
 import AddBible from '../AddBible';
+import {getTranslation} from "../../helpers/translationHelpers";
 
 class BibleHeadingsRow extends React.Component {
 
@@ -17,7 +18,8 @@ class BibleHeadingsRow extends React.Component {
         const bibleId = paneSetting.bibleId;
         let { language_name, direction } = bibles[languageId][bibleId]["manifest"];
         let resourceText = bibleId !== "targetBible" ? " (" + bibleId.toUpperCase() + ")" : "" ;
-        let headingText = language_name + resourceText;
+        let languageName = getTranslation(translate, language_name);
+        let headingText = languageName + resourceText;
         let dir = direction;
         if (!dir) dir = this.props.projectDetailsReducer.manifest.target_language.direction;
         let colStyle = {
