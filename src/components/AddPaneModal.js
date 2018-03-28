@@ -5,7 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
-import {getLanguageTranslation} from '../helpers/translationHelpers';
+import {getLanguageTranslation} from '../helpers/localizationHelpers';
 
 class AddPaneModal extends React.Component {
   render() {

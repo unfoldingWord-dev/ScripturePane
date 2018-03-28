@@ -1,6 +1,12 @@
 import * as nonTranslatable from '../locale/nonTranslatable';
 const translatable = require('../locale/English-en_US.json');
 
+/**
+ * lookup translation for text or key.  First looks for a static translation and then tries a dynamic translation
+ * @param {Function} translate - translation function
+ * @param {String} text - string or key to translate
+ * @return {String} translated text
+ */
 export const getTranslation = function (translate, text) {
   let key = text.toLowerCase();
   if (key && (key.indexOf(' ') >= 0)) { // replace spaces with _
@@ -19,6 +25,13 @@ export const getTranslation = function (translate, text) {
   return translation;
 };
 
+/**
+ * lookup translation for language.  Appends language code to translation to make it easier to identify
+ * @param {Function} translate
+ * @param {String} languageName
+ * @param {String} languageCode
+ * @return {String}
+ */
 export const getLanguageTranslation = (translate, languageName, languageCode) => {
   let translation = getTranslation(translate, languageName);
   if (languageCode) {

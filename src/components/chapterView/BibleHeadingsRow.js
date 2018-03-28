@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Col, Row} from 'react-bootstrap';
 import AddBible from '../AddBible';
-import {getTranslation} from "../../helpers/translationHelpers";
+import {getTranslation} from "../../helpers/localizationHelpers";
 
 class BibleHeadingsRow extends React.Component {
 

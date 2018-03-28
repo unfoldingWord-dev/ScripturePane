@@ -4,7 +4,7 @@ import ContainerDimensions from 'react-container-dimensions';
 import {Glyphicon} from 'react-bootstrap';
 import style from '../css/Style';
 import Verse from './Verse';
-import {getTranslation} from "../helpers/translationHelpers";
+import {getTranslation} from "../helpers/localizationHelpers";
 
 class Pane extends React.Component {
   render() {
