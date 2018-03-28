@@ -8,4 +8,4 @@
  */
 
 export const english = 'English';
-export const hindi = '\u0939\u093f\u0928\u094d\u0926\u0940, \u0939\u093f\u0902\u0926\u0940';
+export const hindi = 'हिंदी';
