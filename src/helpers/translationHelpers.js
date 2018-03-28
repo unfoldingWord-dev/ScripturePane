@@ -1,5 +1,5 @@
-import * as nonTranslatable from '../../locale/nonTranslatable';
-const translatable = require('../../locale/English-en_US.json');
+import * as nonTranslatable from '../locale/nonTranslatable';
+const translatable = require('../locale/English-en_US.json');
 
 export const getTranslation = function (translate, text) {
   let key = text.toLowerCase();
