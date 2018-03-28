@@ -24,5 +24,5 @@ export const getLanguageTranslation = (translate, languageName, languageCode) =>
   if (languageCode) {
     translation += " (" + languageCode + ")"; 
   }
-  return translation
+  return translation;
 };
