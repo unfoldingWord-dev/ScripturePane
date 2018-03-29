@@ -21,3 +21,8 @@ export const isDeepNestedChild = words => {
   });
   return deepNestedChild;
 };
+
+export function punctuationWordSpacing(word) {
+  const lastChar = word.text.substr(word.text.length - 1);
+  return ((lastChar === '"') || (lastChar === "'") || (lastChar === "-")) ? '' : ' ';
+}

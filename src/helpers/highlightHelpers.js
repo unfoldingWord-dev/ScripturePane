@@ -1,6 +1,6 @@
 import React from 'react';
 import isEqual from 'lodash/isEqual';
-import { isWord } from './stringHelpers';
+import { isWord, punctuationWordSpacing } from './stringHelpers';
 
 export function isWordArrayMatch(word, contextId) {
   let isMatch = false;
@@ -44,20 +44,21 @@ export function getWordHighlightedDetails(contextId, previousWord, word) {
   };
 }
 
-export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGrayVerseRow, previousWord) {
+export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGrayVerseRow, previousWord, wordSpacing) {
   // if its an array of an array thus get deep nested words array.
   if (Array.isArray(nestedWords[0])) nestedWords = getDeepNestedWords(nestedWords);
 
   let isHighlightedWord = false;
   let isBetweenHighlightedWord = false;
   let nestedPreviousWord = previousWord;
-  let wordSpacing = ' ';
+  let nestedWordSpacing = wordSpacing;
 
   const wordSpans = nestedWords.map((nestedWord, nestedWordIndex, wordsArray) => {
     const nestedWordSpanIndex = `${index.toString()}_${nestedWordIndex.toString()}_${nestedWord.text}`;
     const nestedNextWord = wordsArray[index + 1];
     if (isWord(nestedWord)) {
-      let padding = wordSpacing;
+      let padding = nestedWordSpacing;
+      nestedWordSpacing = ' '; // spacing between words
       if (nestedPreviousWord && isPuntuationAndNeedsNoSpace(nestedPreviousWord)) padding = '';
       const highlightedDetails = getWordHighlightedDetails(
         contextId,
@@ -82,8 +83,7 @@ export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGra
         </span>
       );
     } else if (nestedWord.text) {
-      const lastChar = nestedWord.text.substr(nestedWord.text.length - 1);
-      wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
+      nestedWordSpacing = punctuationWordSpacing(nestedWord); // spacing before words
 
       if (isPunctuationHighlighted(nestedPreviousWord, nestedNextWord, contextId)) {
         return (
@@ -103,7 +103,8 @@ export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGra
 
   return {
     wordSpans,
-    nestedPreviousWord
+    nestedPreviousWord,
+    nestedWordSpacing
   };
 }
 
