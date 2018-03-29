@@ -23,7 +23,8 @@ class View extends React.Component {
       expandedPaneVisibility,
       selectedPane,
       hideExpandModal,
-      hideModal
+      hideModal,
+      translate
     } = this.props;
     const currentPaneSettings = ScripturePane && ScripturePane.currentPaneSettings ? ScripturePane.currentPaneSettings : [];
     const scripturePane = currentPaneSettings.map((paneSetting, index) => {
@@ -52,6 +53,7 @@ class View extends React.Component {
           <AddBible
             scripturePane={scripturePane}
             showModal={showModal}
+            translate={translate}
           />
         </div>
       );
@@ -60,12 +62,12 @@ class View extends React.Component {
       <div style={style.scripturePane}>
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
           <div style={style.titleBar}>
-            <span>Step 1. Read</span>
+            <span>{translate("step1_read")}</span>
             <Glyphicon
               onClick={showExpandModal}
               glyph={"fullscreen"}
               style={{ cursor: "pointer" }}
-              title="Click to show expanded resource panes"
+              title={translate("show_exp_resource")}
             />
           </div>
           <div style={style.body}>
@@ -80,6 +82,7 @@ class View extends React.Component {
           addPane={addPane}
           selectedPane={selectedPane}
           currentPaneSettings={currentPaneSettings}
+          translate={translate}
         />
         <ChapterViewModal
           show={expandedPaneVisibility}
@@ -92,6 +95,7 @@ class View extends React.Component {
           contextIdReducer={this.props.contextIdReducer}
           resourcesReducer={this.props.resourcesReducer}
           projectDetailsReducer={this.props.projectDetailsReducer}
+          translate={translate}
         />
       </div>
     );
@@ -99,6 +103,7 @@ class View extends React.Component {
 }
 
 View.propTypes = {
+  translate: PropTypes.func.isRequired,
   currentToolViews: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,
   contextIdReducer: PropTypes.object.isRequired,

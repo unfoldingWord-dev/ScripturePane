@@ -7,8 +7,10 @@ import { Modal } from 'react-bootstrap';
 
 // Tests for ChapterViewModal React Component
 describe('Test ChapterViewModal component', () => {
+  const mock_translate = (text) => { return text; };
   test('Tests that the modal\'s title is displayed', () => {
     const props = {
+      translate: mock_translate,
       show: true,
       onHide: jest.fn(),
       show: true,

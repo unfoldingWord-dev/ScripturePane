@@ -11,7 +11,7 @@ exports[`WordDetails component renders correctly 1`] = `
 >
   <span>
     <strong>
-      Lemma:
+      lemma
     </strong>
      
     καί
@@ -19,7 +19,7 @@ exports[`WordDetails component renders correctly 1`] = `
   <br />
   <span>
     <strong>
-      Morphology:
+      morphology
     </strong>
      
     Gr,CC,,,,,,,,
@@ -27,7 +27,7 @@ exports[`WordDetails component renders correctly 1`] = `
   <br />
   <span>
     <strong>
-      Strongs:
+      strongs
     </strong>
      
     G25320
@@ -35,7 +35,7 @@ exports[`WordDetails component renders correctly 1`] = `
   <br />
   <span>
     <strong>
-      Lexicon:
+      lexicon
     </strong>
      
     and, even, also, namely.

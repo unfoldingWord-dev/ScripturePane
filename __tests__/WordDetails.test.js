@@ -4,8 +4,10 @@ import renderer from 'react-test-renderer';
 import WordDetails from '../src/components/WordDetails';
 
 describe('WordDetails component', () => {
+  const mock_translate = (text) => { return text; };
   test('renders correctly', () => {
     const props = {
+      translate: mock_translate,
       word: {
         lemma: "καί",
         morph: "Gr,CC,,,,,,,,",

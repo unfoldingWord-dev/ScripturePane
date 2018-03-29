@@ -6,8 +6,10 @@ import {shallow} from 'enzyme';
 
 // Tests for AddPanelModal React Component
 describe('Test AddPaneModal component',()=>{
+  const mock_translate = (text) => { return text; };
   test('Test "(Current project)" is in language select', () => {
     const props = {
+      translate: mock_translate,
       selectSourceLanguage: jest.fn(),
       addPane: jest.fn(),
       show: true,
@@ -35,13 +37,14 @@ describe('Test AddPaneModal component',()=>{
       },
       currentPaneSettings: ['ult']
     };
-    const expectedOptions = ['Select', 'English (unfoldingWord Literal Text)', 'French (Current project)']; // expect options to have in the language select
+    const expectedOptions = ['select', 'English (unfoldingWord Literal Text)', 'French (Current project)']; // expect options to have in the language select
     const enzymeWrapper = shallow(<AddPaneModal {...props} />);
     validateSelectOptions(enzymeWrapper, expectedOptions);
   });
 
   test('Test source is disabled in AddPanelModal if already selected', () => {
     const props = {
+      translate: mock_translate,
       selectSourceLanguage: jest.fn(),
       addPane: jest.fn(),
       show: true,

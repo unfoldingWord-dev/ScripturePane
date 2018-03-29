@@ -5,10 +5,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
+import {getLanguageTranslation} from '../helpers/localizationHelpers';
 
 class AddPaneModal extends React.Component {
   render() {
-    const { selectSourceLanguage, addPane, show, onHide, selectedPane, currentPaneSettings } = this.props;
+    const { translate, selectSourceLanguage, addPane, show, onHide, selectedPane, currentPaneSettings } = this.props;
     const { bibles } = this.props.resourcesReducer;
     let panes = [];
 
@@ -16,9 +17,9 @@ class AddPaneModal extends React.Component {
     Object.keys(bibles).forEach((languageId) => {
       const bibleIds = bibles[languageId];
       Object.keys(bibleIds).forEach((bibleId) => {
-        const { language_name, resource_title } = bibles[languageId][bibleId]["manifest"];
+        const { language_name, language_id, resource_title } = bibles[languageId][bibleId]["manifest"];
         const resourceText = bibleId !== "targetBible" ? " (" + resource_title + ")" : " (Current project)";
-        const displayText = language_name + resourceText;
+        const displayText = getLanguageTranslation(translate, language_name, language_id) + resourceText;
         const foundInCurrentPaneSettings = currentPaneSettings.filter((paneSetting) => {
           return paneSetting.bibleId === bibleId && paneSetting.languageId === languageId;
         }).length > 0;
@@ -42,7 +43,7 @@ class AddPaneModal extends React.Component {
         <Modal.Header style={{ backgroundColor: "var(--accent-color-dark)" }}>
           <Modal.Title id="contained-modal-title-sm"
             style={{ textAlign: "center", color: "var(--reverse-color)" }}>
-            Add Resources
+            {translate("add_resource")}
             <Glyphicon
                 onClick={onHide}
                 glyph={"remove"}
@@ -52,20 +53,20 @@ class AddPaneModal extends React.Component {
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: "var(--reverse-color)", color: "var(--accent-color-dark)", padding: "45px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <h4 style={{ marginBottom: "30px" }}>
-            Select language
+            {translate("select_language")}
           </h4>
           <FormControl
             componentClass="select"
             style={{ width: "300px" }}
             onChange={e => selectSourceLanguage(e.target.value)}
           >
-            <option value="">Select</option>
+            <option value="">{translate("select")}</option>
             {panes}
           </FormControl>
         </Modal.Body>
         <Modal.Footer style={{ padding: '0', backgroundColor: "var(--reverse-color)" }}>
-          <button className="btn-second" onClick={onHide}>Close</button>
-          <button className="btn-prime" disabled={ !selectedPane } onClick={() => addPane()}>Load</button>
+          <button className="btn-second" onClick={onHide}>{translate("close")}</button>
+          <button className="btn-prime" disabled={ !selectedPane } onClick={() => addPane()}>{translate("load")}</button>
         </Modal.Footer>
       </Modal>
     );
@@ -73,6 +74,7 @@ class AddPaneModal extends React.Component {
 }
 
 AddPaneModal.propTypes = {
+  translate: PropTypes.func.isRequired,
   selectSourceLanguage: PropTypes.func.isRequired,
   addPane: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
