@@ -55,7 +55,8 @@ class Verse extends React.Component {
     let previousWord = null;
     const verseSpan = [];
 
-    words.forEach((word, index) => {
+    words.forEach((word, index, wordsArray) => {
+      const nextWord = wordsArray[index + 1];
       if (isWord(word)) {
         const padding = wordSpacing;
         wordSpacing = ' '; // spacing between words
@@ -99,13 +100,18 @@ class Verse extends React.Component {
           verseSpan.push(this.createNonClickableSpan(index, paddingSpanStyle, padding, isHighlightedWord, text));
         }
       } else if (isNestedMilestone(word)) { // if nested milestone
-        const nestedWordSpans = highlightHelpers.getWordsFromNestedMilestone(word, contextId, index, isGrayVerseRow, previousWord);
-        nestedWordSpans.forEach((nestedWordSpan) => verseSpan.push(nestedWordSpan));
+        const nestedMilestone = highlightHelpers.getWordsFromNestedMilestone(word, contextId, index, isGrayVerseRow, previousWord);
+        nestedMilestone.wordSpans.forEach((nestedWordSpan) => verseSpan.push(nestedWordSpan));
         wordSpacing = ' ';
+        previousWord = nestedMilestone.nestedPreviousWord;
       } else if (word.text) { // if not word, show punctuation, etc. but not clickable
         const lastChar = word.text.substr(word.text.length - 1);
         wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
-        verseSpan.push(this.createTextSpan(index, word.text));
+        if (highlightHelpers.isPunctuationHighlighted(previousWord, nextWord, contextId)) {
+          verseSpan.push(this.createHighlightedSpan(index, word.text));
+        } else {
+          verseSpan.push(this.createTextSpan(index, word.text));
+        }
       }
     });
 
@@ -128,6 +134,14 @@ class Verse extends React.Component {
   createTextSpan(index, text) {
     return (
       <span key={index}>
+        {text}
+      </span>
+    );
+  }
+
+  createHighlightedSpan(index, text) {
+    return (
+      <span key={index} style={{ backgroundColor: 'var(--highlight-color)' }}>
         {text}
       </span>
     );

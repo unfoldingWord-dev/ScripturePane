@@ -53,8 +53,9 @@ export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGra
   let nestedPreviousWord = previousWord;
   let wordSpacing = ' ';
 
-  const wordSpans = nestedWords.map((nestedWord, nestedWordIndex) => {
+  const wordSpans = nestedWords.map((nestedWord, nestedWordIndex, wordsArray) => {
     const nestedWordSpanIndex = `${index.toString()}_${nestedWordIndex.toString()}_${nestedWord.text}`;
+    const nestedNextWord = wordsArray[index + 1];
     if (isWord(nestedWord)) {
       let padding = wordSpacing;
       if (nestedPreviousWord && isPuntuationAndNeedsNoSpace(nestedPreviousWord)) padding = '';
@@ -83,14 +84,27 @@ export function getWordsFromNestedMilestone(nestedWords, contextId, index, isGra
     } else if (nestedWord.text) {
       const lastChar = nestedWord.text.substr(nestedWord.text.length - 1);
       wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
-      return (
-        <span key={nestedWordSpanIndex}>
-          {nestedWord.text}
-        </span>
-      );
+
+      if (isPunctuationHighlighted(nestedPreviousWord, nestedNextWord, contextId)) {
+        return (
+          <span key={nestedWordSpanIndex} style={{ backgroundColor: 'var(--highlight-color)' }}>
+            {nestedWord.text}
+          </span>
+        );
+      } else {
+        return (
+          <span key={nestedWordSpanIndex}>
+            {nestedWord.text}
+          </span>
+        );
+      }
     }
   });
-  return wordSpans;
+
+  return {
+    wordSpans,
+    nestedPreviousWord
+  };
 }
 
 /**
@@ -116,4 +130,37 @@ export function getDeepNestedWords(nestedWords) {
     }
   });
   return deepNestedWords;
+}
+
+/**
+ * Determines if a punctuation should be highlighted or not.
+ * @param {object} previousWord
+ * @param {object} nextWord
+ * @param {object} contextId
+ * @returns {bool} true or false. highlighted or not highlighted.
+ */
+export function isPunctuationHighlighted(previousWord, nextWord, contextId) {
+  // handle nested previous words
+  if (previousWord && Array.isArray(previousWord[0])) {
+    const nestedPreviousWord = getDeepNestedWords(previousWord);
+    // get the last item in the array
+    previousWord = nestedPreviousWord[nestedPreviousWord.length - 1];
+  }
+  // handle nested next words
+  if (nextWord) {
+    if (Array.isArray(nextWord) || Array.isArray(nextWord[0])) {
+      let nestedNextWords = getDeepNestedWords(nextWord);
+      nextWord = nestedNextWords[0];
+    }
+  }
+
+  if (previousWord && nextWord) {
+    return isWordArrayMatch(previousWord, contextId) && isWordArrayMatch(nextWord, contextId);
+  } else if (previousWord) {
+    return isWordArrayMatch(previousWord, contextId);
+  } else if (nextWord) {
+    return isWordArrayMatch(nextWord, contextId);
+  } else {
+    return false;
+  }
 }
