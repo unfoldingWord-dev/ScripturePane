@@ -5,9 +5,9 @@ import AddBibleSVG from './AddBibleSVG';
 class AddBible extends React.Component {
 
   render() {
-    let { showModal } = this.props;
+    let { showModal, translate } = this.props;
     return(
-        <div style={{ height: "60px", width: "60px", cursor: 'pointer' }} title="Click to add a resource" onClick={showModal}>
+        <div style={{ height: "60px", width: "60px", cursor: 'pointer' }} title={translate("click_add_resource")} onClick={showModal}>
           <AddBibleSVG />
         </div>
     );
@@ -15,6 +15,7 @@ class AddBible extends React.Component {
 }
 
 AddBible.propTypes = {
+  translate: PropTypes.func.isRequired,
   showModal: PropTypes.func.isRequired
 };
 

@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 import * as highlightHelpers from '../helpers/highlightHelpers';
 import {removeMarker} from '../helpers/UsfmHelpers';
-import {isWord, isNestedMilestone} from '../helpers/stringHelpers';
+import {isWord, isNestedMilestone, punctuationWordSpacing} from '../helpers/stringHelpers';
 // components
 import WordDetails from './WordDetails';
 // constants
@@ -54,7 +54,8 @@ class Verse extends React.Component {
       const positionCoord = e.target;
       const PopoverTitle = <strong style={{fontSize: '1.2em'}}>{word.word}</strong>;
       const {showPopover} = this.props.actions;
-      const wordDetails = <WordDetails lexiconData={lexiconData} word={word}/>;
+      const {translate} = this.props;
+      const wordDetails = <WordDetails lexiconData={lexiconData} word={word} translate={translate} />;
       showPopover(PopoverTitle, wordDetails, positionCoord);
     }
   }
@@ -87,7 +88,8 @@ class Verse extends React.Component {
     let previousWord = null;
     const verseSpan = [];
 
-    words.forEach((word, index) => {
+    words.forEach((word, index, wordsArray) => {
+      const nextWord = wordsArray[index + 1];
       if (isWord(word)) {
         const padding = wordSpacing;
         wordSpacing = ' '; // spacing between words
@@ -131,13 +133,17 @@ class Verse extends React.Component {
           verseSpan.push(this.createNonClickableSpan(index, paddingSpanStyle, padding, isHighlightedWord, text));
         }
       } else if (isNestedMilestone(word)) { // if nested milestone
-        const nestedWordSpans = highlightHelpers.getWordsFromNestedMilestone(word, contextId, index, isGrayVerseRow, previousWord);
-        nestedWordSpans.forEach((nestedWordSpan) => verseSpan.push(nestedWordSpan));
-        wordSpacing = ' ';
+        const nestedMilestone = highlightHelpers.getWordsFromNestedMilestone(word, contextId, index, isGrayVerseRow, previousWord, wordSpacing);
+        nestedMilestone.wordSpans.forEach((nestedWordSpan) => verseSpan.push(nestedWordSpan));
+        previousWord = nestedMilestone.nestedPreviousWord;
+        wordSpacing = nestedMilestone.nestedWordSpacing;
       } else if (word.text) { // if not word, show punctuation, etc. but not clickable
-        const lastChar = word.text.substr(word.text.length - 1);
-        wordSpacing = ((lastChar === '"') || (lastChar === "'")) ? '' : ' '; // spacing before words
-        verseSpan.push(this.createTextSpan(index, word.text));
+        wordSpacing = punctuationWordSpacing(word); // spacing before words
+        if (highlightHelpers.isPunctuationHighlighted(previousWord, nextWord, contextId)) {
+          verseSpan.push(this.createHighlightedSpan(index, word.text));
+        } else {
+          verseSpan.push(this.createTextSpan(index, word.text));
+        }
       }
     });
 
@@ -167,9 +173,17 @@ class Verse extends React.Component {
 
   handleEdit() {
     const {bibleId, chapter, verse, verseText, onEdit} = this.props;
-    if(typeof onEdit === 'function') {
+    if (typeof onEdit === 'function') {
       onEdit(bibleId, chapter, verse, verseText);
     }
+  }
+
+  createHighlightedSpan(index, text) {
+    return (
+      <span key={index} style={{ backgroundColor: 'var(--highlight-color)' }}>
+        {text}
+      </span>
+    );
   }
 
   render() {
@@ -217,6 +231,7 @@ class Verse extends React.Component {
 
 Verse.propTypes = {
   resourcesReducer: PropTypes.object.isRequired,
+  translate: PropTypes.func.isRequired,
   actions: PropTypes.shape({
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,

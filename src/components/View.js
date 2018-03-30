@@ -11,7 +11,6 @@ class View extends React.Component {
   render() {
     const {
       actions,
-      translate,
       selectionsReducer,
       settingsReducer: {
         toolsSettings: {
@@ -29,12 +28,14 @@ class View extends React.Component {
       expandedPaneVisibility,
       selectedPane,
       hideExpandModal,
-      hideModal
+      hideModal,
+      translate
     } = this.props;
     const currentPaneSettings = ScripturePane && ScripturePane.currentPaneSettings ? ScripturePane.currentPaneSettings : [];
     const scripturePane = currentPaneSettings.map((paneSetting, index) => {
       return (
         <Pane
+          translate={translate}
           actions={actions}
           contextIdReducer={contextIdReducer}
           resourcesReducer={resourcesReducer}
@@ -62,6 +63,7 @@ class View extends React.Component {
           <AddBible
             scripturePane={scripturePane}
             showModal={showModal}
+            translate={translate}
           />
         </div>
       );
@@ -70,12 +72,12 @@ class View extends React.Component {
       <div style={style.scripturePane}>
         <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
           <div style={style.titleBar}>
-            <span>{translate('step1')}</span>
+            <span>{translate("step1_read")}</span>
             <Glyphicon
               onClick={showExpandModal}
-              glyph={'fullscreen'}
-              style={{cursor: 'pointer'}}
-              title="Click to show expanded resource panes"
+              glyph={"fullscreen"}
+              style={{ cursor: "pointer" }}
+              title={translate("show_exp_resource")}
             />
           </div>
           <div style={style.body}>
@@ -98,13 +100,13 @@ class View extends React.Component {
         />
         <AddPaneModal
           {...this.props}
-          translate={translate}
           show={modalVisibility}
           onHide={hideModal}
           selectSourceLanguage={selectSourceLanguage}
           addPane={addPane}
           selectedPane={selectedPane}
           currentPaneSettings={currentPaneSettings}
+          translate={translate}
         />
       </div>
     );

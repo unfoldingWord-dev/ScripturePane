@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Col, Row} from 'react-bootstrap';
 import AddBible from '../AddBible';
+import {getTranslation} from "../../helpers/localizationHelpers";
 
 class BibleHeadingsRow extends React.Component {
 
@@ -12,6 +13,7 @@ class BibleHeadingsRow extends React.Component {
       }
     } = this.props;
     let {bibles} = this.props.resourcesReducer;
+    const { translate } = this.props;
     // if required data, then populate bibleHeadings
     let bibleHeadings = [];
     if (currentPaneSettings.length > 0) {
@@ -20,7 +22,8 @@ class BibleHeadingsRow extends React.Component {
         const bibleId = paneSetting.bibleId;
         let { language_name, direction } = bibles[languageId][bibleId]["manifest"];
         let resourceText = bibleId !== "targetBible" ? " (" + bibleId.toUpperCase() + ")" : "" ;
-        let headingText = language_name + resourceText;
+        let languageName = getTranslation(translate, language_name);
+        let headingText = languageName + resourceText;
         let dir = direction;
         if (!dir) dir = this.props.projectDetailsReducer.manifest.target_language.direction;
         let colStyle = {
@@ -50,7 +53,7 @@ class BibleHeadingsRow extends React.Component {
       let remaining = 3 - bibleHeadings.length;
       bibleHeadings.push(
         <Col key={3-remaining} md={4} sm={4} xs={4} lg={4} style={colStyle} >
-          <AddBible showModal={this.props.showModal} />
+          <AddBible showModal={this.props.showModal} translate={translate} />
         </Col>
       );
     }
@@ -70,6 +73,7 @@ class BibleHeadingsRow extends React.Component {
 
 BibleHeadingsRow.propTypes = {
   scripturePane: PropTypes.object.isRequired,
+  translate: PropTypes.func.isRequired,
   projectDetailsReducer: PropTypes.shape({
     manifest: PropTypes.shape({
       target_language: PropTypes.shape({

@@ -49,5 +49,6 @@ exports[`Test Pane behavior Test book name and language layout. 1`] = `
     }
   }
   selectionsReducer={Object {}}
+  translate={[Function]}
 />
 `;

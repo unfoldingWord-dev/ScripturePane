@@ -92,6 +92,7 @@ class ChapterView extends React.Component {
         const refKey = ChapterView.makeRefKey(chapter, verseNumber);
         return (
           <VerseRow key={verseNumber}
+                    translate={translate}
                     verseNumber={verseNumber}
                     onEditTargetVerse={this.handleEditTargetVerse}
                     actions={actions}
@@ -119,6 +120,7 @@ class ChapterView extends React.Component {
       <div>
         <div style={{width: '100%', height: '100%'}}>
           <BibleHeadingsRow scripturePane={scripturePane}
+                            translate={translate}
                             resourcesReducer={resourcesReducer}
                             projectDetailsReducer={projectDetailsReducer}
                             showModal={showModal} />

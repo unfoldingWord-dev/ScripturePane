@@ -36,7 +36,7 @@ describe('Test AddPaneModal component',()=>{
       },
       currentPaneSettings: ['ult']
     };
-    const expectedOptions = ['resources.select', 'English (unfoldingWord Literal Text)', 'French (Current project)']; // expect options to have in the language select
+    const expectedOptions = ['select', 'English (unfoldingWord Literal Text)', 'French (Current project)']; // expect options to have in the language select
     const enzymeWrapper = shallow(<AddPaneModal {...props} />);
     validateSelectOptions(enzymeWrapper, expectedOptions);
   });

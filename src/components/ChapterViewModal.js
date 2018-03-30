@@ -96,7 +96,6 @@ class ChapterViewModal extends React.Component {
                        resourcesReducer={resourcesReducer}/>
         </div>
       </BaseDialog>
-
     );
   }
 }

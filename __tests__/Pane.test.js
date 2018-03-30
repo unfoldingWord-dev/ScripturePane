@@ -14,6 +14,7 @@ describe('Test Pane behavior',()=>{
         showPopover: () => {}
       },
       selectionsReducer: {},
+      translate: k=>k,
       contextIdReducer: {
         "contextId":{
                 "reference":{

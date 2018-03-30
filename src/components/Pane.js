@@ -4,10 +4,11 @@ import ContainerDimensions from 'react-container-dimensions';
 import {Glyphicon} from 'react-bootstrap';
 import style from '../css/Style';
 import Verse from './Verse';
+import {getTranslation} from "../helpers/localizationHelpers";
 
 class Pane extends React.Component {
   render() {
-    let { actions, contextIdReducer, selectionsReducer, removePane, index, bibleId, languageId, resourcesReducer } = this.props;
+    let { translate, actions, contextIdReducer, selectionsReducer, removePane, index, bibleId, languageId, resourcesReducer } = this.props;
     const {bibles} = resourcesReducer;
     let { reference } = contextIdReducer.contextId;
     let {
@@ -17,9 +18,10 @@ class Pane extends React.Component {
       description
     } = bibles && bibles[languageId][bibleId] ? bibles[languageId][bibleId]["manifest"] : {};
     direction = direction || 'ltr';
-    description = description || "";
+    description = getTranslation(translate, description || "");
     let verseText = bibles && bibles[languageId][bibleId] && bibles[languageId][bibleId][reference.chapter] ? bibles[languageId][bibleId][reference.chapter][reference.verse] : '';
-    let headingText = bibleId !== "targetBible" ? language_name + " (" + bibleId.toUpperCase() + ")" : language_name ? language_name : '';
+    let languageName = getTranslation(translate, language_name);
+    let headingText = bibleId !== "targetBible" ? languageName + " (" + bibleId.toUpperCase() + ")" : (languageName || '');
     let contentStyle;
     const PANECHAR = 9;
 
@@ -50,10 +52,11 @@ class Pane extends React.Component {
             </ContainerDimensions>
           </div>
           <Glyphicon glyph={"remove"} style={{color: "var(--text-color-light)", cursor: 'pointer'}}
-                     onClick={() => removePane(index)} title="Click to remove resource"/>
+                     onClick={() => removePane(index)} title={translate("click_remove_resource")} />
         </div>
         <div style={contentStyle}>
           <Verse
+            translate={translate}
             selectionsReducer={selectionsReducer}
             resourcesReducer={resourcesReducer}
             contextIdReducer={contextIdReducer}
@@ -74,6 +77,7 @@ class Pane extends React.Component {
 
 Pane.propTypes = {
   selectionsReducer: PropTypes.object.isRequired,
+  translate: PropTypes.func.isRequired,
   removePane: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   bibleId: PropTypes.string.isRequired,

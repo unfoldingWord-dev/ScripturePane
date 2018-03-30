@@ -170,3 +170,64 @@ describe('getDeepNestedWords', () => {
     expect(wordObjects).toEqual(expectedNestedChildren);
   });
 });
+
+describe('isPunctuationHighlighted', () => {
+  const content = [
+    {
+      content: "Θεοῦ",
+      lemma: "θεός",
+      morph: "Gr,N,,,,,GMS,",
+      occurrence: 1,
+      occurrences: 1,
+      strong: "G23160",
+      tag: "zaln",
+      type: "milestone"
+    },
+    {
+      content: "τοῦ",
+      lemma: "ὁ",
+      morph: "Gr,EA,,,,GMS,",
+      occurrence: 1,
+      occurrences: 1,
+      strong: "G35880",
+      tag: "zaln",
+      type: "milestone"
+    }
+  ];
+  const previousWord = {
+    content: content,
+    occurrence: 1,
+    occurrences: 1,
+    tag: "w",
+    text: "God",
+    type: "word"
+  };
+  const nextWord = {
+    content: content,
+    occurrence: 1,
+    occurrences: 1,
+    tag: "w",
+    text: "s",
+    type: "word"
+  };
+  const contextID = {
+    groupId: "god",
+    occurrence: 1,
+    quote: "Θεοῦ"
+  };
+
+  test('Returns false with invalid argumnets', () => {
+    const isPunctuationHighlighted = highlightHelpers.isPunctuationHighlighted(null, null, null);
+    expect(isPunctuationHighlighted).toBeFalsy();
+  });
+
+  test('Returns true with valid argumnets', () => {
+    const isPunctuationHighlighted = highlightHelpers.isPunctuationHighlighted(previousWord, nextWord, contextID);
+    expect(isPunctuationHighlighted).toBeTruthy();
+  });
+
+  test('Returns true with only one define argument', () => {
+    const isPunctuationHighlighted = highlightHelpers.isPunctuationHighlighted(previousWord, undefined, contextID);
+    expect(isPunctuationHighlighted).toBeTruthy();
+  });
+});

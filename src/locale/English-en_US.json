@@ -7,13 +7,7 @@
     "next_button": "Next",
     "load_button": "Load"
   },
-  "step1": "Step 1. Read",
   "edit_verse": "Edit Verse - ${passage}",
-  "resources": {
-    "select_language": "Select language",
-    "add_resources": "Add Resources",
-    "select": "Select"
-  },
   "editor": {
     "spelling": "Spelling",
     "punctuation": "Punctuation",
@@ -21,5 +15,19 @@
     "meaning": "Meaning",
     "grammar": "Grammar",
     "other": "Other"
-  }
+  },
+  "step1_read": "Step 1. Read",
+  "show_exp_resource": "Click to show expanded resource panes",
+  "click_add_resource": "Click to add a resource",
+  "add_resource": "Add Resources",
+  "select_language": "Select language",
+  "select": "Select",
+  "click_remove_resource": "Click to remove resource",
+  "lemma": "Lemma:",
+  "morphology": "Morphology:",
+  "strongs": "Strongs:",
+  "lexicon": "Lexicon:",
+  "greek": "Greek",
+  "target_language": "Target Language",
+  "gateway_language": "Gateway Language"
 }

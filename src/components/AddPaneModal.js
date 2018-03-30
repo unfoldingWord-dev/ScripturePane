@@ -8,6 +8,7 @@ import BaseDialog from './BaseDialog';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import {FormControl} from 'react-bootstrap';
+import {getLanguageTranslation} from '../helpers/localizationHelpers';
 
 const styles = {
   icon: {
@@ -44,9 +45,9 @@ class AddPaneModal extends React.Component {
     Object.keys(bibles).forEach((languageId) => {
       const bibleIds = bibles[languageId];
       Object.keys(bibleIds).forEach((bibleId) => {
-        const { language_name, resource_title } = bibles[languageId][bibleId]["manifest"];
+        const { language_name, language_id, resource_title } = bibles[languageId][bibleId]["manifest"];
         const resourceText = bibleId !== "targetBible" ? " (" + resource_title + ")" : " (Current project)";
-        const displayText = language_name + resourceText;
+        const displayText = getLanguageTranslation(translate, language_name, language_id) + resourceText;
         const foundInCurrentPaneSettings = currentPaneSettings.filter((paneSetting) => {
           return paneSetting.bibleId === bibleId && paneSetting.languageId === languageId;
         }).length > 0;
@@ -63,7 +64,7 @@ class AddPaneModal extends React.Component {
       });
     });
 
-    const titleText = translate('resources.add_resources');
+    const titleText = translate('add_resource');
     const title = (
       <h4>
         <span style={{flexGrow: 1, textAlign: 'center'}}>{titleText}</span>
@@ -85,14 +86,14 @@ class AddPaneModal extends React.Component {
                   secondaryLabel={translate('buttons.close_button')}
                   onClose={onHide}>
           <h4 style={{ marginBottom: "30px" }}>
-            {translate('resources.select_language')}
+            {translate('select_language')}
           </h4>
           <FormControl
             componentClass="select"
             style={styles.select}
             onChange={e => selectSourceLanguage(e.target.value)}
           >
-            <option value="">{translate('resources.select')}</option>
+            <option value="">{translate('select')}</option>
             {panes}
           </FormControl>
       </BaseDialog>

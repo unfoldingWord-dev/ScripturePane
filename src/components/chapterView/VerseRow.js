@@ -23,6 +23,7 @@ class VerseRow extends React.Component {
       actions,
       resourcesReducer,
       contextIdReducer,
+      translate,
       selectionsReducer,
       scripturePane: {
         currentPaneSettings
@@ -58,6 +59,7 @@ class VerseRow extends React.Component {
         return (
           <Col key={index} md={4} sm={4} xs={4} lg={4} style={colStyle}>
             <Verse
+              translate={translate}
               onEdit={this.handleEdit}
               resourcesReducer={resourcesReducer}
               contextIdReducer={contextIdReducer}
@@ -87,6 +89,7 @@ class VerseRow extends React.Component {
 }
 
 VerseRow.propTypes = {
+  translate: PropTypes.func.isRequired,
   onEditTargetVerse: PropTypes.func,
   selectionsReducer: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,

@@ -66,3 +66,37 @@ describe('isDeepNestedChild()', () => {
     expect(isDeepNestedChild).toBeFalsy();
   });
 });
+
+describe('punctuationWordSpacing()', () => {
+  test('Supports hyphenated words (-)', () => {
+    const punctuation = {
+      "type": "text",
+      "text": "-"
+    };
+    expect(stringHelpers.punctuationWordSpacing(punctuation)).toEqual('');
+  });
+
+  test('Supports commas (,)', () => {
+    const punctuation = {
+      "type": "text",
+      "text": ","
+    };
+    expect(stringHelpers.punctuationWordSpacing(punctuation)).toEqual(' ');
+  });
+
+  test('Supports periods (.)', () => {
+    const punctuation = {
+      "type": "text",
+      "text": "."
+    };
+    expect(stringHelpers.punctuationWordSpacing(punctuation)).toEqual(' ');
+  });
+
+  test("Supports apostrophes (')", () => {
+    const punctuation = {
+      "type": "text",
+      "text": "'"
+    };
+    expect(stringHelpers.punctuationWordSpacing(punctuation)).toEqual('');
+  });
+});
