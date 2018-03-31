@@ -1,9 +1,10 @@
 /* eslint-env jest */
 import fs from 'fs-extra';
 import * as highlightHelpers from '../src/helpers/highlightHelpers';
+import path from 'path';
 
-const ult_project = '__tests__/fixtures/ult/tit/1.json';
-const ugnt_project = '__tests__/fixtures/ugnt/tit/1.json';
+const ult_project = path.join(__dirname, 'fixtures/ult/tit/1.json');
+const ugnt_project = path.join(__dirname, 'fixtures/ugnt/tit/1.json');
 const expectedNestedChildren = [
   {
     "text": "good",

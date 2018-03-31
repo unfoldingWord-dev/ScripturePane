@@ -1,12 +1,27 @@
 {
+  "buttons": {
+    "save_button": "Save",
+    "back_button": "Back",
+    "close_button": "Close",
+    "cancel_button": "Cancel",
+    "next_button": "Next",
+    "load_button": "Load"
+  },
+  "edit_verse": "Edit Verse - ${passage}",
+  "editor": {
+    "spelling": "Spelling",
+    "punctuation": "Punctuation",
+    "word_choice": "Word Choice",
+    "meaning": "Meaning",
+    "grammar": "Grammar",
+    "other": "Other"
+  },
   "step1_read": "Step 1. Read",
   "show_exp_resource": "Click to show expanded resource panes",
   "click_add_resource": "Click to add a resource",
   "add_resource": "Add Resources",
   "select_language": "Select language",
   "select": "Select",
-  "close": "Close",
-  "load": "Load",
   "click_remove_resource": "Click to remove resource",
   "lemma": "Lemma:",
   "morphology": "Morphology:",

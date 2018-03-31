@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Glyphicon } from 'react-bootstrap';
+import {Glyphicon} from 'react-bootstrap';
 import Pane from './Pane';
 import AddPaneModal from './AddPaneModal';
 import ChapterViewModal from './ChapterViewModal';
@@ -10,6 +10,8 @@ import AddBible from './AddBible';
 class View extends React.Component {
   render() {
     const {
+      actions,
+      selectionsReducer,
       settingsReducer: {
         toolsSettings: {
           ScripturePane
@@ -17,7 +19,10 @@ class View extends React.Component {
       },
       selectSourceLanguage,
       showExpandModal,
+      projectDetailsReducer,
+      contextIdReducer,
       modalVisibility,
+      resourcesReducer,
       showModal,
       addPane,
       expandedPaneVisibility,
@@ -30,7 +35,11 @@ class View extends React.Component {
     const scripturePane = currentPaneSettings.map((paneSetting, index) => {
       return (
         <Pane
-          {...this.props}
+          translate={translate}
+          actions={actions}
+          contextIdReducer={contextIdReducer}
+          resourcesReducer={resourcesReducer}
+          selectionsReducer={selectionsReducer}
           key={index}
           index={index}
           bibleId={paneSetting.bibleId}
@@ -42,14 +51,15 @@ class View extends React.Component {
     });
 
     /**
-    * @description This will add/push an array element to the scripturePane array
-    * only when the length of the array is less than or equal to 2. this element
-    * being added is the button to open the modal that adds more resources to
-    * the scripturePane component.
-    */
+     * @description This will add/push an array element to the scripturePane array
+     * only when the length of the array is less than or equal to 2. this element
+     * being added is the button to open the modal that adds more resources to
+     * the scripturePane component.
+     */
     for (let index = scripturePane.length; index < 3; index++) {
       scripturePane.push(
-        <div key={index} style={index > 0 ? style.otherBible : style.firstBible}>
+        <div key={index}
+             style={index > 0 ? style.otherBible : style.firstBible}>
           <AddBible
             scripturePane={scripturePane}
             showModal={showModal}
@@ -60,7 +70,7 @@ class View extends React.Component {
     }
     return (
       <div style={style.scripturePane}>
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
           <div style={style.titleBar}>
             <span>{translate("step1_read")}</span>
             <Glyphicon
@@ -74,6 +84,20 @@ class View extends React.Component {
             {scripturePane}
           </div>
         </div>
+        <ChapterViewModal
+          translate={translate}
+          actions={actions}
+          selectionsReducer={selectionsReducer}
+          scripturePane={ScripturePane}
+          resourcesReducer={resourcesReducer}
+          projectDetailsReducer={projectDetailsReducer}
+          contextIdReducer={contextIdReducer}
+          bibles={this.props.resourcesReducer.bibles}
+          show={expandedPaneVisibility}
+          onHide={hideExpandModal}
+          currentPaneSettings={currentPaneSettings}
+          showModal={showModal}
+        />
         <AddPaneModal
           {...this.props}
           show={modalVisibility}
@@ -84,19 +108,6 @@ class View extends React.Component {
           currentPaneSettings={currentPaneSettings}
           translate={translate}
         />
-        <ChapterViewModal
-          show={expandedPaneVisibility}
-          onHide={hideExpandModal}
-          actions={this.props.actions}
-          showModal={showModal}
-          bibles={this.props.resourcesReducer.bibles}
-          selectionsReducer={this.props.selectionsReducer}
-          settingsReducer={this.props.settingsReducer}
-          contextIdReducer={this.props.contextIdReducer}
-          resourcesReducer={this.props.resourcesReducer}
-          projectDetailsReducer={this.props.projectDetailsReducer}
-          translate={translate}
-        />
       </div>
     );
   }
@@ -104,6 +115,7 @@ class View extends React.Component {
 
 View.propTypes = {
   translate: PropTypes.func.isRequired,
+  projectDetailsReducer: PropTypes.object.isRequired,
   currentToolViews: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
@@ -113,15 +125,14 @@ View.propTypes = {
         currentPaneSettings: PropTypes.array
       })
     })
-  }),
-  selectionsReducer: PropTypes.object.isRequired,
-  projectDetailsReducer: PropTypes.object.isRequired,
+  }).isRequired,
   actions: PropTypes.shape({
     setToolSettings: PropTypes.func.isRequired,
     getWordListForVerse: PropTypes.func.isRequired,
     loadLexiconEntry: PropTypes.func.isRequired,
-    showPopover: PropTypes.func.isRequired,
-  }),
+    showPopover: PropTypes.func.isRequired
+  }).isRequired,
+  selectionsReducer: PropTypes.object.isRequired,
   selectSourceLanguage: PropTypes.func.isRequired,
   showExpandModal: PropTypes.func.isRequired,
   modalVisibility: PropTypes.bool.isRequired,

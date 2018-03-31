@@ -7,7 +7,11 @@ import {getTranslation} from "../../helpers/localizationHelpers";
 class BibleHeadingsRow extends React.Component {
 
   render() {
-    let {currentPaneSettings} = this.props.settingsReducer.toolsSettings.ScripturePane;
+    let {
+      scripturePane: {
+        currentPaneSettings
+      }
+    } = this.props;
     let {bibles} = this.props.resourcesReducer;
     const { translate } = this.props;
     // if required data, then populate bibleHeadings
@@ -68,8 +72,8 @@ class BibleHeadingsRow extends React.Component {
 }
 
 BibleHeadingsRow.propTypes = {
+  scripturePane: PropTypes.object.isRequired,
   translate: PropTypes.func.isRequired,
-  settingsReducer: PropTypes.object.isRequired,
   projectDetailsReducer: PropTypes.shape({
     manifest: PropTypes.shape({
       target_language: PropTypes.shape({

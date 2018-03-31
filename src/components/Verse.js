@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'deep-equal';
 import stringTokenizer from 'string-punctuation-tokenizer';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import IconButton from 'material-ui/IconButton';
 // helpers
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 import * as highlightHelpers from '../helpers/highlightHelpers';
@@ -12,7 +14,37 @@ import WordDetails from './WordDetails';
 // constants
 const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text for this reference.]';
 
+const makeStyles = (props) => {
+  const { verseText, direction } = props;
+  const verseIsPlaceHolder = !!verseText;
+
+  return {
+    flex: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%'
+    },
+    verse: {
+      direction: direction,
+      flex: 1,
+      fontStyle: verseIsPlaceHolder ? 'italic' : 'normal'
+    },
+    edit: {
+      textAlign: 'right'
+    }
+  };
+};
+
 class Verse extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.verseArray = this.verseArray.bind(this);
+    this.onWordClick = this.onWordClick.bind(this);
+    this.verseString = this.verseString.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
   onWordClick(e, word) {
     if (word && word.strong) {
       const {strong} = word;
@@ -139,6 +171,13 @@ class Verse extends React.Component {
     );
   }
 
+  handleEdit() {
+    const {bibleId, chapter, verse, verseText, onEdit} = this.props;
+    if (typeof onEdit === 'function') {
+      onEdit(bibleId, chapter, verse, verseText);
+    }
+  }
+
   createHighlightedSpan(index, text) {
     return (
       <span key={index} style={{ backgroundColor: 'var(--highlight-color)' }}>
@@ -149,35 +188,49 @@ class Verse extends React.Component {
 
   render() {
     let verseSpan = <span/>;
-    let { verseText, chapter, verse, direction } = this.props;
-    let verseIsPlaceHolder = false;
+    const { bibleId, verseText, chapter, verse, direction } = this.props;
 
+    let text = verseText;
     if (!verseText) {
-      verseText = PLACE_HOLDER_TEXT;
-      verseIsPlaceHolder = true;
+      text = PLACE_HOLDER_TEXT;
     }
 
-    if (verseText && typeof verseText === 'string') { // if the verse content is string / text.
-      verseSpan = this.verseString(verseText);
+    if (text && typeof text === 'string') { // if the verse content is string / text.
+      verseSpan = this.verseString(text);
     } else { // then the verse content is an array / verse objects.
-      verseSpan = this.verseArray(verseText);
+      verseSpan = this.verseArray(text);
     }
 
+    const isEditable = bibleId === 'targetBible' && !!verseText;
     const chapterVerseContent = direction === 'rtl' ? `${verse}:${chapter} ` : `${chapter}:${verse} `;
     const chapterVerse = <strong>{chapterVerseContent}</strong>;
-    let divStyle = { direction: direction };
-    if (verseIsPlaceHolder) divStyle['fontStyle'] = 'italic';
+    const styles = makeStyles(this.props);
+
+    let edit = null;
+    if(isEditable) {
+      edit = (
+        <div style={styles.edit}>
+          <IconButton onClick={this.handleEdit}>
+            <EditIcon/>
+          </IconButton>
+        </div>
+      );
+    }
 
     return (
-      <div style={divStyle}>
-        {chapterVerse}
-        {verseSpan}
+      <div style={styles.flex}>
+        <div style={styles.verse}>
+          {chapterVerse}
+          {verseSpan}
+        </div>
+        {edit}
       </div>
     );
   }
 }
 
 Verse.propTypes = {
+  resourcesReducer: PropTypes.object.isRequired,
   translate: PropTypes.func.isRequired,
   actions: PropTypes.shape({
     setToolSettings: PropTypes.func.isRequired,
@@ -185,7 +238,7 @@ Verse.propTypes = {
     loadLexiconEntry: PropTypes.func.isRequired,
     showPopover: PropTypes.func.isRequired,
     getLexiconData: PropTypes.func.isRequired
-  }),
+  }).isRequired,
   verseText: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.array.isRequired,
@@ -195,9 +248,10 @@ Verse.propTypes = {
   verse: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.number.isRequired
-  ]),
+  ]).isRequired,
   direction: PropTypes.string.isRequired,
   bibleId: PropTypes.string,
+  onEdit: PropTypes.func,
   isCurrent: PropTypes.bool.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
   selectionsReducer: PropTypes.object.isRequired,

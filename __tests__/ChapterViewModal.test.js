@@ -1,37 +1,42 @@
 /* eslint-env jest */
-
-import React from 'react';
 import ChapterViewModal from '../src/components/ChapterViewModal';
-import { shallow } from 'enzyme';
-import { Modal } from 'react-bootstrap';
 
 // Tests for ChapterViewModal React Component
-describe('Test ChapterViewModal component', () => {
-  const mock_translate = (text) => { return text; };
-  test('Tests that the modal\'s title is displayed', () => {
-    const props = {
-      translate: mock_translate,
-      show: true,
-      onHide: jest.fn(),
-      show: true,
-      projectDetailsReducer: {
-        manifest: {
-          project: {
-            name: 'My Book'
-          }
-        }
-      },
-      contextIdReducer: {},
-      resourcesReducer: {},
+describe('Dialog title', () => {
+  it('only has a project name', () => {
+    const manifest = {
+      project: {
+        name: 'project name'
+      }
     };
-    const expectedTitle = props['projectDetailsReducer']['manifest']['project']['name'];
-    const enzymeWrapper = shallow(<ChapterViewModal {...props} />);
-    validateModalTitle(enzymeWrapper, expectedTitle);
+    const title = ChapterViewModal.makeTitle(manifest);
+    expect(title).toEqual('project name');
+  });
+
+  it('only has a book name', () => {
+    const manifest = {
+      target_language: {
+        book: {
+          name: 'book name'
+        }
+      }
+    };
+    const title = ChapterViewModal.makeTitle(manifest);
+    expect(title).toEqual('book name');
+  });
+
+  it('has a book name and project name', () => {
+    const manifest = {
+      project: {
+        name: 'project name'
+      },
+      target_language: {
+        book: {
+          name: 'book name'
+        }
+      }
+    };
+    const title = ChapterViewModal.makeTitle(manifest);
+    expect(title).toEqual('book name');
   });
 });
-
-function validateModalTitle(enzymeWrapper, expectedTitle) {
-  let titleHeader = enzymeWrapper.find(Modal.Title);
-  expect(titleHeader.length).toEqual(1);
-  expect(enzymeWrapper.find(Modal.Title).props().children[0]).toEqual(expectedTitle);
-}

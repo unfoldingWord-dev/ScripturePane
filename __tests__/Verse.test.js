@@ -1,8 +1,7 @@
 /* eslint-env jest */
 
 import React from 'react';
-import Verse, {PLACE_HOLDER_TEXT} from '../src/components/Verse';
-import {mount} from 'enzyme';
+import Verse from '../src/components/Verse';
 import renderer from 'react-test-renderer';
 
 // Tests for Verse React Component
@@ -11,7 +10,9 @@ describe('Test Verse component',()=>{
     const props = {
       verseText: null,
       chapter: 1,
+      translate: k=>k,
       verse: 1,
+      resourcesReducer: {},
       direction: 'ltr',
       isCurrent: true,
       selectionsReducer: {
@@ -28,9 +29,8 @@ describe('Test Verse component',()=>{
         getLexiconData: () => {}
       }
     };
-    const expectedText = '1:1 '+PLACE_HOLDER_TEXT;
-    const enzymeWrapper = mount(<Verse {...props} />);
-    validateVerse(enzymeWrapper, expectedText);
+    const wrapper = renderer.create(<Verse {...props} />);
+    expect(wrapper).toMatchSnapshot();
   });
 
   test('Test when verse is empty string that the WARNING placeholder is displayed', () => {
@@ -38,6 +38,8 @@ describe('Test Verse component',()=>{
       verseText: '',
       chapter: 1,
       verse: 1,
+      translate: k=>k,
+      resourcesReducer: {},
       direction: 'ltr',
       isCurrent: true,
       selectionsReducer: {
@@ -54,9 +56,8 @@ describe('Test Verse component',()=>{
         getLexiconData: () => {}
       }
     };
-    const expectedText = '1:1 '+PLACE_HOLDER_TEXT;
-    const enzymeWrapper = mount(<Verse {...props} />);
-    validateVerse(enzymeWrapper, expectedText);
+    const wrapper = renderer.create(<Verse {...props} />);
+    expect(wrapper).toMatchSnapshot();
   });
 
   test('Test when verse is not null that the verse is displayed', () => {
@@ -64,6 +65,8 @@ describe('Test Verse component',()=>{
       verseText: 'Jesus wept',
       chapter: 11,
       verse: 35,
+      translate: k=>k,
+      resourcesReducer: {},
       direction: 'ltr',
       isCurrent: true,
       selectionsReducer: {
@@ -80,9 +83,8 @@ describe('Test Verse component',()=>{
         getLexiconData: () => {}
       }
     };
-    const expectedText = '11:35 Jesus wept';
-    const enzymeWrapper = mount(<Verse {...props} />);
-    validateVerse(enzymeWrapper, expectedText);
+    const wrapper = renderer.create(<Verse {...props} />);
+    expect(wrapper).toMatchSnapshot();
   });
 
   test('Test that USFM is stripped out', () => {
@@ -90,6 +92,8 @@ describe('Test Verse component',()=>{
       verseText: 'Also, we are writing these things to you so that our joy will be complete. \\f + \\ft Some older versions read, \\fqa And we are writing these things to you so that your joy will be complete \\fqa* . \\f*\n\n\\s5\n\\p\n\\q1\n',
       chapter: 1,
       verse: 1,
+      translate: k=>k,
+      resourcesReducer: {},
       direction: 'ltr',
       isCurrent: true,
       selectionsReducer: {
@@ -106,9 +110,8 @@ describe('Test Verse component',()=>{
         getLexiconData: () => {}
       }
     };
-    const expectedText = '1:1 Also, we are writing these things to you so that our joy will be complete. ';
-    const enzymeWrapper = mount(<Verse {...props} />);
-    validateVerse(enzymeWrapper, expectedText);
+    const wrapper = renderer.create(<Verse {...props} />);
+    expect(wrapper).toMatchSnapshot();
   });
 
   test('Test when verse is verseObject that the verse is displayed', () => {
@@ -121,8 +124,10 @@ describe('Test Verse component',()=>{
       ],
       chapter: 11,
       verse: 35,
+      translate: k=>k,
       direction: 'ltr',
       isCurrent: true,
+      resourcesReducer: {},
       selectionsReducer: {
         selections: []
       },
@@ -137,9 +142,8 @@ describe('Test Verse component',()=>{
         getLexiconData: () => {}
       },
     };
-    const expectedText = '11:35 Jesus wept.';
-    const enzymeWrapper = mount(<Verse {...props} />);
-    validateVerse(enzymeWrapper, expectedText);
+    const wrapper = renderer.create(<Verse {...props} />);
+    expect(wrapper).toMatchSnapshot();
   });
 });
 
@@ -149,7 +153,9 @@ describe('Verse.js', () => {
       verseText: 'Jesus wept',
       chapter: 11,
       verse: 35,
+      translate: k=>k,
       direction: 'ltr',
+      resourcesReducer: {},
       isCurrent: true,
       selectionsReducer: {
         selections: []
@@ -171,12 +177,6 @@ describe('Verse.js', () => {
     expect(tree).toMatchSnapshot();
   });
 });
-
-function validateVerse(enzymeWrapper, expectedText) {
-  const verseDiv = enzymeWrapper.find('div');
-  expect(verseDiv.length).toEqual(1);
-  expect(verseDiv.text()).toEqual(expectedText);
-}
 
 //
 // helpers

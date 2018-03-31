@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditScreen/> has text 1`] = `
+<textarea
+  autoFocus={true}
+  id="verse-editor-field"
+  onChange={[Function]}
+  rows={4}
+  style={
+    Object {
+      "WebkitAppearance": "textfield",
+      "backgroundColor": "transparent",
+      "border": "solid 1px var(--border-color)",
+      "color": "rgba(0, 0, 0, 0.870588)",
+      "cursor": "inherit",
+      "fontFamily": "inherit",
+      "fontSize": "inherit",
+      "fontStretch": "inherit",
+      "fontStyle": "inherit",
+      "fontVariant": "inherit",
+      "fontWeight": "inherit",
+      "lineHeight": "inherit",
+      "outline": "none",
+      "padding": "10px",
+      "resize": "none",
+      "width": "100%",
+    }
+  }
+  value="verse text"
+/>
+`;

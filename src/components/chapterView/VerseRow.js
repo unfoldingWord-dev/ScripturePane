@@ -4,10 +4,32 @@ import {Col, Row} from 'react-bootstrap';
 import Verse from '../Verse';
 
 class VerseRow extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  handleEdit(bibleId, chapter, verse, verseText) {
+    const {onEditTargetVerse} = this.props;
+    if(bibleId === 'targetBible' && typeof onEditTargetVerse === 'function') {
+      onEditTargetVerse(bibleId, chapter, verse, verseText);
+    }
+  }
+
   render() {
-    const {verseNumber} = this.props;
-    const {bibles} = this.props.resourcesReducer;
-    const {currentPaneSettings} = this.props.settingsReducer.toolsSettings.ScripturePane;
+    const {
+      verseNumber,
+      actions,
+      resourcesReducer,
+      contextIdReducer,
+      translate,
+      selectionsReducer,
+      scripturePane: {
+        currentPaneSettings
+      }
+    } = this.props;
+    const {bibles} = resourcesReducer;
     const {chapter, verse} = this.props.contextIdReducer.contextId.reference;
     const isCurrent = verseNumber === verse.toString();
     let verseCells = <div />;
@@ -37,7 +59,12 @@ class VerseRow extends React.Component {
         return (
           <Col key={index} md={4} sm={4} xs={4} lg={4} style={colStyle}>
             <Verse
-              {...this.props}
+              translate={translate}
+              onEdit={this.handleEdit}
+              resourcesReducer={resourcesReducer}
+              contextIdReducer={contextIdReducer}
+              selectionsReducer={selectionsReducer}
+              actions={actions}
               sourceName={bibleId}
               bibleId={bibleId}
               languageId={languageId}
@@ -62,8 +89,12 @@ class VerseRow extends React.Component {
 }
 
 VerseRow.propTypes = {
+  translate: PropTypes.func.isRequired,
+  onEditTargetVerse: PropTypes.func,
+  selectionsReducer: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
   verseNumber: PropTypes.string.isRequired,
-  settingsReducer: PropTypes.object.isRequired,
+  scripturePane: PropTypes.object.isRequired,
   resourcesReducer: PropTypes.object.isRequired,
   contextIdReducer: PropTypes.object.isRequired,
   projectDetailsReducer: PropTypes.object.isRequired

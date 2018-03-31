@@ -4,8 +4,36 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Modal, Glyphicon, FormControl} from 'react-bootstrap';
+import BaseDialog from './BaseDialog';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import {FormControl} from 'react-bootstrap';
 import {getLanguageTranslation} from '../helpers/localizationHelpers';
+
+const styles = {
+  icon: {
+    color: '#ffffff',
+    width: 25,
+    height: 25
+  },
+  iconButton: {
+    padding: 0,
+    width: 25,
+    height: 25,
+    marginTop: 5
+  },
+  title: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  body: {
+    textAlign: 'center'
+  },
+  select: {
+    margin: '0 auto',
+    width: '300px'
+  }
+};
 
 class AddPaneModal extends React.Component {
   render() {
@@ -36,39 +64,39 @@ class AddPaneModal extends React.Component {
       });
     });
 
-
+    const titleText = translate('add_resource');
+    const title = (
+      <h4>
+        <span style={{flexGrow: 1, textAlign: 'center'}}>{titleText}</span>
+        <IconButton style={styles.iconButton}
+                    iconStyle={styles.icon}
+                    onClick={onHide}>
+          <CloseIcon/>
+        </IconButton>
+      </h4>
+    );
 
     return (
-      <Modal show={show} onHide={onHide} bsSize="lg" aria-labelledby="contained-modal-title-sm">
-        <Modal.Header style={{ backgroundColor: "var(--accent-color-dark)" }}>
-          <Modal.Title id="contained-modal-title-sm"
-            style={{ textAlign: "center", color: "var(--reverse-color)" }}>
-            {translate("add_resource")}
-            <Glyphicon
-                onClick={onHide}
-                glyph={"remove"}
-                style={{color: "var(--reverse-color)", cursor: "pointer", fontSize: "18px", float: "right"}}
-            />
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{ backgroundColor: "var(--reverse-color)", color: "var(--accent-color-dark)", padding: "45px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <BaseDialog open={show}
+                  title={title}
+                  bodyStyle={styles.body}
+                  titleStyle={styles.title}
+                  primaryLabel={translate('buttons.load_button')}
+                  onSubmit={selectedPane ? addPane : null}
+                  secondaryLabel={translate('buttons.close_button')}
+                  onClose={onHide}>
           <h4 style={{ marginBottom: "30px" }}>
-            {translate("select_language")}
+            {translate('select_language')}
           </h4>
           <FormControl
             componentClass="select"
-            style={{ width: "300px" }}
+            style={styles.select}
             onChange={e => selectSourceLanguage(e.target.value)}
           >
-            <option value="">{translate("select")}</option>
+            <option value="">{translate('select')}</option>
             {panes}
           </FormControl>
-        </Modal.Body>
-        <Modal.Footer style={{ padding: '0', backgroundColor: "var(--reverse-color)" }}>
-          <button className="btn-second" onClick={onHide}>{translate("close")}</button>
-          <button className="btn-prime" disabled={ !selectedPane } onClick={() => addPane()}>{translate("load")}</button>
-        </Modal.Footer>
-      </Modal>
+      </BaseDialog>
     );
   }
 }

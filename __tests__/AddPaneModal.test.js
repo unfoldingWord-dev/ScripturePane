@@ -6,12 +6,11 @@ import {shallow} from 'enzyme';
 
 // Tests for AddPanelModal React Component
 describe('Test AddPaneModal component',()=>{
-  const mock_translate = (text) => { return text; };
   test('Test "(Current project)" is in language select', () => {
     const props = {
-      translate: mock_translate,
       selectSourceLanguage: jest.fn(),
       addPane: jest.fn(),
+      translate: k=>k,
       show: true,
       onHide: jest.fn(),
       selectedPane: false,
@@ -44,9 +43,9 @@ describe('Test AddPaneModal component',()=>{
 
   test('Test source is disabled in AddPanelModal if already selected', () => {
     const props = {
-      translate: mock_translate,
       selectSourceLanguage: jest.fn(),
       addPane: jest.fn(),
+      translate: k=>k,
       show: true,
       onHide: jest.fn(),
       selectedPane: false,
