@@ -4,4 +4,3 @@ Status](https://travis-ci.org/translationCoreApps/ScripturePane.svg?branch=maste
 
 # ScripturePane
 A submodule for scripture display with tC.
-
