@@ -34,7 +34,7 @@ exports[`<VerseEditor/> renders 1`] = `
             </text>
           </svg>
         </span>
-        Edit Verse
+        edit_verse
       </span>
     </div>
     <div
@@ -74,7 +74,7 @@ exports[`<VerseEditor/> renders 1`] = `
             </text>
           </svg>
         </span>
-        Select reason(s) for change
+        select_reasons
       </span>
     </div>
   </div>
