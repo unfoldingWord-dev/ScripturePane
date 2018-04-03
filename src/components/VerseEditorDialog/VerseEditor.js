@@ -166,8 +166,9 @@ class VerseEditor extends React.Component {
           {screen}
         </div>
         <div style={styles.actions}>
-          <button className="btn"
+          <button className="btn btn-link"
                   disabled={stepIndex === 0}
+                  style={{color: stepIndex === 0 ? '#777' : 'var(--accent-color-dark)' }}
                   onClick={this._handleBack}>
             {translate('buttons.back_button')}
           </button>
