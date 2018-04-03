@@ -1,12 +1,27 @@
 {
+  "buttons": {
+    "save_button": "Save",
+    "back_button": "Back",
+    "close_button": "Close",
+    "cancel_button": "Cancel",
+    "next_button": "Next",
+    "load_button": "Load"
+  },
+  "edit_verse": "Edit Verse - ${passage}",
+  "editor": {
+    "spelling": "Spelling",
+    "punctuation": "Punctuation",
+    "word_choice": "Word Choice",
+    "meaning": "Meaning",
+    "grammar": "Grammar",
+    "other": "Other"
+  },
   "step1_read": "चरण 1. पढ़ें",
   "show_exp_resource": "विस्तृत संसाधन पैन दिखाने के लिए क्लिक करें",
   "click_add_resource": "एक संसाधन जोड़ने के लिए क्लिक करें",
   "add_resource": "संसाधन जोड़ें",
   "select_language": "भाषा चुनिए",
   "select": "चुनते हैं",
-  "close": "बंद करे",
-  "load": "भार",
   "click_remove_resource": "संसाधन को हटाने के लिए क्लिक करें",
   "lemma": "लेम्मा:",
   "morphology": "आकृति विज्ञान:",
