@@ -94,8 +94,9 @@ exports[`<VerseEditor/> renders 1`] = `
     style="padding:0 24px;text-align:right"
   >
     <button
-      class="btn"
+      class="btn btn-link"
       disabled=""
+      style="color:#777"
     >
       buttons.back_button
     </button>
