@@ -34,7 +34,7 @@ exports[`<VerseEditor/> renders 1`] = `
             </text>
           </svg>
         </span>
-        Edit Verse
+        edit_verse
       </span>
     </div>
     <div
@@ -74,7 +74,7 @@ exports[`<VerseEditor/> renders 1`] = `
             </text>
           </svg>
         </span>
-        Select reason(s) for change
+        select_reasons
       </span>
     </div>
   </div>
@@ -94,8 +94,9 @@ exports[`<VerseEditor/> renders 1`] = `
     style="padding:0 24px;text-align:right"
   >
     <button
-      class="btn"
+      class="btn btn-link"
       disabled=""
+      style="color:#777"
     >
       buttons.back_button
     </button>

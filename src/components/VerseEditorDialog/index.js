@@ -35,7 +35,7 @@ class VerseEditorDialog extends React.Component {
     const title = (
       <span>
         <EditIcon style={styles.icon}/>
-        {translate('edit_verse', {passage: verseTitle})}
+        {translate('edit_verse_title', {passage: verseTitle})}
       </span>
     );
 
