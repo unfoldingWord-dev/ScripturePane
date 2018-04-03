@@ -16,8 +16,8 @@ const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text fo
 
 const makeStyles = (props) => {
   const { verseText, direction } = props;
-  const verseIsPlaceHolder = !!verseText;
-
+  const verseIsPlaceHolder = !verseText;
+  
   return {
     flex: {
       display: 'flex',
