@@ -17,7 +17,7 @@ const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text fo
 const makeStyles = (props) => {
   const { verseText, direction } = props;
   const verseIsPlaceHolder = !verseText;
-  
+
   return {
     flex: {
       display: 'flex',
@@ -201,7 +201,7 @@ class Verse extends React.Component {
       verseSpan = this.verseArray(text);
     }
 
-    const isEditable = bibleId === 'targetBible' && !!verseText;
+    const isEditable = bibleId === 'targetBible';
     const chapterVerseContent = direction === 'rtl' ? `${verse}:${chapter} ` : `${chapter}:${verse} `;
     const chapterVerse = <strong>{chapterVerseContent}</strong>;
     const styles = makeStyles(this.props);
