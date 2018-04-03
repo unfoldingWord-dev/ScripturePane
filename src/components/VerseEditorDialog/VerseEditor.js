@@ -27,7 +27,7 @@ const styles = {
   }
 };
 
-const steps = ['Edit Verse', 'Select reason(s) for change'];
+const steps = ['edit_verse', 'select_reasons'];
 
 /**
  * Checks if the next butt should be enabled
@@ -157,11 +157,16 @@ class VerseEditor extends React.Component {
       );
     }
 
+    const localizedSteps = [];
+    for(const step of steps) {
+      localizedSteps.push(translate(step));
+    }
+
     return (
       <div>
         <VerseEditorStepper stepIndex={stepIndex}
                             style={styles.stepper}
-                            steps={steps}/>
+                            steps={localizedSteps}/>
         <div style={styles.screen}>
           {screen}
         </div>
