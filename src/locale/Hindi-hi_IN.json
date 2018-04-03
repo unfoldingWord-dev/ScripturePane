@@ -1,20 +1,20 @@
 {
   "buttons": {
-    "save_button": "Save",
-    "back_button": "Back",
-    "close_button": "Close",
-    "cancel_button": "Cancel",
-    "next_button": "Next",
-    "load_button": "Load"
+    "save_button": "बचाना",
+    "back_button": "वापस",
+    "close_button": "बंद करे",
+    "cancel_button": "रद्द करना",
+    "next_button": "आगामी",
+    "load_button": "भार"
   },
-  "edit_verse": "Edit Verse - ${passage}",
+  "edit_verse": "कविता संपादित करें - ${passage}",
   "editor": {
-    "spelling": "Spelling",
-    "punctuation": "Punctuation",
-    "word_choice": "Word Choice",
-    "meaning": "Meaning",
-    "grammar": "Grammar",
-    "other": "Other"
+    "spelling": "वर्तनी",
+    "punctuation": "विराम चिह्न",
+    "word_choice": "शब्दों का चयन",
+    "meaning": "अर्थ",
+    "grammar": "व्याकरण",
+    "other": "अन्य"
   },
   "step1_read": "चरण 1. पढ़ें",
   "show_exp_resource": "विस्तृत संसाधन पैन दिखाने के लिए क्लिक करें",
