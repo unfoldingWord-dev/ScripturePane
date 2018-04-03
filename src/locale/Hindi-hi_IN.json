@@ -7,7 +7,9 @@
     "next_button": "आगामी",
     "load_button": "भार"
   },
-  "edit_verse": "कविता संपादित करें - ${passage}",
+  "edit_verse_title": "Edit Verse - ${passage}",
+  "edit_verse": "Edit Verse",
+  "select_reasons": "Select reason(s) for change",
   "editor": {
     "spelling": "वर्तनी",
     "punctuation": "विराम चिह्न",
