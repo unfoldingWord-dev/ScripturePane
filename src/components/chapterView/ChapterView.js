@@ -111,7 +111,11 @@ class ChapterView extends React.Component {
     let verseTitle = '';
     let verseText = '';
     if(openEditor) {
-      const bookName = projectDetailsReducer.manifest.target_language.book.name;
+      let bookName = projectDetailsReducer.manifest.target_language.book.name;
+      if(bookName === null) {
+        console.warn('The localized book name could not be found. This is likely a bug in tC.');
+        bookName = projectDetailsReducer.manifest.project.name;
+      }
       verseTitle = `${bookName} ${editVerse.chapter}:${editVerse.verse}`;
       verseText = editVerse.verseText;
     }

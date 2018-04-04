@@ -15,7 +15,7 @@ exports[`Test Verse component Test that USFM is stripped out 1`] = `
       Object {
         "direction": "ltr",
         "flex": 1,
-        "fontStyle": "italic",
+        "fontStyle": "normal",
       }
     }
   >
@@ -44,7 +44,7 @@ exports[`Test Verse component Test when verse is empty string that the WARNING p
       Object {
         "direction": "ltr",
         "flex": 1,
-        "fontStyle": "normal",
+        "fontStyle": "italic",
       }
     }
   >
@@ -73,7 +73,7 @@ exports[`Test Verse component Test when verse is not null that the verse is disp
       Object {
         "direction": "ltr",
         "flex": 1,
-        "fontStyle": "italic",
+        "fontStyle": "normal",
       }
     }
   >
@@ -102,7 +102,7 @@ exports[`Test Verse component Test when verse is null that the WARNING placehold
       Object {
         "direction": "ltr",
         "flex": 1,
-        "fontStyle": "normal",
+        "fontStyle": "italic",
       }
     }
   >
@@ -131,7 +131,7 @@ exports[`Test Verse component Test when verse is verseObject that the verse is d
       Object {
         "direction": "ltr",
         "flex": 1,
-        "fontStyle": "italic",
+        "fontStyle": "normal",
       }
     }
   >
@@ -160,7 +160,7 @@ exports[`Verse.js renders correctly 1`] = `
       Object {
         "direction": "ltr",
         "flex": 1,
-        "fontStyle": "italic",
+        "fontStyle": "normal",
       }
     }
   >

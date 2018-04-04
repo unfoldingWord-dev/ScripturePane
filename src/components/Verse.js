@@ -16,7 +16,7 @@ const PLACE_HOLDER_TEXT = '[WARNING: This Bible version does not include text fo
 
 const makeStyles = (props) => {
   const { verseText, direction } = props;
-  const verseIsPlaceHolder = !!verseText;
+  const verseIsPlaceHolder = !verseText;
 
   return {
     flex: {
@@ -29,8 +29,13 @@ const makeStyles = (props) => {
       flex: 1,
       fontStyle: verseIsPlaceHolder ? 'italic' : 'normal'
     },
-    edit: {
+    edit_wrapper: {
       textAlign: 'right'
+    },
+    edit_button: {
+      padding: 0,
+      width: 28,
+      height: 28
     }
   };
 };
@@ -201,7 +206,7 @@ class Verse extends React.Component {
       verseSpan = this.verseArray(text);
     }
 
-    const isEditable = bibleId === 'targetBible' && !!verseText;
+    const isEditable = bibleId === 'targetBible';
     const chapterVerseContent = direction === 'rtl' ? `${verse}:${chapter} ` : `${chapter}:${verse} `;
     const chapterVerse = <strong>{chapterVerseContent}</strong>;
     const styles = makeStyles(this.props);
@@ -209,8 +214,8 @@ class Verse extends React.Component {
     let edit = null;
     if(isEditable) {
       edit = (
-        <div style={styles.edit}>
-          <IconButton onClick={this.handleEdit}>
+        <div style={styles.edit_wrapper}>
+          <IconButton style={styles.edit_button} onClick={this.handleEdit}>
             <EditIcon/>
           </IconButton>
         </div>
