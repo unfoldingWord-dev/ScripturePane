@@ -68,7 +68,9 @@ class Verse extends React.Component {
   verseString(verseText) {
     verseText = removeMarker(verseText);
     verseText = verseText.replace(/\s+/g, ' ');
-    const selections= this.props.selectionsReducer.selections;
+    // if empty string then verseText = place holder warning.
+    if (verseText.length === 0) verseText = PLACE_HOLDER_TEXT;
+    const selections = this.props.selectionsReducer.selections;
     let verseTextSpans = <span>{verseText}</span>;
 
     if (selections && selections.length > 0) {
@@ -192,11 +194,11 @@ class Verse extends React.Component {
   }
 
   render() {
-    let verseSpan = <span/>;
     const { bibleId, verseText, chapter, verse, direction } = this.props;
-
+    let verseSpan = <span/>;
     let text = verseText;
-    if (!verseText) {
+
+    if (!verseText || (typeof verseText === 'object' && !verseText.verseObjects.some((word) => word.type === "word" && word.text.length > 0))) {
       text = PLACE_HOLDER_TEXT;
     }
 
