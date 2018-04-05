@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 import * as highlightHelpers from '../helpers/highlightHelpers';
 import {removeMarker} from '../helpers/UsfmHelpers';
-import {isWord, isNestedMilestone, punctuationWordSpacing, emptyTextInVerseObject} from '../helpers/stringHelpers';
+import {isWord, isNestedMilestone, punctuationWordSpacing, textIsEmptyInVerseObject} from '../helpers/stringHelpers';
 // components
 import WordDetails from './WordDetails';
 // constants
@@ -198,7 +198,7 @@ class Verse extends React.Component {
     let verseSpan = <span/>;
     let text = verseText;
 
-    if (!verseText || (verseText.verseObject && emptyTextInVerseObject(verseText))) {
+    if (!verseText || (verseText.verseObject && textIsEmptyInVerseObject(verseText))) {
       text = PLACE_HOLDER_TEXT;
     }
 

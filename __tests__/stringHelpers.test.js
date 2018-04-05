@@ -100,3 +100,35 @@ describe('punctuationWordSpacing()', () => {
     expect(stringHelpers.punctuationWordSpacing(punctuation)).toEqual('');
   });
 });
+
+describe('emptyTextInVerseObject()', () => {
+  test('Should return true if the verse object words are empty', () => {
+    const verseText = {
+      verseObjects: [
+        {
+          type: 'word',
+          text: ''
+        },
+        {
+          text: ''
+        }
+      ]
+    };
+    expect(stringHelpers.textIsEmptyInVerseObject(verseText)).toBeTruthy();
+  });
+
+  test('Should return false if the verse object words are not empty', () => {
+    const verseText = {
+      verseObjects: [
+        {
+          type: 'word',
+          text: 'hello'
+        },
+        {
+          text: ''
+        }
+      ]
+    };
+    expect(stringHelpers.textIsEmptyInVerseObject(verseText)).toBeFalsy();
+  });
+});

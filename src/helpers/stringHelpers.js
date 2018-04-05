@@ -27,7 +27,7 @@ export function punctuationWordSpacing(word) {
   return ((lastChar === '"') || (lastChar === "'") || (lastChar === "-")) ? '' : ' ';
 }
 
-export function emptyTextInVerseObject(verseText) {
+export function textIsEmptyInVerseObject(verseText) {
   const emptyVerse = !verseText.verseObjects.some((word) => word.type === "word" && word.text.length > 0);
 
   return typeof verseText === 'object' && emptyVerse;
