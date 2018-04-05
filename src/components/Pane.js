@@ -20,7 +20,7 @@ class Pane extends React.Component {
     direction = direction || 'ltr';
     description = getTranslation(translate, description || "");
     let verseText = bibles && bibles[languageId][bibleId] && bibles[languageId][bibleId][reference.chapter] ? bibles[languageId][bibleId][reference.chapter][reference.verse] : '';
-    let languageName = getTranslation(translate, language_name);
+    let languageName = getTranslation(translate, language_name || "");
     let headingText = bibleId !== "targetBible" ? languageName + " (" + bibleId.toUpperCase() + ")" : (languageName || '');
     let contentStyle;
     const PANECHAR = 9;

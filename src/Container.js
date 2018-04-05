@@ -45,7 +45,7 @@ class ScripturePane extends React.Component {
    * be added to the scripture pane and it sets the state with this name in the
    * selectedPane property. it matches that name that was sleected with the
    * staticPaneSettings.
-   * @param {object} value - selected Language Id And BibleId 'hi_ult', 'en_ult'.
+   * @param {object} value - selected Language Id And BibleId 'hi_ulb', 'en_ult'.
    * @return {state} This will set the state to the selectedPane object
    */
   selectSourceLanguage(value) {
