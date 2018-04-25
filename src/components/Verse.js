@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import * as lexiconHelpers from '../helpers/lexiconHelpers';
 import * as highlightHelpers from '../helpers/highlightHelpers';
 import {removeMarker} from '../helpers/UsfmHelpers';
-import {isWord, isNestedMilestone, punctuationWordSpacing} from '../helpers/stringHelpers';
+import {isWord, isNestedMilestone, punctuationWordSpacing, textIsEmptyInVerseObject} from '../helpers/stringHelpers';
 // components
 import WordDetails from './WordDetails';
 // constants
@@ -68,7 +68,9 @@ class Verse extends React.Component {
   verseString(verseText) {
     verseText = removeMarker(verseText);
     verseText = verseText.replace(/\s+/g, ' ');
-    const selections= this.props.selectionsReducer.selections;
+    // if empty string then verseText = place holder warning.
+    if (verseText.length === 0) verseText = PLACE_HOLDER_TEXT;
+    const selections = this.props.selectionsReducer.selections;
     let verseTextSpans = <span>{verseText}</span>;
 
     if (selections && selections.length > 0) {
@@ -192,11 +194,11 @@ class Verse extends React.Component {
   }
 
   render() {
-    let verseSpan = <span/>;
     const { bibleId, verseText, chapter, verse, direction } = this.props;
-
+    let verseSpan = <span/>;
     let text = verseText;
-    if (!verseText) {
+
+    if (!verseText || (verseText.verseObject && textIsEmptyInVerseObject(verseText))) {
       text = PLACE_HOLDER_TEXT;
     }
 
