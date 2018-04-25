@@ -83,11 +83,9 @@ class VerseEditor extends React.Component {
     this._isLastStep = this._isLastStep.bind(this);
     this._handleVerseChange = this._handleVerseChange.bind(this);
     this._handleReasonChange = this._handleReasonChange.bind(this);
-    const {verseText} = this.props;
-    debugger;
     this.state = {
       stepIndex: 0,
-      newVerse: verseText,
+      newVerse: '',
       verseChanged: false,
       reasons: []
     };
@@ -146,13 +144,13 @@ class VerseEditor extends React.Component {
   }
 
   render() {
-    const {translate, onCancel, open, verseTitle} = this.props;
+    const {translate, onCancel, open, verseTitle, verseText} = this.props;
     const {stepIndex, newVerse, reasons} = this.state;
-
+    let text = !this.state.verseChanged ? verseText : newVerse;
     let screen;
     switch (stepIndex) {
       case 0:
-        screen = (<EditScreen verseText={newVerse} onChange={this._handleVerseChange} />);
+        screen = (<EditScreen verseText={text} onChange={this._handleVerseChange} />);
         break;
       case 1:
         screen = (<ReasonScreen translate={translate} selectedReasons={reasons} onChange={this._handleReasonChange} />);

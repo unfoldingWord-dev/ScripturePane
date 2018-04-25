@@ -105,7 +105,7 @@ class ChapterView extends React.Component {
         );
       });
     }
-
+    debugger;
     const {editVerse} = this.state;
     const openEditor = editVerse !== null;
     let verseTitle = '';
